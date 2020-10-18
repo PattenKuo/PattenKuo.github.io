@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>log4js配置说明</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/35450/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/35450/</url>
+      
+        <content type="html"><![CDATA[<p>NOTE: this documentation is for version 2.x. You probably want to look at <a href="https://github.com/log4js-node/log4js-node/tree/v1.1.1">version 1.1.1 docs</a> instead.</p><p>This is a conversion of the <a href="https://github.com/stritti/log4js">log4js</a> framework to work with <a href="https://nodejs.org/en/">node</a>. I started out just stripping out the browser-specific code and tidying up some of the javascript to work better in node. It grew from there. Although it’s got a similar name to the Java library <a href="https://logging.apache.org/log4j/2.x/">log4j</a>, thinking that it will behave the same way will only bring you sorrow and confusion.</p><p>The full documentation is available here.</p><p>Out of the box it supports the following features:</p><p>· coloured console logging to stdout or stderr<br>· file appender, with configurable log rolling based on file size or date<br>· SMTP appender<br>· GELF appender<br>· Loggly appender<br>· Logstash UDP appender<br>· logFaces (UDP and HTTP) appender<br>· multiprocess appender (useful when you’ve got multiple servers)<br>· a logger for connect/express servers<br>· configurable log message layout/patterns<br>· different log levels for different log categories (make some parts of your app log as DEBUG, others only ERRORS, etc.)</p><p>** installation**<br><code>npm install log4js</code></p><p>** usage**<br>Minimalist version:</p><p><code>var log4js = require('log4js'); var logger = log4js.getLogger(); logger.level = 'debug'; logger.debug(&quot;Some debug messages&quot;);</code></p><p>By default, log4js will not output any logs (so that it can safely be used in libraries). The level for thedefault category is set to OFF. To enable logs, set the level (as in the example). This will then output to stdout with the coloured layout (thanks to <a href="https://github.com/masylum">masylum</a>), so for the above you would see:</p><p><code>[2010-01-17 11:43:37.987] [DEBUG] [default] - Some debug messages</code></p><p>See example.js for a full example, but here’s a snippet (also in examples/fromreadme.js):</p><p>`const log4js = require(‘log4js’);<br>log4js.configure({<br>appenders: { cheese: { type: ‘file’, filename: ‘cheese.log’ } },<br>categories: { default: { appenders: [‘cheese’], level: ‘error’ } }<br>});</p><p>const logger = log4js.getLogger(‘cheese’);<br>logger.trace(‘Entering cheese testing’);<br>logger.debug(‘Got cheese.’);<br><a href="http://logger.info">logger.info</a>(‘Cheese is Gouda.’);<br>logger.warn(‘Cheese is quite smelly.’);<br>logger.error(‘Cheese is too ripe!’);<br>logger.fatal(‘Cheese was breeding ground for listeria.’);<br>`</p><p>Output (in cheese.log):</p><p><code>[2010-01-17 11:43:37.987] [ERROR] cheese - Cheese is too ripe! [2010-01-17 11:43:37.990] [FATAL] cheese - Cheese was breeding ground for listeria.</code></p><p><strong>Note for library makers</strong><br>If you’re writing a library and would like to include support for log4js, without introducing a dependency headache for your users, take a look at <a href="https://github.com/log4js-node/log4js-api">log4js-api</a>.</p><p><strong>Documentation</strong></p><p>Available here.</p><p>There’s also <a href="https://github.com/log4js-node/log4js-example">an example application</a>.</p><p><strong>Contributing</strong><br>Contributions welcome, but take a look at the <a href="https://github.com/log4js-node/log4js-node">rules</a> first.</p><p><strong>License</strong><br>The original log4js was distributed under the Apache 2.0 License, and so is this. I’ve tried to keep the original copyright and author credits in place, except in sections that I have rewritten extensively.</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>天猫、淘宝、阿里巴巴、京东商品图片抓取保存操作步骤（图文详细产品图片保存）</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62973/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62973/</url>
