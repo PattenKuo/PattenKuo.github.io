@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>天猫、淘宝、阿里巴巴、京东商品图片抓取保存操作步骤（图文详细产品图片保存）</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62973/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62973/</url>
+      
+        <content type="html"><![CDATA[<p>近期，由于工作需要天猫上的一些产品图片以及详细图文，由于单个保存有点繁琐，索性弄了一个小程序根据地址来抓取图片。</p><p>原理很简单，首先是根据地址获取页面内容，因为天猫、淘宝、阿里巴巴、京东等的产品页面结构都是一样的，直接根据正则分析其中图片，然后保存即可。</p><p>1.打开Svenhetin-PicCapture.exe，打开后的界面如下（运行程序确保已安装Microsoft .NET Framework 4.0）<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62973/Step1.jpg" alt="v2-6d1e330f2fffba41b5ad77f4dcd68c15_hd"></p><p>2.在文本框内填写天猫、淘宝、阿里巴巴、京东等的商品地址：<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62973/Step2.jpg" alt="v2-f6f30fdecec7cefad6df7da72d9b65d4_hd"></p><p>3.点击获取，稍等8-20秒，如果获取到相关图片信息，会弹出保存目录选择框。<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62973/Step3.jpg" alt="v2-e569c648ba0a5c3ac87462664796d4a4_hd"></p><p>4.点击【确定】保存即可。<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62973/Step4.jpg" alt="v2-3cdec66c039faa8ed805bd9350377069_hd"></p><p>5、点击【是】后查看获取的天猫产品图片信息目录结构：<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62973/Step5.jpg" alt="v2-a036847838ad969a7ea2be3e19e4fcc1_hd"></p><p>6、产品主图如下：<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62973/Step6a.jpg" alt="v2-6c6a2acca0f7ae0bdece3852a37d4598_hd"></p><p>产品详细图片如下：<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62973/Step6b.jpg" alt="v2-1adae09b5ccbe866b1b97d64f5f38e16_hd"></p><p>原1688页面图片对照</p><p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62973/Step6c.jpg" alt="v2-256f05434b2e5416f1df00692cf0bbfb_hd"></p><p><strong>PS：如果打不开，或者打开报错，请确保是否安装了Microsoft .NET Framework 4.0</strong><br>下载NET Framework 4.0地址：<a href="%EF%BC%88%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80%EF%BC%9Ahttp://dl1sw.baidu.com/soft/9b/15910/Microsoft.NET.exe?version=585709662%EF%BC%89">点击这里</a></p><p><strong>PS:发布后，有伙伴反应总是报脚本错误，这应该是1688等网站的反爬虫脚本导致的，点击【否】即可。</strong></p><p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62973/jiaoben.png" alt="jiaoben"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 跨境电商 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>吴晓波《历代经济变革得失》读后感</title>
       <link href="%E4%B9%A6%E4%B8%AD%E8%87%AA%E6%9C%89%E9%BB%84%E9%87%91%E5%B1%8B/34692/"/>
       <url>%E4%B9%A6%E4%B8%AD%E8%87%AA%E6%9C%89%E9%BB%84%E9%87%91%E5%B1%8B/34692/</url>
