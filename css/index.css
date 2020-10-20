@@ -3169,7 +3169,7 @@ blockquote footer cite:before {
   }
 }
 #page-header #site-subtitle {
-  color: var(--light-grey);
+  color: var(--light-dark);
   font-size: 1.15em;
 }
 @media screen and (min-width: 768px) {
