@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>如何搭建win10 asp开发环境安装iis10？</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40541/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40541/</url>
+      
+        <content type="html"><![CDATA[<p>到目前大部分网站还是用asp，可见短期内不会被彻底淘汰，学习asp开发就需要搭建本机的环境，接下来我给大家介绍Windows10如何安装IIS信息服务。</p><p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40541/localhost.png" alt="localhost"></p><p><strong>工具/原料:Windows10系统</strong></p><p><strong>方法/步骤</strong></p><p>一、按下【win + R】调出运行界面，输入【control.exe】，如下图所示：<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40541/run.png" alt="run"><br>二、查看方式调为【类别】，点击【程序】，如下图所示：<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40541/control.png" alt="control"><br>三、点击【启用或关闭Windows功能】，如下图所示：<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40541/cx.png" alt="cx"><br>四、到了这一步我先说明一下，文件夹前面的框里是方块的意思是这个文件夹内容没有全选，框里是对勾的是这个文件夹里的内容全选了。如图配置即可。<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40541/windowsfeature.png" alt="windowsfeature"><br>五、配置完成之后，点击确定，慢慢等待。可以看到正在应用所做的更改 的进度条，完成之后会提示已完成请求的更改。关闭即可。<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40541/after-windowsfeature.png" alt="after-windowsfeature"><br>六、接下来我们要打开IIS管理器。桌面上右键点击【此电脑】–&gt;【管理】。即可进入【计算机管理】。在【服务和应用程序】里有IIS管理器，点击 进入IIS管理器。<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40541/international.png" alt="international"><br>七、我们可以看到中间部分有很多图标，找到【ASP】，点击。<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40541/asp.png" alt="asp"><br>八、这一步是配置asp应用程序，找到【启用父路径】，选为【True】。<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40541/asp-1.png" alt="asp-1"><br>九、到这里IIS环境已经搭建好了，在浏览器里输入localhost就可以看到iis的主页了。想要添加网站程序可以点右侧的高级设置，将物理路径改成你的网站程序就能访问了。<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40541/localhost-1.png" alt="localhost-1"></p><p><strong>参考</strong></p><blockquote><p>感谢作者<a href="https://jingyan.baidu.com/user/npublic?uid=98b0bd12cafcbe2126ee159e">九三四九</a>原创文章百度经验<a href="https://jingyan.baidu.com/article/bad08e1eef7afa09c85121ff.html">如何搭建win10 asp开发环境安装iis10？</a></p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>闲来无事，想起我们的那些日子，你能猜出哪个是你吗？朋友，岁月使我们更加紧密</title>
       <link href="%E9%9A%8F%E7%AC%94/65417/"/>
       <url>%E9%9A%8F%E7%AC%94/65417/</url>
