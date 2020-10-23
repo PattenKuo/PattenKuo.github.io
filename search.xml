@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>win10+银河麒麟ubuntu双系统正确卸载ubuntu</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/54692/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/54692/</url>
+      
+        <content type="html"><![CDATA[<ul><li><p>第一步：下载需要的工具包，这里我用的是<a href="https://pan.baidu.com/s/1TdD9ycooQg_EuoqC0BIy6A">MBR</a>, 可以直接从我分享的网盘链接下载，密码w3sl</p></li><li><p>第二步：将下载好的文件放在任一位置，我这里以C盘根目录为例：C://MBR/</p></li><li><p>第三步：在contana框中输入：<code>cmd</code>，右击命令提示符，以管理员身份运行</p></li><li><p>第四步：进入MBR文件目录，如我这里输入：<code>cd MBR</code></p></li><li><p>第五步：输入命令：<code>MbrFix /drive 0 fixmbr /yes</code></p></li><li><p>然后重启电脑，看是否直接进入windows，如果是的，那么恭喜你，可以开始删除了</p></li><li><p>右击我的电脑–&gt;管理–&gt;存储-磁盘管理–&gt;选择你当初分配给ubuntu 的磁盘，右击–&gt;删除卷</p></li><li><p>对于删除后的磁盘为绿色，你可以考虑将其拓展到你的其他盘，重新利用起来</p></li><li><p>如我选择将其为“文档”磁盘拓展空间，右击“文档”磁盘–&gt;拓展卷</p></li></ul><p><strong>致谢</strong>：</p><blockquote><p>wae42675的博客《<a href="https://blog.csdn.net/wae42675/article/details/78821910/">双系统正确卸载Ubuntu系统</a>》</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>银河麒麟Ubuntu安装wine时无法找到add-apt-repository问题的解决方法</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/13392/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/13392/</url>
@@ -876,9 +901,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> 跨境电商 </tag>
             
@@ -932,9 +957,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
         </tags>
       
