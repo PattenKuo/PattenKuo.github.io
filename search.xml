@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>用n管理不同版本的Node（nodejs升降级）</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/31934/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/31934/</url>
+      
+        <content type="html"><![CDATA[<h2 id="n"><a class="markdownIt-Anchor" href="#n"></a> n</h2><p>是管理多个Node版本的工具，作者是<a href="https://github.com/tj">TJ Holowaychuk</a>（鼎鼎大名的Express框架作者），就像它的名字一样，它的理念就是简单易用。之前用的是nvm，貌似大家都说好，但是用起来切换版本配置有点麻烦，而且结合zsh启动会有延迟等等导致一些人弃用了nvm，投入了TJ大神n的怀抱（可能是不太会用nvm），n管理Node版本体验真的很simple and easy，顿时世界变得清爽许多</p><h2 id="另外补充一下n和nvm的区别"><a class="markdownIt-Anchor" href="#另外补充一下n和nvm的区别"></a> 另外补充一下n和nvm的区别：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">n命令是作为一个node的模块而存在，而nvm 是一个独立于node&#x2F;npm的外部 shell 脚本。</span><br><span class="line"></span><br><span class="line">由于npm安装的模块路径一般为&#x2F;usr&#x2F;local&#x2F;lib&#x2F;node_modules（可以使用npm root -g命令查看你的系统中全局的路径）</span><br><span class="line">当使用n切换不同的node版本时，实际上会共用全局的node&#x2F;npm目录。</span><br><span class="line">而nvm是每个版本的node都有独立的全局目录。</span><br><span class="line"></span><br><span class="line">So</span><br><span class="line"></span><br><span class="line">if (需求 &#x3D;&#x3D; 按不同node版本使用不同全局node模块) use nvm，以免出现全局模块无法更新的问题。</span><br><span class="line">if (需求 &#x3D;&#x3D; 频繁更新node，不想新版本的node再全局安装node模块) use n，省事省心，当然会有坑哦。</span><br></pre></td></tr></table></figure><ul><li><a href="https://github.com/tj/n">n官方使用说明</a></li><li><a href="https://nodejs.org/zh-cn/">NodeJS官网</a></li></ul><h2 id="基本使用"><a class="markdownIt-Anchor" href="#基本使用"></a> 基本使用</h2><h3 id="安装n"><a class="markdownIt-Anchor" href="#安装n"></a> 安装n</h3><p><code>curl -L http://git.io/n-install | bash</code><br>或者执行<br><code>npm install -g n</code></p><p>安装完记得source一下</p><h3 id="安装node"><a class="markdownIt-Anchor" href="#安装node"></a> 安装node</h3><h4 id="1-安装指定版本"><a class="markdownIt-Anchor" href="#1-安装指定版本"></a> [1] 安装指定版本</h4><p><code>n 6.4.0</code></p><h4 id="2-安装最新版本"><a class="markdownIt-Anchor" href="#2-安装最新版本"></a> [2] 安装最新版本</h4><p><code>n latest</code></p><h4 id="3-安装稳定版本"><a class="markdownIt-Anchor" href="#3-安装稳定版本"></a> [3] 安装稳定版本</h4><p><code>n stable</code></p><h3 id="切换版本"><a class="markdownIt-Anchor" href="#切换版本"></a> 切换版本</h3><p>直接输入n后输出当前已经安装的node版本以及正在使用的版本（前面有一个o），你可以通过移动上下方向键来选择要使用的版本，最后按回车生效。注：<strong>要在root权限下切换方可生效</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">n</span><br><span class="line">4.4.1</span><br><span class="line">o 6.4.0</span><br></pre></td></tr></table></figure><h3 id="查看当前版本在node所有版本中的位置"><a class="markdownIt-Anchor" href="#查看当前版本在node所有版本中的位置"></a> 查看当前版本在node所有版本中的位置</h3><p><code>n ls</code></p><h3 id="删除某个版本"><a class="markdownIt-Anchor" href="#删除某个版本"></a> 删除某个版本</h3><p><code>n rm 0.12.9</code></p><h3 id="查看某版本node的安装路径"><a class="markdownIt-Anchor" href="#查看某版本node的安装路径"></a> 查看某版本node的安装路径</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">n bin 7.1.0</span><br><span class="line">&#x2F;Users&#x2F;Kimi&#x2F;n&#x2F;n&#x2F;versions&#x2F;node&#x2F;7.1.0&#x2F;bin&#x2F;node</span><br></pre></td></tr></table></figure><h3 id="以指定的版本来执行脚本"><a class="markdownIt-Anchor" href="#以指定的版本来执行脚本"></a> 以指定的版本来执行脚本</h3><p><code>&gt; n use 0.12.9 some.js</code></p><p><code>use</code> can be replace with <code>as</code></p><h3 id="设置-nvm-的默认版本"><a class="markdownIt-Anchor" href="#设置-nvm-的默认版本"></a> *设置 nvm 的默认版本</h3><p><code>nvm alias default 6.1.0</code></p><h3 id="跳坑一"><a class="markdownIt-Anchor" href="#跳坑一"></a> 跳坑一</h3><p>安装<code>n</code>执行<code>curl -L http://git.io/n-install | bash</code>时出现如下错误<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/31934/error.png" alt="error"><br>在开始升降级前，请自行确认当前的Node.js 版本，然后全局安装n 这个工具。当然，如果你也可以克隆源代码来编译安装「make install」；编译安装的时候，bin/n默认是安装在/usr/local文件夹下的「通过设置PREFIX=~/customize/path来自定义安装位置」。<br>安装之前需要清除缓存～</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 清除缓存</span><br><span class="line">npm cache clean -f</span><br><span class="line"># 全局安装 n</span><br><span class="line">npm install -g n</span><br></pre></td></tr></table></figure><p><strong>致谢</strong></p><blockquote><p><a href="https://github.com/mklement0/n-install#uninstalling-n">n-install</a><br><a href="http://www.hi-linux.com/2016/04/07/%E5%88%A9%E7%94%A8n%E5%92%8Cnvm%E7%AE%A1%E7%90%86Node%E7%9A%84%E7%89%88%E6%9C%AC/">利用n和nvm管理Node的版本</a><br><a href="https://eric.blog/2016/08/23/set-default-node-version-with-nvm/">Set default node version with NVM</a><br><a href="https://github.com/muwenzi/Program-Blog/issues/6">用n管理不同版本的Node</a><br><a href="http://blog.freedomlang.com/962.html">通过NPM 对Node.js进行升降级</a></p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 工具 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>基于CentOS7.2利用shadowsocks搭建VPN</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/61321/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/61321/</url>
