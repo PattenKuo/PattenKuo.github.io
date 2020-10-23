@@ -1,0 +1,472 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ubuntu16.04/18.04安装钉钉教程 | 郭鹏真PattenKuo的博客</title><meta name="keywords" content="程序猿的学习笔记,工具"><meta name="author" content="郭鹏真PattenKuo"><meta name="copyright" content="郭鹏真PattenKuo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="前言  系统环境 patten@patten-hp:~&#x2F;software$ lsb_release -a No LSB modules are available. Distributor ID:	Ubuntu Description:	Ubuntu 16.04.6 LTS Release:	16.04 Codename:	xenial patten@patten-hp:~&#x2F;software$">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu16.04&#x2F;18.04安装钉钉教程">
+<meta property="og:url" content="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/9699/index.html">
+<meta property="og:site_name" content="郭鹏真PattenKuo的博客">
+<meta property="og:description" content="前言  系统环境 patten@patten-hp:~&#x2F;software$ lsb_release -a No LSB modules are available. Distributor ID:	Ubuntu Description:	Ubuntu 16.04.6 LTS Release:	16.04 Codename:	xenial patten@patten-hp:~&#x2F;software$">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://guopengzhen.com/img/avater.jpg">
+<meta property="article:published_time" content="2020-10-23T10:45:53.000Z">
+<meta property="article:modified_time" content="2020-10-23T10:53:01.984Z">
+<meta property="article:author" content="郭鹏真PattenKuo">
+<meta property="article:tag" content="程序猿的学习笔记">
+<meta property="article:tag" content="工具">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://guopengzhen.com/img/avater.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/9699/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin="crossorigin"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="360-site-verification" content="89d1ebd5a1eb3151d51240867c24a57e"/><meta name="yandex-verification" content="0557569d0f8ae26b"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1508b58379fb497f1ca8ce5eeb12737f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-180790879-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-180790879-1');
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 郭鹏真PattenKuo","link":"链接: ","source":"来源: 郭鹏真PattenKuo的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-10-23 18:53:01'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avater.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">34</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">7</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">4</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text"> 前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%8E%AF%E5%A2%83"><span class="toc-number">1.1.</span> <span class="toc-text"> 系统环境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step-1%E4%B8%8B%E8%BD%BDdeepin-wine-for-ubuntu"><span class="toc-number">2.</span> <span class="toc-text"> Step 1：下载deepin-wine-for-ubuntu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step-2%E5%AE%89%E8%A3%85"><span class="toc-number">3.</span> <span class="toc-text"> Step 2：安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step-3%E5%AE%89%E8%A3%85%E5%AE%8C%E6%88%90"><span class="toc-number">4.</span> <span class="toc-text"> Step 3：安装完成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step-4%E5%8F%AF%E8%83%BD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">5.</span> <span class="toc-text"> Step 4：可能遇到的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E6%9C%AA%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%E5%8C%85-libappindicator1"><span class="toc-number">5.1.</span> <span class="toc-text"> 问题：未安装软件包 libappindicator1。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E6%9B%B4%E6%96%B0%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85gconf2%E4%BE%9D%E8%B5%96"><span class="toc-number">5.2.</span> <span class="toc-text"> 解决方案：更新系统安装gconf2依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%AE%E5%A4%8D%E5%AE%8C%E6%AF%95%E5%86%8D%E6%AC%A1%E5%AE%89%E8%A3%85"><span class="toc-number">5.3.</span> <span class="toc-text"> 修复完毕，再次安装</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://guopengzhen.com/img/avater.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">郭鹏真PattenKuo的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">Ubuntu16.04/18.04安装钉钉教程</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-10-23T10:45:53.000Z" title="发表于 2020-10-23 18:45:53">2020-10-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-10-23T10:53:01.984Z" title="更新于 2020-10-23 18:53:01">2020-10-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">程序猿的学习笔记</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<h3 id="系统环境"><a class="markdownIt-Anchor" href="#系统环境"></a> 系统环境</h3>
+<pre><code>patten@patten-hp:~/software$ lsb_release -a
+No LSB modules are available.
+Distributor ID:	Ubuntu
+Description:	Ubuntu 16.04.6 LTS
+Release:	16.04
+Codename:	xenial
+patten@patten-hp:~/software$
+</code></pre>
+<h2 id="step-1下载deepin-wine-for-ubuntu"><a class="markdownIt-Anchor" href="#step-1下载deepin-wine-for-ubuntu"></a> Step 1：下载deepin-wine-for-ubuntu</h2>
+<p>之前写过一篇文章讲述了《<a href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/57905/"><strong>Ubuntu16.04/18.04安装企业微信教程</strong></a>》，<a href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/57905/#step3%E4%B8%8B%E8%BD%BDdeepin%E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1">里面</a>提供了多个ubuntu软件的下载方式，可知从<a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/deepin/pool/non-free/d/dingtalk/">这里</a>可以下载<code>dingtalk_2.0.13-145_amd64.deb</code>的安装包。</p>
+<h2 id="step-2安装"><a class="markdownIt-Anchor" href="#step-2安装"></a> Step 2：安装</h2>
+<p>到安装包所在目录执行<code>sudo dpkg -i dingtalk_2.0.13-145_amd64.deb</code>安装钉钉，我的安装包目录在<code>~/software</code>。</p>
+<pre><code>patten@patten-hp:~/software$ sudo dpkg -i dingtalk_2.0.13-145_amd64.deb 
+(正在读取数据库 ... 系统当前共安装有 298647 个文件和目录。)
+正准备解包 dingtalk_2.0.13-145_amd64.deb  ...
+正在将 dingtalk (2.0.13-145) 解包到 (2.0.13-145) 上 ...
+正在设置 dingtalk (2.0.13-145) ...
+正在处理用于 hicolor-icon-theme (0.15-0ubuntu1.1) 的触发器 ...
+正在处理用于 gnome-menus (3.13.3-6ubuntu3.1) 的触发器 ...
+正在处理用于 desktop-file-utils (0.22-1ubuntu5.2) 的触发器 ...
+正在处理用于 bamfdaemon (0.5.3~bzr0+16.04.20180209-0ubuntu1) 的触发器 ...
+Rebuilding /usr/share/applications/bamf-2.index...
+正在处理用于 mime-support (3.59ubuntu1) 的触发器 ...
+patten@patten-hp:~/software$
+</code></pre>
+<h2 id="step-3安装完成"><a class="markdownIt-Anchor" href="#step-3安装完成"></a> Step 3：安装完成</h2>
+<p>安装已完成，just Enjoy it！</p>
+<p>最后：在ubuntu的搜索器中搜索“dingding”，打开运行即可。</p>
+<p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/9699/dingding.png" alt></p>
+<p>图一、搜索钉钉应用</p>
+<p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/9699/dingdingLaunch.png" alt></p>
+<p>图二、钉钉Launch页面</p>
+<h2 id="step-4可能遇到的问题"><a class="markdownIt-Anchor" href="#step-4可能遇到的问题"></a> Step 4：可能遇到的问题</h2>
+<p>安装时可能遇到如下问题：</p>
+<h3 id="问题未安装软件包-libappindicator1"><a class="markdownIt-Anchor" href="#问题未安装软件包-libappindicator1"></a> 问题：未安装软件包 libappindicator1。</h3>
+<p>如下所示：</p>
+<pre><code>patten@patten-hp:~/software$ sudo dpkg -i dingtalk_2.0.13-145_amd64.deb 
+[sudo] patten 的密码： 
+正在选中未选择的软件包 dingtalk。
+(正在读取数据库 ... 系统当前共安装有 298552 个文件和目录。)
+正准备解包 dingtalk_2.0.13-145_amd64.deb  ...
+正在解包 dingtalk (2.0.13-145) ...
+dpkg: 依赖关系问题使得 dingtalk 的配置工作不能继续：
+ dingtalk 依赖于 libappindicator1；然而：
+  未安装软件包 libappindicator1。
+
+dpkg: 处理软件包 dingtalk (--install)时出错：
+ 依赖关系问题 - 仍未被配置
+正在处理用于 hicolor-icon-theme (0.15-0ubuntu1.1) 的触发器 ...
+正在处理用于 gnome-menus (3.13.3-6ubuntu3.1) 的触发器 ...
+正在处理用于 desktop-file-utils (0.22-1ubuntu5.2) 的触发器 ...
+正在处理用于 bamfdaemon (0.5.3~bzr0+16.04.20180209-0ubuntu1) 的触发器 ...
+Rebuilding /usr/share/applications/bamf-2.index...
+正在处理用于 mime-support (3.59ubuntu1) 的触发器 ...
+在处理时有错误发生：
+ dingtalk
+patten@patten-hp:~/software$
+</code></pre>
+<h3 id="解决方案更新系统安装gconf2依赖"><a class="markdownIt-Anchor" href="#解决方案更新系统安装gconf2依赖"></a> 解决方案：<strong>更新系统安装gconf2依赖</strong></h3>
+<p>执行如下语句安装依赖：</p>
+<pre><code>$ sudo apt update
+$ sudo apt upgrade
+$ sudo apt-get -f install
+</code></pre>
+<p>如下所示：</p>
+<pre><code>patten@patten-hp:~/software$ sudo apt update
+忽略:1 http://packages.microsoft.com/repos/vscode stable InRelease
+命中:2 http://mirrors.aliyun.com/ubuntu xenial InRelease                       
+忽略:3 http://dl.google.com/linux/chrome/deb stable InRelease                  
+错误:4 http://packages.microsoft.com/repos/vscode stable Release               
+  SECURITY: URL redirect target contains control characters, rejecting.
+命中:5 http://mirrors.aliyun.com/ubuntu xenial-updates InRelease               
+错误:6 http://dl.google.com/linux/chrome/deb stable Release                    
+  SECURITY: URL redirect target contains control characters, rejecting. [IP: 203.208.40.41 80]
+命中:7 http://mirrors.aliyun.com/ubuntu xenial-backports InRelease             
+忽略:8 http://linux.teamviewer.com/deb stable InRelease                        
+命中:9 http://mirrors.aliyun.com/ubuntu xenial-security InRelease              
+忽略:10 http://www.scootersoftware.com bcompare4 InRelease                     
+错误:11 http://linux.teamviewer.com/deb stable Release                         
+  SECURITY: URL redirect target contains control characters, rejecting. [IP: 54.192.151.80 80]
+忽略:12 http://archive.canonical.com/ubuntu xenial InRelease                   
+错误:13 http://www.scootersoftware.com bcompare4 Release                       
+  SECURITY: URL redirect target contains control characters, rejecting.
+错误:14 http://archive.canonical.com/ubuntu xenial Release                     
+  SECURITY: URL redirect target contains control characters, rejecting. [IP: 91.189.92.150 80]
+命中:15 http://ppa.launchpad.net/maarten-baert/simplescreenrecorder/ubuntu xenial InRelease
+命中:16 http://archive.ubuntu.com/ubuntu xenial InRelease
+正在读取软件包列表... 完成   
+E: 仓库 “http://packages.microsoft.com/repos/vscode stable Release” 没有 Release 文件。
+N: 无法安全地用该源进行更新，所以默认禁用该源。
+N: 参见 apt-secure(8) 手册以了解仓库创建和用户配置方面的细节。
+E: 仓库 “http://dl.google.com/linux/chrome/deb stable Release” 没有 Release 文件。
+N: 无法安全地用该源进行更新，所以默认禁用该源。
+N: 参见 apt-secure(8) 手册以了解仓库创建和用户配置方面的细节。
+E: 仓库 “http://linux.teamviewer.com/deb stable Release” 没有 Release 文件。
+N: 无法安全地用该源进行更新，所以默认禁用该源。
+N: 参见 apt-secure(8) 手册以了解仓库创建和用户配置方面的细节。
+E: 仓库 “http://www.scootersoftware.com bcompare4 Release” 没有 Release 文件。
+N: 无法安全地用该源进行更新，所以默认禁用该源。
+N: 参见 apt-secure(8) 手册以了解仓库创建和用户配置方面的细节。
+E: 仓库 “http://archive.canonical.com/ubuntu xenial Release” 没有 Release 文件。
+N: 无法安全地用该源进行更新，所以默认禁用该源。
+N: 参见 apt-secure(8) 手册以了解仓库创建和用户配置方面的细节。
+patten@patten-hp:~/software$ sudo apt upgrade
+正在读取软件包列表... 完成
+正在分析软件包的依赖关系树       
+正在读取状态信息... 完成       
+您也许需要运行“apt-get -f install”来修正上面的错误。
+下列软件包有未满足的依赖关系：
+ dingtalk : 依赖: libappindicator1 但是它还没有被安装
+E: 不能满足依赖关系。不妨试一下 -f 选项。
+patten@patten-hp:~/software$
+patten@patten-hp:~/software$ sudo apt-get -f install
+正在读取软件包列表... 完成
+正在分析软件包的依赖关系树       
+正在读取状态信息... 完成       
+正在修复依赖关系... 完成
+将会同时安装下列软件：
+  libappindicator1 libindicator7
+下列【新】软件包将被安装：
+  libappindicator1 libindicator7
+升级了 0 个软件包，新安装了 2 个软件包，要卸载 0 个软件包，有 2 个软件包未被升级。
+有 1 个软件包没有被完全安装或卸载。
+需要下载 41.2 kB 的归档。
+解压缩后会消耗 165 kB 的额外空间。
+您希望继续执行吗？ [Y/n] Y
+获取:1 http://mirrors.aliyun.com/ubuntu xenial/main amd64 libindicator7 amd64 12.10.2+16.04.20151208-0ubuntu1 [21.9 kB]
+获取:2 http://mirrors.aliyun.com/ubuntu xenial-updates/main amd64 libappindicator1 amd64 12.10.1+16.04.20170215-0ubuntu1 [19.4 kB]
+已下载 41.2 kB，耗时 0秒 (202 kB/s)         
+正在选中未选择的软件包 libindicator7。
+(正在读取数据库 ... 系统当前共安装有 298637 个文件和目录。)
+正准备解包 .../libindicator7_12.10.2+16.04.20151208-0ubuntu1_amd64.deb  ...
+正在解包 libindicator7 (12.10.2+16.04.20151208-0ubuntu1) ...
+正在选中未选择的软件包 libappindicator1。
+正准备解包 .../libappindicator1_12.10.1+16.04.20170215-0ubuntu1_amd64.deb  ...
+正在解包 libappindicator1 (12.10.1+16.04.20170215-0ubuntu1) ...
+正在处理用于 libc-bin (2.23-0ubuntu11) 的触发器 ...
+正在设置 libindicator7 (12.10.2+16.04.20151208-0ubuntu1) ...
+正在设置 libappindicator1 (12.10.1+16.04.20170215-0ubuntu1) ...
+正在设置 dingtalk (2.0.13-145) ...
+正在处理用于 libc-bin (2.23-0ubuntu11) 的触发器 ...
+patten@patten-hp:~/software$
+</code></pre>
+<h3 id="修复完毕再次安装"><a class="markdownIt-Anchor" href="#修复完毕再次安装"></a> 修复完毕，再次安装</h3>
+<p>执行“Step 2：安装”的安装命令<code>sudo dpkg -i dingtalk_2.0.13-145_amd64.deb</code>。</p>
+<pre><code>patten@patten-hp:~/software$ sudo dpkg -i dingtalk_2.0.13-145_amd64.deb 
+(正在读取数据库 ... 系统当前共安装有 298647 个文件和目录。)
+正准备解包 dingtalk_2.0.13-145_amd64.deb  ...
+正在将 dingtalk (2.0.13-145) 解包到 (2.0.13-145) 上 ...
+正在设置 dingtalk (2.0.13-145) ...
+正在处理用于 hicolor-icon-theme (0.15-0ubuntu1.1) 的触发器 ...
+正在处理用于 gnome-menus (3.13.3-6ubuntu3.1) 的触发器 ...
+正在处理用于 desktop-file-utils (0.22-1ubuntu5.2) 的触发器 ...
+正在处理用于 bamfdaemon (0.5.3~bzr0+16.04.20180209-0ubuntu1) 的触发器 ...
+Rebuilding /usr/share/applications/bamf-2.index...
+正在处理用于 mime-support (3.59ubuntu1) 的触发器 ...
+patten@patten-hp:~/software$
+</code></pre>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">郭鹏真PattenKuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/9699/">https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/9699/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://guopengzhen.com" target="_blank">郭鹏真PattenKuo的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">程序猿的学习笔记</a><a class="post-meta__tags" href="/tags/%E5%B7%A5%E5%85%B7/">工具</a></div><div class="post_share"><div class="social-share" data-image="https://guopengzhen.com/img/avater.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="Wechat Pay"/></a><div class="post-qr-code-desc">Wechat Pay</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="Alipay"/></a><div class="post-qr-code-desc">Alipay</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/57905/"><img class="next-cover" src="https://guopengzhen.com/程序猿的学习笔记/57905/image-8.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Ubuntu16.04/18.04安装企业微信教程</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/程序猿的学习笔记/57905/" title="Ubuntu16.04/18.04安装企业微信教程"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/57905/image-8.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-23</div><div class="title">Ubuntu16.04/18.04安装企业微信教程</div></div></a></div><div><a href="/程序猿的学习笔记/35450/" title="log4js配置说明"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/35450/Apache_Log4j_Logo.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-18</div><div class="title">log4js配置说明</div></div></a></div><div><a href="/程序猿的学习笔记/2891/" title="win10安装Git步骤、常用的Git命令及上传已有的本地项目到github或码云"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/2891/git.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-22</div><div class="title">win10安装Git步骤、常用的Git命令及上传已有的本地项目到github或码云</div></div></a></div><div><a href="/程序猿的学习笔记/60027/" title="MBR与GPT的区别以及相互转换"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/60027/timg-1.jpeg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-23</div><div class="title">MBR与GPT的区别以及相互转换</div></div></a></div><div><a href="/程序猿的学习笔记/16541/" title="基于 CentOS 搭建 Ghost 博客"><img class="cover" src="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/16541/ghostLogo.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-18</div><div class="title">基于 CentOS 搭建 Ghost 博客</div></div></a></div><div><a href="/程序猿的学习笔记/62973/" title="天猫、淘宝、阿里巴巴、京东商品图片抓取保存操作步骤（图文详细产品图片保存）"><img class="cover" src="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62973/picCaptureCover.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-18</div><div class="title">天猫、淘宝、阿里巴巴、京东商品图片抓取保存操作步骤（图文详细产品图片保存）</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><label><input id="switch-comments-btn" type="checkbox"/><span class="slider"></span></label><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By 郭鹏真PattenKuo</div><div class="framework-info"><span>Powered by </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'q3J83vICPB2taER4oq48LBuV-gzGzoHsz',
+      appKey: 'Sme7y8okowBtcEXM8OqIfQVf',
+      placeholder: '来都来了，随便说两句吧！',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/9699/'
+    this.page.identifier = '程序猿的学习笔记/9699/'
+    this.page.title = 'Ubuntu16.04/18.04安装钉钉教程'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: true,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', 'UA-180790879-1', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>
