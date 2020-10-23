@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>MBR与GPT的区别以及相互转换</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/60027/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/60027/</url>
+      
+        <content type="html"><![CDATA[<p>很多人在安装windows系统时会碰到一个喋血的问题，就是“Windows无法安装到这个磁盘。选中的磁盘具有MBR分区。在EFI系统上，Windows只能安装到GPT磁盘”。<br>为了解决这个问题，我们应该先了解MBR与GPT的区别，如果急于解决问题的伙伴，直接到第二部分。</p><h2 id="一-mbr与gpt的区别"><a class="markdownIt-Anchor" href="#一-mbr与gpt的区别"></a> 一、MBR与GPT的区别</h2><p>从Intel 6系列主板之后，就开始提供UEFI BIOS支持，正式支持GPT硬盘分区表，一举取代了此前的MBR分区表格式，不过为了保持对老平台的兼容，微软即使最新的Windows 10系统也继续提供了对MBR分区表格式的支持。<br><em>MBR和GPT分区表详解</em><br>全新硬盘（未初始化）装系统之前，必须对齐进行分区，硬盘分区初始化的格式包括MBR和GPT两种。当然对于基于PowerPC的Mac电脑还有专门的Apple分区图，在这里就不做介绍。<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/60027/201610170953377750.jpg" alt="201610170953377750"></p><p>MBR的全称是Master Boot Record（主引导记录），MBR早在1983年IBM PC DOS 2.0中就已经提出。之所以叫“主引导记录”，是因为它是存在于驱动器开始部分的一个特殊的启动扇区。这个扇区包含了已安装的操作系统的启动加载器和驱动器的逻辑分区信息。</p><p>主引导扇区是硬盘的第一扇区。它由三个部分组成，主引导记录MBR、硬盘分区表DPT和硬盘有效标志。在总共512字节的主引导扇区里MBR占446个字节，偏移地址0000H–0088H），它负责从活动分区中装载，并运行系统引导程序；第二部分是Partition table区（DPT分区表），占64个字节；第三部分是Magic number，占2个字节。<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/60027/201610170953378340.png.jpeg" alt="201610170953378340.png"></p><p><em>MBR分区表系统</em><br>所谓启动加载器，是一小段代码，用于加载驱动器上其他分区上更大的加载器。如果你安装了Windows，Windows启动加载器的初始信息就放在这个区域里——如果MBR的信息被覆盖导致Windows不能启动，你就需要使用Windows的MBR修复功能来使其恢复正常。如果你安装了Linux，则位于MBR里的通常会是GRUB加载器。<br>分区表偏移地址为01BEH–01FDH，每个分区表项长16个字节，共64字节为分区项1、分区项2、分区项3、分区项4，分别对应MBR的四个主分区。<br>Magic number也就是结束标志字，偏移地址01FE–01FF的2个字节，固定为55AA，如果该标志错误系统就不能启动。<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/60027/lc.jpeg" alt="lc"></p><p>MBR最大支持2.2TB磁盘，它无法处理大于2.2TB容量的磁盘。MBR还只支持最多4个主分区——如果你想要更多分区，你需要创建所谓“扩展分区”，并在其中创建逻辑分区。</p><p>GPT的全称是Globally Unique Identifier Partition Table，意即GUID分区表，它的推出是和UEFI BIOS相辅相成的，鉴于MBR的磁盘容量和分区数量已经不能满足硬件发展的需求，GPT首要的任务就是突破了2.2T分区的限制，最大支持18EB的分区。<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/60027/gpt.jpg" alt="gpt"></p><p><em>GPT分区表系统</em><br>而在分区数量上，GPT会为每一个分区分配一个全局唯一的标识符，理论上GPT支持无限个磁盘分区，不过在Windows系统上由于系统的限制，最多只能支持128个磁盘分区，基本可以满足所有用户的存储需求。在每一个分区上，这个标识符是一个随机生成的字符串，可以保证为地球上的每一个GPT分区都分配完全唯一的标识符。<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/60027/gpt-1.jpg" alt="gpt-1"></p><p>而在安全性方面，GPT分区表也进行了全方位改进。在早期的MBR磁盘上，分区和启动信息是保存在一起的。如果这部分数据被覆盖或破坏，事情就麻烦了。相对的，GPT在整个磁盘上保存多个这部分信息的副本，因此它更为健壮，并可以恢复被破坏的这部分信息。GPT还为这些信息保存了循环冗余校验码（CRC）以保证其完整和正确——如果数据被破坏，GPT会发觉这些破坏，并从磁盘上的其他地方进行恢复。</p><p>所以对于新平台用户（Intel 6系以后/AMD 900系列以后和A系列）来说，都强烈推荐使用GPT分区表格式，目前包括Windows Vista、7、8、8.1、10已经都支持读取和使用GPT分区表。而对于使用Windows 8、8.1、10的用户，换用GPT后开机启动速度也可以进一步得到显著提升。</p><h2 id="二-mbr与gpt的转换"><a class="markdownIt-Anchor" href="#二-mbr与gpt的转换"></a> 二、MBR与GPT的转换</h2><p>通过你这个不能继续安装的启动盘，选择“修复计算机”——&gt;“疑难杂症”——&gt;“命令行”（具体名字记不清了，仅作参考），进入CMD程序后，依次输入以下命令:</p><ul><li>1.diskpart（启动Diskpart程序）</li><li>2.list disk （查看电脑中有哪些磁盘）</li><li>3.select disk 0（选中编号为0的磁盘，默认一般是0,也有其他的，看自己的硬盘大小确定)</li><li>4.clean（清除磁盘所有分区，<strong>特别注意：整个磁盘都会被清空</strong>)</li><li>5.convert gpt（将磁盘转换成GPT格式，<strong>同理，也可以是&quot;mbr&quot;，但暂时还没试过</strong>）</li><li>6.list partition（查看当前磁盘分区情况）</li><li>7.create partition efi size=100（默认大小为M）</li><li>8.create partition msr size =128</li><li>9.create partition primary size =102400(此处为你想设置C盘的大小)</li><li>10.两次输入exit</li></ul><p>现在就可以顺利安装了，祝你好运！</p><p><strong>致谢</strong><br>一、中关村在线《<a href="http://www.chinaz.com/server/2016/1017/595444.shtml">装机、做系统必备：秒懂MBR和GPT分区表</a>》<br>二、lzrreach的博客《<a href="https://blog.csdn.net/lzrreach/article/details/54933707">重装系统时将mbr分区改为gpt分区</a>》</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>win10安装Git步骤、常用的Git命令及上传已有的本地项目到github或码云</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2891/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2891/</url>
