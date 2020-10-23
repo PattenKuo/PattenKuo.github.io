@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Linux常用终端指令集锦</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/43899/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/43899/</url>
+      
+        <content type="html"><![CDATA[<h2 id="deepin"><a class="markdownIt-Anchor" href="#deepin"></a> Deepin</h2><p>查看已经安装的软件包：<code>dpkg -l</code><br>卸载命令：<code>sudo apt-get autoremove --purge 软件包名称</code><br>清理下载文件的存档 ：<code>sudo apt-get clean</code><br>只清理过时的包: <code>sudo apt-get autoclean</code><br>tar 压缩方法： <code>tar -zcvf /home/xahot.tar.gz /xahot</code><br>解压到指定的目录: <code>tar -zxvf /home/images.tar.gz -C /specific dir</code><br>firewall批量开放端口：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --permanent --zone&#x3D;public --add-port&#x3D;100-500&#x2F;tcp</span><br><span class="line">firewall-cmd --permanent --zone&#x3D;public --add-port&#x3D;100-500&#x2F;udp</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure><h2 id="centos"><a class="markdownIt-Anchor" href="#centos"></a> CentOS</h2><p>安装安装rz和sz命令（无法在putty使用）:<code>yum -y install lrzsz</code></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>习立风浅谈《邪不压正》：这有什么好笑的？，异类眼中的140字时代</title>
       <link href="%E9%9A%8F%E7%AC%94/39927/"/>
       <url>%E9%9A%8F%E7%AC%94/39927/</url>
