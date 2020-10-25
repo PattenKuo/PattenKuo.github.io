@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>When run &#39;git clone&#39; error: RPC failed; curl 56 GnuTLS recv error (-54): Error in the pull function</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/37980/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/37980/</url>
+      
+        <content type="html"><![CDATA[<p>When I use “git clone <a href="https://github.com/smartdevicelink/sdl_core.git">https://github.com/smartdevicelink/sdl_core.git</a>”　on ubuntu16.04 ,<br>the error occured as following:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">remote: Compressing objects: 100% (7&#x2F;7), done.</span><br><span class="line">error: RPC failed; curl 56 GnuTLS recv error (-54): Error in the pull function.</span><br><span class="line">fatal: The remote end hung up unexpectedly</span><br><span class="line">fatal: 过早的文件结束符（EOF）</span><br><span class="line">fatal: index-pack failed</span><br></pre></td></tr></table></figure><p>I solved this problem with the help of 《<a href="https://blog.csdn.net/ai2000ai/article/details/80708079">error: RPC failed; curl 56 GnuTLS recv error (-54): Error in the pull function.</a>》 ，thx.</p><p>Just run the following command to enlarge the cache:</p><p><code>git config --global http.postBuffer 524288000</code></p><p>If the error occured again, to enlarge it bigger again.</p><p>The another solution worked for me is to use ssh protocol instead of http(s) protocol.</p><p>OR use “<a href="https://code.google.com/archive/p/git-repo/">repo</a>” method instead of “git”</p><p><strong>或者就是网络不好!!!</strong></p><p>On <a href="https://git-scm.com/docs/git-config">Git-config</a> page says:<br>【<strong>http.postBuffer</strong>】<br>Maximum size in bytes of the buffer used by smart HTTP transports when POSTing data to the remote system. For requests larger than this buffer size, HTTP/1.1 and Transfer-Encoding: chunked is used to avoid creating a massive pack file locally. Default is 1 MiB, which is sufficient for most requests.</p><blockquote><p>reference:<br><a href="https://git-scm.com/docs/git-config">http.postBuffer</a></p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> Bug </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>武林筑梦人金庸经典语录整理</title>
       <link href="%E6%91%98%E6%8A%84/56194/"/>
       <url>%E6%91%98%E6%8A%84/56194/</url>
