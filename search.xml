@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>跨平台系统图／流程图／架构图编辑器　Dia for linux(ubuntu etc.) Windows Mac OS</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/58048/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/58048/</url>
+      
+        <content type="html"><![CDATA[<p>最近在ubuntu 16.04上找一个架构图编辑软件，找到了一个超好用而且跨平台的制图软件<a href="http://dia-installer.de/">Dia</a>。</p><p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/58048/--_031.png" alt="--_031"></p><h1 id="需求"><a class="markdownIt-Anchor" href="#需求"></a> 需求</h1><p>目前的Dia版本已经在Windows 8.1,8,7，Windows Vista和Windows XP，Linux和Mac OS X上成功测试过。</p><p><a href="http://dia-installer.de/download/index.html">下载页面</a>提供了Mac OS X和Linux的下载包以及有关旧版Windows的Dia的信息。</p><h1 id="故障排除"><a class="markdownIt-Anchor" href="#故障排除"></a> 故障排除</h1><p>如果您遇到任何dia问题，请先阅读<a href="http://dia-installer.de/doc/faq.html">常见问题解答</a>。</p><p>或者可以检查<a href="http://bit.ly/dbNQA2">错误报告</a>。</p><h1 id="许可"><a class="markdownIt-Anchor" href="#许可"></a> 许可</h1><p>Dia是根据GNU [GNU通用公共许可证]<a href="http://dia-installer.de/doc/gpl-2.0.html">http://dia-installer.de/doc/gpl-2.0.html</a>)GPLv2的条款提供的免费软件。</p><h1 id="安装方式"><a class="markdownIt-Anchor" href="#安装方式"></a> 安装方式</h1><p>在<a href="http://dia-installer.de/download/index.html">下载页面</a>下载对应版本。这里仅介绍ubuntu 安装方式。</p><p><code>$ sudo apt install dia-common</code></p><h1 id="启动"><a class="markdownIt-Anchor" href="#启动"></a> 启动</h1><p><code>$ dia</code></p><h1 id="中文支持"><a class="markdownIt-Anchor" href="#中文支持"></a> 中文支持</h1><p>该软件默认不支持中文，如需支持中文，修改配置文件（默认路径：/usr/bin/dia）即可。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cd &#x2F;usr&#x2F;bin  &#x2F;&#x2F;到配置文件目录</span><br><span class="line">$ sudo chmod 777 dia  &#x2F;&#x2F;修改文件权限，将只读改为可读写</span><br><span class="line">$ vi dia</span><br></pre></td></tr></table></figure><p>修改为下图所示保存即可：<br><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/58048/--_032.png" alt="--_032"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 工具 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Qt&#39;s &#39;Property Binding&#39;(Qt的&#39;属性绑定&#39;)</title>
       <link href="%E9%9A%8F%E7%AC%94/60991/"/>
       <url>%E9%9A%8F%E7%AC%94/60991/</url>
