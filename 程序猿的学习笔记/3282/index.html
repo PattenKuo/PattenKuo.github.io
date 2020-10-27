@@ -1,0 +1,415 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AGL(Automotive Grade Linux)系统架构简介 | 郭鹏真PattenKuo的博客</title><meta name="keywords" content="程序猿的学习笔记"><meta name="author" content="郭鹏真PattenKuo"><meta name="copyright" content="郭鹏真PattenKuo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="概述 AGL(Automotive Grade Linux，汽车级Linux)是一个致力于为汽车应用创造开源的软件解决方案的Linux 基金会工作组。尽管AGL最初的目的是IVI（In-Vehicle-Infotainment，车载信息娱乐系统），但最终将支持诸如仪表组和远程信息处理系统的其他用例。AGL有来自汽车，通信和半导体行业的参与者，并欢迎个人开发者的参与贡献。 通过利用Linux内核和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AGL(Automotive Grade Linux)系统架构简介">
+<meta property="og:url" content="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/3282/index.html">
+<meta property="og:site_name" content="郭鹏真PattenKuo的博客">
+<meta property="og:description" content="概述 AGL(Automotive Grade Linux，汽车级Linux)是一个致力于为汽车应用创造开源的软件解决方案的Linux 基金会工作组。尽管AGL最初的目的是IVI（In-Vehicle-Infotainment，车载信息娱乐系统），但最终将支持诸如仪表组和远程信息处理系统的其他用例。AGL有来自汽车，通信和半导体行业的参与者，并欢迎个人开发者的参与贡献。 通过利用Linux内核和">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://guopengzhen.com/img/avater.jpg">
+<meta property="article:published_time" content="2020-10-27T14:41:28.000Z">
+<meta property="article:modified_time" content="2020-10-27T14:45:56.433Z">
+<meta property="article:author" content="郭鹏真PattenKuo">
+<meta property="article:tag" content="程序猿的学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://guopengzhen.com/img/avater.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/3282/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin="crossorigin"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="360-site-verification" content="89d1ebd5a1eb3151d51240867c24a57e"/><meta name="yandex-verification" content="0557569d0f8ae26b"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1508b58379fb497f1ca8ce5eeb12737f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-180790879-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-180790879-1');
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 郭鹏真PattenKuo","link":"链接: ","source":"来源: 郭鹏真PattenKuo的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-10-27 22:45:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avater.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">68</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">12</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text"> 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%82%E7%94%A8%E8%8C%83%E5%9B%B4"><span class="toc-number">2.</span> <span class="toc-text"> 适用范围</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AF%E8%AF%AD%E8%A1%A8"><span class="toc-number">3.</span> <span class="toc-text"> 术语表</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://guopengzhen.com/img/avater.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">郭鹏真PattenKuo的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">AGL(Automotive Grade Linux)系统架构简介</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-10-27T14:41:28.000Z" title="发表于 2020-10-27 22:41:28">2020-10-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-10-27T14:45:56.433Z" title="更新于 2020-10-27 22:45:56">2020-10-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">程序猿的学习笔记</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">986</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>2分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="概述"><a class="markdownIt-Anchor" href="#概述"></a> 概述</h2>
+<p><a target="_blank" rel="noopener" href="https://www.automotivelinux.org/">AGL</a>(Automotive Grade Linux，汽车级Linux)是一个致力于为汽车应用创造开源的软件解决方案的<a target="_blank" rel="noopener" href="http://www.linuxfoundation.org/">Linux 基金会</a>工作组。尽管AGL最初的目的是IVI（In-Vehicle-Infotainment，车载信息娱乐系统），但最终将支持诸如仪表组和远程信息处理系统的其他用例。AGL有来自汽车，通信和半导体行业的参与者，并欢迎个人开发者的参与贡献。</p>
+<p>通过利用Linux内核和其他开源软件项目的超过<a target="_blank" rel="noopener" href="https://www.linuxfoundation.org/sites/main/files/publications/estimatinglinux.html">10亿美元的投资</a>，AGL工作组：</p>
+<ul>
+<li>为汽车供应商提供高效的软件创新，以满足消费者对更好的IVI体验的需求。</li>
+<li>汇集数千名开源软件开发人员的才能，致力于在Linux内核，网络和连接等领域维护核心软件，应用于众多行业的系统。</li>
+</ul>
+<p>汽车级Linux工作组的目标是提供：</p>
+<blockquote>
+<p>以汽车为中心的核心Linux操作系统堆栈，可满足汽车生态系统的公共和共享需求，并有广泛的社区支持，其中包括个人开发人员、学术组织和公司。</p>
+</blockquote>
+<blockquote>
+<p>为汽车原始设备制造商、一级供应商及其半导体和软件供应商提供一个透明、协作和开放的环境，以创建令人惊叹的车载软件。</p>
+</blockquote>
+<blockquote>
+<p>一个与其他开源项目合作和开发新的开源解决方案的集体诉求。</p>
+</blockquote>
+<blockquote>
+<p>一种嵌入式Linux发行版，可以为Linux新手或拥有开源经验的团队提供高效的原型设计</p>
+</blockquote>
+<p>产品团队通过启动在多个硬件平台上运行的参考应用程序，可以更快地投入市场。</p>
+<h2 id="适用范围"><a class="markdownIt-Anchor" href="#适用范围"></a> 适用范围</h2>
+<p>本文档的范围是定义汽车级Linux软件平台的体系结构。需求被分解为体系结构的概述和体系结构中每个层的描述，然后是各个层中每个模块的规范。体系结构图和规范的布局考虑了IVI系统所需的所有组件;然而，对于单个模块来说规范求并不全面。随着规范的不断发展，将继续补充这些部分。<br>
+本文的主要目标是定义构建应用程序的核心软件平台。因此，除了在单一情况下(主屏幕)，本文档不定义应用程序规范。应用规范将由使用AGL平台的各种项目开发。这些应用程序规范可用于将新的或修订的规范引入平台。<br>
+目前还没有计划使用此规范来创建遵从性或认证程序。该规范被用作指导AGL整体工作的蓝图，并为公司和个人制定工作包，以完成AGL工作组的目标。</p>
+<h2 id="术语表"><a class="markdownIt-Anchor" href="#术语表"></a> 术语表</h2>
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A2DP</td>
+<td>进阶播音设定档</td>
+</tr>
+<tr>
+<td>AGL</td>
+<td>汽车级Linux</td>
+</tr>
+<tr>
+<td>AVRCP</td>
+<td>音频视频远程配置文件</td>
+</tr>
+<tr>
+<td>FS</td>
+<td>文件系统</td>
+</tr>
+<tr>
+<td>GPS</td>
+<td>全球定位系统</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>图形处理器</td>
+</tr>
+<tr>
+<td>HFP</td>
+<td>免提配置文件</td>
+</tr>
+<tr>
+<td>IBOC</td>
+<td>带内同频</td>
+</tr>
+<tr>
+<td>LTSI</td>
+<td>长期支持计划</td>
+</tr>
+<tr>
+<td>NTP</td>
+<td>网络定时协议</td>
+</tr>
+<tr>
+<td>OEM</td>
+<td>原始设备制造商</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>操作系统</td>
+</tr>
+<tr>
+<td>OSS</td>
+<td>开源软件</td>
+</tr>
+<tr>
+<td>SDL</td>
+<td>智能设备连接（Smart Device Link）</td>
+</tr>
+<tr>
+<td>STT</td>
+<td>语音识别</td>
+</tr>
+<tr>
+<td>TTS</td>
+<td>语音合成</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>下面是汽车级Linux软件架构图。该体系结构由五个层组成。应用/HMI层包含应用程序及其相关的业务逻辑和HMI。一般来说，应用程序超出了本文的范围，因为它们是针对开发基于AGL的系统的OEM的特定产品。<br>
+应用程序框架层提供了在AGL系统上创建管理和运行应用程序的APIs。服务层包含所有应用程序都可以访问的用户空间服务。操作系统(OS)层提供Linux内核和设备驱动程序以及标准OS实用程序。</p>
+<p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/3282/Agl----.png" alt="Agl----"></p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">郭鹏真PattenKuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/3282/">https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/3282/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://guopengzhen.com" target="_blank">郭鹏真PattenKuo的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">程序猿的学习笔记</a></div><div class="post_share"><div class="social-share" data-image="https://guopengzhen.com/img/avater.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="Wechat Pay"/></a><div class="post-qr-code-desc">Wechat Pay</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="Alipay"/></a><div class="post-qr-code-desc">Alipay</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/16286/"><img class="next-cover" src="https://guopengzhen.com/程序猿的学习笔记/16286/--_001.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Qt＋QtwebEngine＋QML新建内嵌html网页项目手顺教程</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/程序猿的学习笔记/60027/" title="MBR与GPT的区别以及相互转换"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/60027/timg-1.jpeg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-23</div><div class="title">MBR与GPT的区别以及相互转换</div></div></a></div><div><a href="/程序猿的学习笔记/16286/" title="Qt＋QtwebEngine＋QML新建内嵌html网页项目手顺教程"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/16286/--_001.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-26</div><div class="title">Qt＋QtwebEngine＋QML新建内嵌html网页项目手顺教程</div></div></a></div><div><a href="/程序猿的学习笔记/57905/" title="Ubuntu16.04/18.04安装企业微信教程"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/57905/image-8.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-23</div><div class="title">Ubuntu16.04/18.04安装企业微信教程</div></div></a></div><div><a href="/程序猿的学习笔记/9699/" title="Ubuntu16.04/18.04安装钉钉教程"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/9699/dingdingLaunch.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-23</div><div class="title">Ubuntu16.04/18.04安装钉钉教程</div></div></a></div><div><a href="/程序猿的学习笔记/43899/" title="Linux常用终端指令集锦"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/43899/deepinCMD.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-23</div><div class="title">Linux常用终端指令集锦</div></div></a></div><div><a href="/程序猿的学习笔记/37980/" title="When run 'git clone' error: RPC failed; curl 56 GnuTLS recv error (-54): Error in the pull function"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-25</div><div class="title">When run 'git clone' error: RPC failed; curl 56 GnuTLS recv error (-54): Error in the pull function</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><label><input id="switch-comments-btn" type="checkbox"/><span class="slider"></span></label><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By 郭鹏真PattenKuo</div><div class="framework-info"><span>Powered by </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'q3J83vICPB2taER4oq48LBuV-gzGzoHsz',
+      appKey: 'Sme7y8okowBtcEXM8OqIfQVf',
+      placeholder: '来都来了，随便说两句吧！',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/3282/'
+    this.page.identifier = '程序猿的学习笔记/3282/'
+    this.page.title = 'AGL(Automotive Grade Linux)系统架构简介'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: true,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', 'UA-180790879-1', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>

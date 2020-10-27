@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>AGL(Automotive Grade Linux)系统架构简介</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/3282/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/3282/</url>
+      
+        <content type="html"><![CDATA[<h2 id="概述"><a class="markdownIt-Anchor" href="#概述"></a> 概述</h2><p><a href="https://www.automotivelinux.org/">AGL</a>(Automotive Grade Linux，汽车级Linux)是一个致力于为汽车应用创造开源的软件解决方案的<a href="http://www.linuxfoundation.org/">Linux 基金会</a>工作组。尽管AGL最初的目的是IVI（In-Vehicle-Infotainment，车载信息娱乐系统），但最终将支持诸如仪表组和远程信息处理系统的其他用例。AGL有来自汽车，通信和半导体行业的参与者，并欢迎个人开发者的参与贡献。</p><p>通过利用Linux内核和其他开源软件项目的超过<a href="https://www.linuxfoundation.org/sites/main/files/publications/estimatinglinux.html">10亿美元的投资</a>，AGL工作组：</p><ul><li>为汽车供应商提供高效的软件创新，以满足消费者对更好的IVI体验的需求。</li><li>汇集数千名开源软件开发人员的才能，致力于在Linux内核，网络和连接等领域维护核心软件，应用于众多行业的系统。</li></ul><p>汽车级Linux工作组的目标是提供：</p><blockquote><p>以汽车为中心的核心Linux操作系统堆栈，可满足汽车生态系统的公共和共享需求，并有广泛的社区支持，其中包括个人开发人员、学术组织和公司。</p></blockquote><blockquote><p>为汽车原始设备制造商、一级供应商及其半导体和软件供应商提供一个透明、协作和开放的环境，以创建令人惊叹的车载软件。</p></blockquote><blockquote><p>一个与其他开源项目合作和开发新的开源解决方案的集体诉求。</p></blockquote><blockquote><p>一种嵌入式Linux发行版，可以为Linux新手或拥有开源经验的团队提供高效的原型设计</p></blockquote><p>产品团队通过启动在多个硬件平台上运行的参考应用程序，可以更快地投入市场。</p><h2 id="适用范围"><a class="markdownIt-Anchor" href="#适用范围"></a> 适用范围</h2><p>本文档的范围是定义汽车级Linux软件平台的体系结构。需求被分解为体系结构的概述和体系结构中每个层的描述，然后是各个层中每个模块的规范。体系结构图和规范的布局考虑了IVI系统所需的所有组件;然而，对于单个模块来说规范求并不全面。随着规范的不断发展，将继续补充这些部分。<br>本文的主要目标是定义构建应用程序的核心软件平台。因此，除了在单一情况下(主屏幕)，本文档不定义应用程序规范。应用规范将由使用AGL平台的各种项目开发。这些应用程序规范可用于将新的或修订的规范引入平台。<br>目前还没有计划使用此规范来创建遵从性或认证程序。该规范被用作指导AGL整体工作的蓝图，并为公司和个人制定工作包，以完成AGL工作组的目标。</p><h2 id="术语表"><a class="markdownIt-Anchor" href="#术语表"></a> 术语表</h2><table><thead><tr><th>术语</th><th>定义</th></tr></thead><tbody><tr><td>A2DP</td><td>进阶播音设定档</td></tr><tr><td>AGL</td><td>汽车级Linux</td></tr><tr><td>AVRCP</td><td>音频视频远程配置文件</td></tr><tr><td>FS</td><td>文件系统</td></tr><tr><td>GPS</td><td>全球定位系统</td></tr><tr><td>GPU</td><td>图形处理器</td></tr><tr><td>HFP</td><td>免提配置文件</td></tr><tr><td>IBOC</td><td>带内同频</td></tr><tr><td>LTSI</td><td>长期支持计划</td></tr><tr><td>NTP</td><td>网络定时协议</td></tr><tr><td>OEM</td><td>原始设备制造商</td></tr><tr><td>OS</td><td>操作系统</td></tr><tr><td>OSS</td><td>开源软件</td></tr><tr><td>SDL</td><td>智能设备连接（Smart Device Link）</td></tr><tr><td>STT</td><td>语音识别</td></tr><tr><td>TTS</td><td>语音合成</td></tr></tbody></table><hr><p>下面是汽车级Linux软件架构图。该体系结构由五个层组成。应用/HMI层包含应用程序及其相关的业务逻辑和HMI。一般来说，应用程序超出了本文的范围，因为它们是针对开发基于AGL的系统的OEM的特定产品。<br>应用程序框架层提供了在AGL系统上创建管理和运行应用程序的APIs。服务层包含所有应用程序都可以访问的用户空间服务。操作系统(OS)层提供Linux内核和设备驱动程序以及标准OS实用程序。</p><p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/3282/Agl----.png" alt="Agl----"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Qt＋QtwebEngine＋QML新建内嵌html网页项目手顺教程</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/16286/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/16286/</url>
