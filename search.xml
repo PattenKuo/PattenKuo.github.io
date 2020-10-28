@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>nodejs 请求Alexa报错：&#39;error_description&#39;: &#39;The request is missing a required parameter :  Content-Type&#39;,&#39; error&#39;: &#39;invalid_request&#39;</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/13851/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/13851/</url>
+      
+        <content type="html"><![CDATA[<h1 id="错误一"><a class="markdownIt-Anchor" href="#错误一"></a> 错误一：</h1><p><strong>代码如下——</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">app.get(&#39;&#x2F;connect&#39;, function(req, res)&#123;</span><br><span class="line">    payload &#x3D; &#123;&quot;client_id&quot; : config.Client_ID, </span><br><span class="line">               &quot;client_secret&quot; : config.Client_Secret, </span><br><span class="line">               &quot;refresh_token&quot; : &#39;https:&#x2F;&#x2F;localhost&#x2F;connect&#39;, </span><br><span class="line">               &quot;speech&quot;: &quot;lalallalalalala&quot;</span><br><span class="line">    &#125;</span><br><span class="line">    url &#x3D; &quot;https:&#x2F;&#x2F;api.amazon.com&#x2F;auth&#x2F;o2&#x2F;token&#x2F;?grant_type&#x3D;refresh_token&amp;client_id&#x3D;&quot; + config.Client_ID +</span><br><span class="line">    &quot;&amp;client_secret&#x3D;&quot; + config.Client_Secret;</span><br><span class="line">    request.post(&#123;</span><br><span class="line">            url:url, </span><br><span class="line">            headers: &#123;</span><br><span class="line">            &#125;,</span><br><span class="line">            formData: payload</span><br><span class="line">    &#125;, function optionalCallback(err, httpResponse, body) &#123;</span><br><span class="line">    if (err) &#123;</span><br><span class="line">        return console.error(&#39;upload failed:&#39;, err);</span><br><span class="line">    &#125;</span><br><span class="line">        res.end(body);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>报错<code>&quot;error_description&quot;:&quot;The request is missing a required parameter : Content-Type&quot;,&quot;error&quot;:&quot;invalid_request&quot;</code></p><p>**解决方案:**在<code>headers</code>　里添加——</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">headers: &#123;</span><br><span class="line">         &quot; Accept&quot;: &quot;application&#x2F;x-www-form-urlencoded&quot;,</span><br><span class="line">         &quot;Content-Type&quot;:&quot;application&#x2F;x-www-form-urlencoded&quot;,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure><h1 id="错误二"><a class="markdownIt-Anchor" href="#错误二"></a> 错误二:</h1><p><strong>报错如下——</strong><br><code>&quot;error_description&quot;:&quot;Malformed request&quot;,&quot;error&quot;:&quot;invalid_request&quot;</code></p><p>解决方案，使用<code>request</code>中<code>request.post</code> 函数体内请求<code>url</code>错误，更改如下即可：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">url &#x3D; &quot;https:&#x2F;&#x2F;api.amazon.com&#x2F;auth&#x2F;o2&#x2F;token&#x2F;?grant_type&#x3D;refresh_token&amp;client_id&#x3D;&quot; + config.Client_ID +</span><br><span class="line">&quot;&amp;client_secret&#x3D;&quot; + config.Client_Secret;</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> Bug </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Agl编译html＋Alexa的Qt项目手记</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/55115/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/55115/</url>
