@@ -1,0 +1,346 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Alexa cmake /usr/bin/cmake:  /usr/local/lib/libcurl.so.4:  no version information available  (required by /usr/bin/cmake) | 郭鹏真PattenKuo的博客</title><meta name="keywords" content="程序猿的学习笔记,Bug"><meta name="author" content="郭鹏真PattenKuo"><meta name="copyright" content="郭鹏真PattenKuo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="补充20181112：我在安装Alexa的过程中，follow this guidence “Ubuntu Linux Quick Start Guide”,this error occured。 但是按照下面修复了之后才发现出现了另一个错误， 12C SampleApplication:Failed to initialize SampleApplicationFailed to create">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Alexa cmake &#x2F;usr&#x2F;bin&#x2F;cmake:  &#x2F;usr&#x2F;local&#x2F;lib&#x2F;libcurl.so.4:  no version information available  (required by &#x2F;usr&#x2F;bin&#x2F;cmake)">
+<meta property="og:url" content="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40686/index.html">
+<meta property="og:site_name" content="郭鹏真PattenKuo的博客">
+<meta property="og:description" content="补充20181112：我在安装Alexa的过程中，follow this guidence “Ubuntu Linux Quick Start Guide”,this error occured。 但是按照下面修复了之后才发现出现了另一个错误， 12C SampleApplication:Failed to initialize SampleApplicationFailed to create">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://guopengzhen.com/img/avater.jpg">
+<meta property="article:published_time" content="2020-10-28T04:14:21.000Z">
+<meta property="article:modified_time" content="2020-10-28T04:16:29.187Z">
+<meta property="article:author" content="郭鹏真PattenKuo">
+<meta property="article:tag" content="程序猿的学习笔记">
+<meta property="article:tag" content="Bug">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://guopengzhen.com/img/avater.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40686/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin="crossorigin"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="360-site-verification" content="89d1ebd5a1eb3151d51240867c24a57e"/><meta name="yandex-verification" content="0557569d0f8ae26b"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1508b58379fb497f1ca8ce5eeb12737f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-180790879-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-180790879-1');
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 郭鹏真PattenKuo","link":"链接: ","source":"来源: 郭鹏真PattenKuo的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: false,
+  postUpdate: '2020-10-28 12:16:29'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avater.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">71</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">12</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://guopengzhen.com/img/avater.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">郭鹏真PattenKuo的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">Alexa cmake /usr/bin/cmake:  /usr/local/lib/libcurl.so.4:  no version information available  (required by /usr/bin/cmake)</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-10-28T04:14:21.000Z" title="发表于 2020-10-28 12:14:21">2020-10-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-10-28T04:16:29.187Z" title="更新于 2020-10-28 12:16:29">2020-10-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">程序猿的学习笔记</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">920</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>补充20181112：我在安装Alexa的过程中，follow this guidence “<a target="_blank" rel="noopener" href="https://github.com/alexa/avs-device-sdk/wiki/Ubuntu-Linux-Quick-Start-Guide">Ubuntu Linux Quick Start Guide</a>”,this error occured。</p>
+<p>但是按照下面修复了之后才发现出现了另一个错误，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">C SampleApplication:Failed to initialize SampleApplication</span><br><span class="line">Failed to create to SampleApplication!</span><br></pre></td></tr></table></figure>
+<p>最后试了好多次才发现，由于之前<code>git clone https://github.com/tatsuhiro-t/nghttp2.git</code><br>
+和<br>
+<code>git clone git://github.com/alexa/avs-device-sdk.git</code><br>
+速度太慢了，几k／s，所以用了同事前段时间下载的包。最后我把这两个包换成最新的包，Alexa就成功运行Sample了——</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line">$ .&#x2F;SampleApp&#x2F;src&#x2F;SampleApp Integration&#x2F;AlexaClientSDKConfig.json</span><br><span class="line"></span><br><span class="line">2018-11-13 03:41:10.454 [  1] I sdkVersion: 1.10.0</span><br><span class="line">configFile Integration&#x2F;AlexaClientSDKConfig.json</span><br><span class="line">#################################################</span><br><span class="line">#       NOTIFICATION INDICATOR STATE: OFF       #</span><br><span class="line">#################################################</span><br><span class="line"></span><br><span class="line">##################################</span><br><span class="line">#       NOT YET AUTHORIZED       #</span><br><span class="line">##################################</span><br><span class="line"></span><br><span class="line">################################################################################################</span><br><span class="line">#       To authorize, browse to: &#39;https:&#x2F;&#x2F;amazon.com&#x2F;us&#x2F;code&#39; and enter the code: AMCEMH       #</span><br><span class="line">################################################################################################</span><br><span class="line"></span><br><span class="line">#################################################</span><br><span class="line">#       Checking for authorization (1)...       #</span><br><span class="line">#################################################</span><br><span class="line"></span><br><span class="line">ALSA lib pcm.c:2266:(snd_pcm_open_noupdate) Unknown PCM cards.pcm.rear</span><br><span class="line">ALSA lib pcm.c:2266:(snd_pcm_open_noupdate) Unknown PCM cards.pcm.center_lfe</span><br><span class="line">ALSA lib pcm.c:2266:(snd_pcm_open_noupdate) Unknown PCM cards.pcm.side</span><br><span class="line">ALSA lib pcm_route.c:867:(find_matching_chmap) Found no matching channel map</span><br><span class="line">ALSA lib pcm_route.c:867:(find_matching_chmap) Found no matching channel map</span><br><span class="line">ALSA lib pcm_route.c:867:(find_matching_chmap) Found no matching channel map</span><br><span class="line">ALSA lib pcm_route.c:867:(find_matching_chmap) Found no matching channel map</span><br><span class="line">                  #    #     #  #####      #####  ######  #    #              </span><br><span class="line">                 # #   #     # #     #    #     # #     # #   #               </span><br><span class="line">                #   #  #     # #          #       #     # #  #                </span><br><span class="line">               #     # #     #  #####      #####  #     # ###                 </span><br><span class="line">               #######  #   #        #          # #     # #  #                </span><br><span class="line">               #     #   # #   #     #    #     # #     # #   #               </span><br><span class="line">               #     #    #     #####      #####  ######  #    #              </span><br><span class="line">                                                                              </span><br><span class="line">       #####                                           #                      </span><br><span class="line">      #     #   ##   #    # #####  #      ######      # #   #####  #####      </span><br><span class="line">      #        #  #  ##  ## #    # #      #          #   #  #    # #    #     </span><br><span class="line">       #####  #    # # ## # #    # #      #####     #     # #    # #    #     </span><br><span class="line">            # ###### #    # #####  #      #         ####### #####  #####      </span><br><span class="line">      #     # #    # #    # #      #      #         #     # #      #          </span><br><span class="line">       #####  #    # #    # #      ###### ######    #     # #      #          </span><br><span class="line"></span><br><span class="line">       SDK Version 1.10.0</span><br><span class="line"></span><br><span class="line">+----------------------------------------------------------------------------+</span><br><span class="line">|                                  Options:                                  |</span><br><span class="line">| Tap to talk:                                                               |</span><br><span class="line">|       Press &#39;t&#39; and Enter followed by your query (no need for the &#39;Alexa&#39;).|</span><br><span class="line">| Hold to talk:                                                              |</span><br><span class="line">|       Press &#39;h&#39; followed by Enter to simulate holding a button.            |</span><br><span class="line">|       Then say your query (no need for the &#39;Alexa&#39;).                       |</span><br><span class="line">|       Press &#39;h&#39; followed by Enter to simulate releasing a button.          |</span><br><span class="line">| Stop an interaction:                                                       |</span><br><span class="line">|       Press &#39;s&#39; and Enter to stop an ongoing interaction.                  |</span><br><span class="line">| Playback Controls:                                                         |</span><br><span class="line">|       Press &#39;1&#39; for a &#39;PLAY&#39; button press.                                 |</span><br><span class="line">|       Press &#39;2&#39; for a &#39;PAUSE&#39; button press.                                |</span><br><span class="line">|       Press &#39;3&#39; for a &#39;NEXT&#39; button press.                                 |</span><br><span class="line">|       Press &#39;4&#39; for a &#39;PREVIOUS&#39; button press.                             |</span><br><span class="line">| Settings:                                                                  |</span><br><span class="line">|       Press &#39;c&#39; followed by Enter at any time to see the settings screen.  |</span><br><span class="line">| Speaker Control:                                                           |</span><br><span class="line">|       Press &#39;p&#39; followed by Enter at any time to adjust speaker settings.  |</span><br><span class="line">| Firmware Version:                                                          |</span><br><span class="line">|       Press &#39;f&#39; followed by Enter at any time to report a different        |</span><br><span class="line">|       firmware version.                                                    |</span><br><span class="line">| Info:                                                                      |</span><br><span class="line">|       Press &#39;i&#39; followed by Enter at any time to see the help screen.      |</span><br><span class="line">| Reset device:                                                              |</span><br><span class="line">|       Press &#39;k&#39; followed by Enter at any time to reset your device. This   |</span><br><span class="line">|       will erase any data stored in the device and you will have to        |</span><br><span class="line">|       re-register your device.                                             |</span><br><span class="line">|       This option will also exit the application.                          |</span><br><span class="line">| Reauthorize device:                                                        |</span><br><span class="line">|       Press &#39;z&#39; followed by Enter at any time to re-authorize your device. |</span><br><span class="line">|       This will erase any data stored in the device and initiate           |</span><br><span class="line">|       re-authorization.                                                    |</span><br><span class="line">| Quit:                                                                      |</span><br><span class="line">|       Press &#39;q&#39; followed by Enter at any time to quit the application.     |</span><br><span class="line">+----------------------------------------------------------------------------+</span><br><span class="line"></span><br><span class="line">#################################################</span><br><span class="line">#       Checking for authorization (2)...       #</span><br><span class="line">#################################################</span><br><span class="line"></span><br><span class="line">#################################################</span><br><span class="line">#       Checking for authorization (3)...       #</span><br><span class="line">#################################################</span><br><span class="line"></span><br><span class="line">#################################################</span><br><span class="line">#       Checking for authorization (4)...       #</span><br><span class="line">#################################################</span><br><span class="line"></span><br><span class="line">#################################################</span><br><span class="line">#       Checking for authorization (5)...       #</span><br><span class="line">#################################################</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<hr>
+<p>----------------华丽的分割线----------------------</p>
+<hr>
+<p>原文2018111１——</p>
+<p>get help from <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/30017397/error-curl-usr-local-lib-libcurl-so-4-no-version-information-available-requ/38896967">error: curl: /usr/local/lib/libcurl.so.4: no version information available (required by curl)</a></p>
+<p>I also had such problem in installing CMAKE, I type cmake, the output is:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmake: &#x2F;usr&#x2F;local&#x2F;lib&#x2F;libcurl.so.4: no version information available     (required by cmake)</span><br><span class="line">Segmentation fault (core dumped)&#96;</span><br></pre></td></tr></table></figure>
+<p>Something like yours.<br>
+First,I locate the path of libcurl.so.4:<br>
+<code>locate libcurl.so.4</code></p>
+<p>the result is:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;home&#x2F;chenjian&#x2F;software&#x2F;curl-7.20.0&#x2F;lib&#x2F;.libs&#x2F;libcurl.so.4</span><br><span class="line">&#x2F;home&#x2F;chenjian&#x2F;software&#x2F;curl-7.20.0&#x2F;lib&#x2F;.libs&#x2F;libcurl.so.4.2.0</span><br><span class="line">&#x2F;usr&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libcurl.so.4</span><br><span class="line">&#x2F;usr&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libcurl.so.4.3.0</span><br><span class="line">&#x2F;usr&#x2F;local&#x2F;lib&#x2F;libcurl.so.4</span><br><span class="line">&#x2F;usr&#x2F;local&#x2F;lib&#x2F;libcurl.so.4.2.0</span><br></pre></td></tr></table></figure>
+<p>Second, find the link of libcurl.so.4,type:<br>
+<code>ls -l /usr/local/lib/libcurl.so.4</code></p>
+<p>the result:<br>
+<code>lrwxrwxrwx 1 root root 16 Aug 16 21:15 /usr/local/lib/libcurl.so.4 -&gt; libcurl.so.4.2.0</code></p>
+<p>Third, remove it and rebuild the link to libcurl.so.4.3.0:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rm -rf &#x2F;usr&#x2F;local&#x2F;lib&#x2F;libcurl.so.4</span><br><span class="line">sudo ln -s &#x2F;usr&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libcurl.so.4.3.0 &#x2F;usr&#x2F;local&#x2F;lib&#x2F;libcurl.so.4</span><br></pre></td></tr></table></figure>
+<p>Next, check it:<br>
+<code>ls -l /usr/local/lib/libcurl.so.4</code></p>
+<p>well, the output is:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lrwxrwxrwx 1 root root 42 Aug 24 09:23 &#x2F;usr&#x2F;local&#x2F;lib&#x2F;libcurl.so.4 -&gt; &#x2F;usr&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libcurl.so.4.3.0</span><br></pre></td></tr></table></figure>
+<p>Then, I type<code>cmake -version</code>, and the result is</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cmake version 3.2.2</span><br><span class="line"></span><br><span class="line">CMake suite maintained and supported by Kitware (kitware.com&#x2F;cmake).</span><br></pre></td></tr></table></figure>
+<p>After fixing the bug, I think it may be caused by multi-version of curl, like me, the origin ubuntu environment had one, but I install another one.</p>
+<p>Thx for <a target="_blank" rel="noopener" href="https://stackoverflow.com/users/6355684/chenjian">CHENJIAN</a></p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">郭鹏真PattenKuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40686/">https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40686/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://guopengzhen.com" target="_blank">郭鹏真PattenKuo的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">程序猿的学习笔记</a><a class="post-meta__tags" href="/tags/Bug/">Bug</a></div><div class="post_share"><div class="social-share" data-image="https://guopengzhen.com/img/avater.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="Wechat Pay"/></a><div class="post-qr-code-desc">Wechat Pay</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="Alipay"/></a><div class="post-qr-code-desc">Alipay</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/7730/"><img class="next-cover" src="https://guopengzhen.com/img/avater.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Could NOT find GTest (missing:  GTEST_LIBRARY GTEST_MAIN_LIBRARY)  on Ubuntu16.04</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/程序猿的学习笔记/7730/" title="Could NOT find GTest (missing:  GTEST_LIBRARY GTEST_MAIN_LIBRARY)  on Ubuntu16.04"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-28</div><div class="title">Could NOT find GTest (missing:  GTEST_LIBRARY GTEST_MAIN_LIBRARY)  on Ubuntu16.04</div></div></a></div><div><a href="/程序猿的学习笔记/37980/" title="When run 'git clone' error: RPC failed; curl 56 GnuTLS recv error (-54): Error in the pull function"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-25</div><div class="title">When run 'git clone' error: RPC failed; curl 56 GnuTLS recv error (-54): Error in the pull function</div></div></a></div><div><a href="/程序猿的学习笔记/13392/" title="银河麒麟Ubuntu安装wine时无法找到add-apt-repository问题的解决方法"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-23</div><div class="title">银河麒麟Ubuntu安装wine时无法找到add-apt-repository问题的解决方法</div></div></a></div><div><a href="/程序猿的学习笔记/3282/" title="AGL(Automotive Grade Linux)系统架构简介"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/3282/AGL.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-27</div><div class="title">AGL(Automotive Grade Linux)系统架构简介</div></div></a></div><div><a href="/程序猿的学习笔记/43899/" title="Linux常用终端指令集锦"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/43899/deepinCMD.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-23</div><div class="title">Linux常用终端指令集锦</div></div></a></div><div><a href="/程序猿的学习笔记/60027/" title="MBR与GPT的区别以及相互转换"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/60027/timg-1.jpeg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-23</div><div class="title">MBR与GPT的区别以及相互转换</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><label><input id="switch-comments-btn" type="checkbox"/><span class="slider"></span></label><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By 郭鹏真PattenKuo</div><div class="framework-info"><span>Powered by </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'q3J83vICPB2taER4oq48LBuV-gzGzoHsz',
+      appKey: 'Sme7y8okowBtcEXM8OqIfQVf',
+      placeholder: '来都来了，随便说两句吧！',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40686/'
+    this.page.identifier = '程序猿的学习笔记/40686/'
+    this.page.title = 'Alexa cmake /usr/bin/cmake:  /usr/local/lib/libcurl.so.4:  no version information available  (required by /usr/bin/cmake)'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: true,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', 'UA-180790879-1', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>
