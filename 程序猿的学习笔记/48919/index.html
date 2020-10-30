@@ -1,0 +1,428 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>前端性能优化（CSS动画篇） | 郭鹏真PattenKuo的博客</title><meta name="keywords" content="程序猿的学习笔记,前端"><meta name="author" content="郭鹏真PattenKuo"><meta name="copyright" content="郭鹏真PattenKuo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="最近拜读了一下html5rocks上几位大神写的一篇关于CSS3动画性能优化的文章，学到了很多，在这里记录一下，其中的知识都是来源于这俩篇文章，我只是截取了其中比较关注的内容出来，原文地址High Performance Animations及Accelerated Rendering in Chrome  原理 现代浏览器在使用CSS3动画时，以下四种情形绘制的效率较高，分别是： * 改变位置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端性能优化（CSS动画篇）">
+<meta property="og:url" content="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/48919/index.html">
+<meta property="og:site_name" content="郭鹏真PattenKuo的博客">
+<meta property="og:description" content="最近拜读了一下html5rocks上几位大神写的一篇关于CSS3动画性能优化的文章，学到了很多，在这里记录一下，其中的知识都是来源于这俩篇文章，我只是截取了其中比较关注的内容出来，原文地址High Performance Animations及Accelerated Rendering in Chrome  原理 现代浏览器在使用CSS3动画时，以下四种情形绘制的效率较高，分别是： * 改变位置">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://guopengzhen.com/img/avater.jpg">
+<meta property="article:published_time" content="2020-10-30T12:13:24.000Z">
+<meta property="article:modified_time" content="2020-10-30T12:18:38.804Z">
+<meta property="article:author" content="郭鹏真PattenKuo">
+<meta property="article:tag" content="程序猿的学习笔记">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://guopengzhen.com/img/avater.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/48919/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin="crossorigin"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="360-site-verification" content="89d1ebd5a1eb3151d51240867c24a57e"/><meta name="yandex-verification" content="0557569d0f8ae26b"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1508b58379fb497f1ca8ce5eeb12737f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-180790879-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-180790879-1');
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 郭鹏真PattenKuo","link":"链接: ","source":"来源: 郭鹏真PattenKuo的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-10-30 20:18:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avater.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">80</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">15</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text"> 原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%82%E9%87%8D%E7%BB%98%E5%9B%9E%E6%B5%81%E5%92%8C%E9%87%8D%E5%B8%83%E5%B1%80%E5%9B%BE%E5%B1%82%E9%87%8D%E7%BB%84"><span class="toc-number">1.1.</span> <span class="toc-text"> 层？重绘？回流和重布局？图层重组？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%82%E5%92%8Ccss%E5%8A%A8%E7%94%BB"><span class="toc-number">1.2.</span> <span class="toc-text"> 层和CSS动画</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E9%87%8D%E5%B8%83%E5%B1%80%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text"> 触发重布局的属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%AB%E4%BD%BF%E7%94%A8css%E7%B1%BB%E5%90%8D%E5%81%9A%E7%8A%B6%E6%80%81%E6%A0%87%E8%AE%B0"><span class="toc-number">2.1.</span> <span class="toc-text"> 别使用CSS类名做状态标记</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E9%87%8D%E7%BB%98%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">3.</span> <span class="toc-text"> 触发重绘的属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%8B%E6%9C%BA%E5%B0%B1%E7%AE%97%E9%87%8D%E7%BB%98%E4%B9%9F%E5%BE%88%E6%85%A2"><span class="toc-number">3.1.</span> <span class="toc-text"> 手机就算重绘也很慢</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E5%9B%BE%E5%B1%82%E9%87%8D%E7%BB%84%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">4.</span> <span class="toc-text"> 触发图层重组的属性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%8F%E6%98%8E%E5%BA%A6%E7%AB%9F%E7%84%B6%E4%B8%8D%E4%BC%9A%E8%A7%A6%E5%8F%91%E9%87%8D%E7%BB%98"><span class="toc-number">4.1.</span> <span class="toc-text"> 透明度竟然不会触发重绘？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E8%BF%AB%E6%B5%8F%E8%A7%88%E5%99%A8%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%B1%82"><span class="toc-number">4.2.</span> <span class="toc-text"> 强迫浏览器创建图层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#chrome%E4%B8%AD%E7%9A%84%E6%8A%97%E9%94%AF%E9%BD%BF"><span class="toc-number">4.3.</span> <span class="toc-text"> Chrome中的抗锯齿</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#transform%E5%8F%98%E6%8D%A2%E6%98%AF%E4%BD%A0%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-number">4.4.</span> <span class="toc-text"> transform变换是你的选择</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#js%E5%8A%A8%E7%94%BB%E5%92%8Ccss3%E5%8A%A8%E7%94%BB%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">5.</span> <span class="toc-text"> JS动画和CSS3动画的比较</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#js%E5%8A%A8%E7%94%BB"><span class="toc-number">5.1.</span> <span class="toc-text"> JS动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#css%E5%8A%A8%E7%94%BB"><span class="toc-number">5.2.</span> <span class="toc-text"> CSS动画</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%9E%BB"><span class="toc-number">6.</span> <span class="toc-text"> 前瞻</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">7.</span> <span class="toc-text"> 结论</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://guopengzhen.com/img/avater.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">郭鹏真PattenKuo的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">前端性能优化（CSS动画篇）</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-10-30T12:13:24.000Z" title="发表于 2020-10-30 20:13:24">2020-10-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-10-30T12:18:38.804Z" title="更新于 2020-10-30 20:18:38">2020-10-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">程序猿的学习笔记</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>最近拜读了一下<a target="_blank" rel="noopener" href="http://www.html5rocks.com/">html5rocks</a>上几位大神写的一篇关于CSS3动画性能优化的文章，学到了很多，在这里记录一下，其中的知识都是来源于这俩篇文章，我只是截取了其中比较关注的内容出来，原文地址<a target="_blank" rel="noopener" href="http://www.html5rocks.com/en/tutorials/speed/high-performance-animations/">High Performance Animations</a>及<a target="_blank" rel="noopener" href="http://www.html5rocks.com/zh/tutorials/speed/layers/">Accelerated Rendering in Chrome</a></p>
+<h2 id="原理"><a class="markdownIt-Anchor" href="#原理"></a> 原理</h2>
+<p>现代浏览器在使用CSS3动画时，以下四种情形绘制的效率较高，分别是：<br>
+* 改变位置<br>
+* 改变大小<br>
+* 旋转<br>
+* 改变透明度</p>
+<h3 id="层重绘回流和重布局图层重组"><a class="markdownIt-Anchor" href="#层重绘回流和重布局图层重组"></a> 层？重绘？回流和重布局？图层重组？</h3>
+<p>首先要了解CSS的图层的概念（Chrome浏览器）</p>
+<p>浏览器在渲染一个页面时，会将页面分为很多个图层，图层有大有小，每个图层上有一个或多个节点。在渲染DOM的时候，浏览器所做的工作实际上是：<br>
+1. 获取DOM后分割为多个图层<br>
+2. 对每个图层的节点计算样式结果（Recalculate style–样式重计算）<br>
+3. 为每个节点生成图形和位置（Layout–回流和重布局）<br>
+4. 将每个节点绘制填充到图层位图中（Paint Setup和Paint–重绘）<br>
+5. 图层作为纹理上传至GPU<br>
+6. 符合多个图层到页面上生成最终屏幕图像（Composite Layers–图层重组）</p>
+<p>Chrome中满足以下任意情况就会创建图层：<br>
+* 3D或透视变换（perspective transform）CSS属性<br>
+* 使用加速视频解码的<code>&lt;video&gt;</code>节点<br>
+* 拥有3D（WebGL）上下文或加速的2D上下文的<code>&lt;canvas&gt;</code>节点<br>
+* 混合插件（如Flash）<br>
+* 对自己的opacity做CSS动画或使用一个动画webkit变换的元素<br>
+* 拥有加速CSS过滤器的元素<br>
+* 元素有一个包含复合层的后代节点（一个元素拥有一个子元素，该子元素在自己的层里）<br>
+* 元素有一个<code>z-index</code>较低且包含一个复合层的兄弟元素（换句话说就是该元素在复合层上面渲染）</p>
+<p>需要注意的是，如果图层中某个元素需要重绘，那么整个图层都需要重绘。比如一个图层包含很多节点，其中有个gif图，gif图的每一帧，都会重回整个图层的其他节点，然后生成最终的图层位图。所以这需要通过特殊的方式来强制gif图属于自己一个图层（<code>translateZ(0)</code>或者<code>translate3d(0,0,0)</code>），CSS3的动画也是一样（好在绝大部分情况浏览器自己会为CSS3动画的节点创建图层）</p>
+<h3 id="层和css动画"><a class="markdownIt-Anchor" href="#层和css动画"></a> 层和CSS动画</h3>
+<p>简化一下上述过程，每一帧动画浏览器可能需要做如下工作：<br>
+1. 计算需要被加载到节点上的样式结果（Recalculate style–样式重计算）<br>
+2. 为每个节点生成图形和位置（Layout–回流和重布局）<br>
+3. 将每个节点填充到图层中（Paint Setup和Paint–重绘）<br>
+4. 组合图层到页面上（Composite Layers–图层重组）</p>
+<p>如果我们需要使得动画的性能提高，需要做的就是减少浏览器在动画运行时所需要做的工作。最好的情况是，改变的属性仅仅印象图层的组合，变换（<code>transform</code>）和透明度（<code>opacity</code>）就属于这种情况</p>
+<p>现代浏览器如Chrome，Firefox，Safari和Opera都对变换和透明度采用硬件加速，但IE10+不是很确定是否硬件加速</p>
+<h2 id="触发重布局的属性"><a class="markdownIt-Anchor" href="#触发重布局的属性"></a> 触发重布局的属性</h2>
+<p>有些节点，当你改变他时，会需要重新布局（这也意味着需要重新计算其他被影响的节点的位置和大小）。这种情况下，被影响的DOM树越大（可见节点），重绘所需要的时间就会越长，而渲染一帧动画的时间也相应变长。所以需要尽力避免这些属性</p>
+<p>一些常用的改变时会触发重布局的属性：<br>
+盒子模型相关属性会触发重布局：<br>
+* width<br>
+* height<br>
+* padding<br>
+* margin<br>
+* display<br>
+* border-width<br>
+* border<br>
+* min-height</p>
+<p>定位属性及浮动也会触发重布局：<br>
+* top<br>
+* bottom<br>
+* left<br>
+* right<br>
+* position<br>
+* float<br>
+* clear</p>
+<p>改变节点内部文字结构也会触发重布局：<br>
+* text-align<br>
+* overflow-y<br>
+* font-weight<br>
+* overflow<br>
+* font-family<br>
+* line-height<br>
+* vertival-align<br>
+* white-space<br>
+* font-size</p>
+<p>这么多常用属性都会触发重布局，可以看到，他们的特点就是可能修改整个节点的大小或位置，所以会触发重布局</p>
+<h3 id="别使用css类名做状态标记"><a class="markdownIt-Anchor" href="#别使用css类名做状态标记"></a> 别使用CSS类名做状态标记</h3>
+<p>如果在网页中使用CSS的类来对节点做状态标记，当这些节点的状态标记类修改时，将会触发节点的重绘和重布局。所以在节点上使用CSS类来做状态比较是代价很昂贵的</p>
+<h2 id="触发重绘的属性"><a class="markdownIt-Anchor" href="#触发重绘的属性"></a> 触发重绘的属性</h2>
+<p>修改时只触发重绘的属性有：<br>
+* color<br>
+* border-style<br>
+* border-radius<br>
+* visibility<br>
+* text-decoration<br>
+* background<br>
+* background-image<br>
+* background-position<br>
+* background-repeat<br>
+* background-size<br>
+* outline-color<br>
+* outline<br>
+* outline-style<br>
+* outline-width<br>
+* box-shadow</p>
+<p>这样可以看到，这些属性都不会修改节点的大小和位置，自然不会触发重布局，但是节点内部的渲染效果进行了改变，所以只需要重绘就可以了</p>
+<h3 id="手机就算重绘也很慢"><a class="markdownIt-Anchor" href="#手机就算重绘也很慢"></a> 手机就算重绘也很慢</h3>
+<p>在重绘时，这些节点会被加载到GPU中进行重绘，这对移动设备如手机的影响还是很大的。因为CPU不如台式机或笔记本电脑，所以绘画巫妖的时间更长。而且CPU与GPU之间的有较大的带宽限制，所以纹理的上传需要一定时间</p>
+<h2 id="触发图层重组的属性"><a class="markdownIt-Anchor" href="#触发图层重组的属性"></a> 触发图层重组的属性</h2>
+<h3 id="透明度竟然不会触发重绘"><a class="markdownIt-Anchor" href="#透明度竟然不会触发重绘"></a> 透明度竟然不会触发重绘？</h3>
+<p>需要注意的是，上面那些触发重绘的属性里面没有<code>opacity</code>（透明度），很奇怪不是吗？实际上透明度的改变后，GPU在绘画时只是简单的降低之前已经画好的纹理的alpha值来达到效果，并不需要整体的重绘。不过这个前提是这个被修改<code>opacity</code>本身必须是一个图层，如果图层下还有其他节点，GPU也会将他们透明化</p>
+<h3 id="强迫浏览器创建图层"><a class="markdownIt-Anchor" href="#强迫浏览器创建图层"></a> 强迫浏览器创建图层</h3>
+<p>在Blink和WebKit的浏览器中，一当一个节点被设定了透明度的相关过渡效果或动画时，浏览器会将其作为一个单独的图层，但很多开发者使用<code>translateZ(0)</code>或者<code>translate3d(0,0,0)</code>去使浏览器创建图层。这种方式可以消除在动画开始之前的图层创建时间，使得动画尽快开始（创建图层和绘制图层还是比较慢的），而且不会随着抗锯齿而导出突变。不过这种方法需要节制，否则会因为创建过多的图层导致崩溃</p>
+<h3 id="chrome中的抗锯齿"><a class="markdownIt-Anchor" href="#chrome中的抗锯齿"></a> Chrome中的抗锯齿</h3>
+<p>Chrome中，非根图层以及透明图层使用grayscale antialiasing而不是subpixel antialiasing，如果抗锯齿方法变化，这个效果将会非常显著。如果你打算预处理一个节点而不打算等到动画开始，可以通过这种强迫浏览器创建图层的方式进行</p>
+<h3 id="transform变换是你的选择"><a class="markdownIt-Anchor" href="#transform变换是你的选择"></a> transform变换是你的选择</h3>
+<p>我们通过节点的<code>transform</code>可以修改节点的位置、旋转、大小等。我们平常会使用<code>left</code>和<code>top</code>属性来修改节点的位置，但正如上面所述，<code>left</code>和<code>top</code>会触发重布局，修改时的代价相当大。取而代之的更好方法是使用<code>translate</code>，这个不会触发重布局</p>
+<h2 id="js动画和css3动画的比较"><a class="markdownIt-Anchor" href="#js动画和css3动画的比较"></a> JS动画和CSS3动画的比较</h2>
+<p>我们经常面临一个抉择：是使用JavaScript的动画还是使用CSS的动画，下面将对比一下这两种方式</p>
+<h3 id="js动画"><a class="markdownIt-Anchor" href="#js动画"></a> JS动画</h3>
+<p>缺点：JavaScript在浏览器的主线程中运行，而其中还有很多其他需要运行的JavaScript、样式计算、布局、绘制等对其干扰。这也就导致了线程可能出现阻塞，从而造成丢帧的情况。</p>
+<p>优点：JavaScript的动画与CSS预先定义好的动画不同，可以在其动画过程中对其进行控制：开始、暂停、回放、中止、取消都是可以做到的。而且一些动画效果，比如视差滚动效果，只有JavaScript能够完成</p>
+<h3 id="css动画"><a class="markdownIt-Anchor" href="#css动画"></a> CSS动画</h3>
+<p>缺点：缺乏强大的控制能力。而且很难以有意义的方式结合到一起，使得动画变得复杂且易于出问题。<br>
+优点：浏览器可以对动画进行优化。它必要时可以创建图层，然后在主线程之外运行。</p>
+<h2 id="前瞻"><a class="markdownIt-Anchor" href="#前瞻"></a> 前瞻</h2>
+<p>Google目前正在探究通过JS的多线程（Web Workers）来提供更好的动画效果，而不会触发重布局及样式重计算</p>
+<h2 id="结论"><a class="markdownIt-Anchor" href="#结论"></a> 结论</h2>
+<p>动画给予了页面丰富的视觉体验。我们应该尽力避免使用会触发重布局和重绘的属性，以免失帧。最好提前申明动画，这样能让浏览器提前对动画进行优化。由于GPU的参与，现在用来做动画的最好属性是如下几个：<br>
+* opacity<br>
+* translate<br>
+* rotate<br>
+* scale</p>
+<p>也许会有一些新的方式使得可以使用JavaScript做出更好的没有限制的动画，而且不用担心主线程的阻塞问题。但在那之前，还是好好考虑下如何做出流畅的动画吧</p>
+<p><strong>致谢：</strong><br>
+《<a target="_blank" rel="noopener" href="https://segmentfault.com/u/lingyucoder">天镶</a>》<br>
+《<a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000000490328">前端性能优化（CSS动画篇）</a>》</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">郭鹏真PattenKuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/48919/">https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/48919/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://guopengzhen.com" target="_blank">郭鹏真PattenKuo的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">程序猿的学习笔记</a><a class="post-meta__tags" href="/tags/%E5%89%8D%E7%AB%AF/">前端</a></div><div class="post_share"><div class="social-share" data-image="https://guopengzhen.com/img/avater.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="Wechat Pay"/></a><div class="post-qr-code-desc">Wechat Pay</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="Alipay"/></a><div class="post-qr-code-desc">Alipay</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21600/"><img class="next-cover" src="https://guopengzhen.com/img/avater.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C++ string类成员函数汇总（超全）</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/程序猿的学习笔记/49759/" title="HTML学习笔记：HTML速查列表"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-28</div><div class="title">HTML学习笔记：HTML速查列表</div></div></a></div><div><a href="/程序猿的学习笔记/3282/" title="AGL(Automotive Grade Linux)系统架构简介"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/3282/AGL.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-27</div><div class="title">AGL(Automotive Grade Linux)系统架构简介</div></div></a></div><div><a href="/程序猿的学习笔记/55115/" title="Agl编译html＋Alexa的Qt项目手记"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-28</div><div class="title">Agl编译html＋Alexa的Qt项目手记</div></div></a></div><div><a href="/程序猿的学习笔记/40686/" title="Alexa cmake /usr/bin/cmake:  /usr/local/lib/libcurl.so.4:  no version information available  (required by /usr/bin/cmake)"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-28</div><div class="title">Alexa cmake /usr/bin/cmake:  /usr/local/lib/libcurl.so.4:  no version information available  (required by /usr/bin/cmake)</div></div></a></div><div><a href="/程序猿的学习笔记/21600/" title="C++ string类成员函数汇总（超全）"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-30</div><div class="title">C++ string类成员函数汇总（超全）</div></div></a></div><div><a href="/程序猿的学习笔记/7730/" title="Could NOT find GTest (missing:  GTEST_LIBRARY GTEST_MAIN_LIBRARY)  on Ubuntu16.04"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-28</div><div class="title">Could NOT find GTest (missing:  GTEST_LIBRARY GTEST_MAIN_LIBRARY)  on Ubuntu16.04</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><label><input id="switch-comments-btn" type="checkbox"/><span class="slider"></span></label><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By 郭鹏真PattenKuo</div><div class="framework-info"><span>Powered by </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'q3J83vICPB2taER4oq48LBuV-gzGzoHsz',
+      appKey: 'Sme7y8okowBtcEXM8OqIfQVf',
+      placeholder: '来都来了，随便说两句吧！',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/48919/'
+    this.page.identifier = '程序猿的学习笔记/48919/'
+    this.page.title = '前端性能优化（CSS动画篇）'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: true,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', 'UA-180790879-1', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>
