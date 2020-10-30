@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>C++ string类成员函数汇总（超全）</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21600/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21600/</url>
+      
+        <content type="html"><![CDATA[<p>在定义 string 类对象时，string 类自身可以管理内存，程序员不必关注内存的分配细节。</p><p>string 类提供的各种操作函数大致分为八类：构造器和析构器、大小和容量、元素存取、字 符串比较、字符串修改、字符串接合、I/O 操作以及搜索和查找。</p><p>下表列出了 string 类的所有成员函数及它们的功能。</p><table><caption>表 1 string 类的所有成员函数</caption><tbody><tr><th>函数名称</th><th>功能</th></tr><tr><td>构造函数</td><td>产生或复制字符串</td></tr><tr><td>析构函数</td><td>销毁字符串</td></tr><tr><td>=，assign</td><td>赋以新值</td></tr><tr><td>Swap</td><td>交换两个字符串的内容</td></tr><tr><td>+ =，append( )，push_back()</td><td>添加字符</td></tr><tr><td>insert ()</td><td>插入字符</td></tr><tr><td>erase()</td><td>删除字符</td></tr><tr><td>clear ()</td><td>移除全部字符</td></tr><tr><td>resize ()</td><td>改变字符数量</td></tr><tr><td>replace()</td><td>替换字符</td></tr><tr><td>+</td><td>串联字符串</td></tr><tr><td>==，！&nbsp;=，&lt;，&lt;=，&gt;，&gt;=，compare()</td><td>比较字符串内容</td></tr><tr><td>size()，length()</td><td>返回字符数量</td></tr><tr><td>max_size ()</td><td>返回字符的最大可能个数</td></tr><tr><td>empty ()</td><td>判断字符串是否为空</td></tr><tr><td>capacity ()</td><td>返回重新分配之前的字符容量</td></tr><tr><td>reserve()</td><td>保留内存以存储一定数量的字符</td></tr><tr><td>[],at()</td><td>存取单一字符</td></tr><tr><td>&gt;&gt;，getline()</td><td>从 stream 中读取某值</td></tr><tr><td>&lt;&lt;</td><td>将值写入 stream</td></tr><tr><td>copy()</td><td>将内容复制为一个 C - string</td></tr><tr><td>c_str()</td><td>将内容以 C - string 形式返回</td></tr><tr><td>data()</td><td>将内容以字符数组形式返回</td></tr><tr><td>substr()</td><td>返回子字符串</td></tr><tr><td>find()</td><td>搜寻某子字符串或字符</td></tr><tr><td>begin( )，end()</td><td>提供正向迭代器支持</td></tr><tr><td>rbegin()，rend()</td><td>提供逆向迭代器支持</td></tr><tr><td>get_allocator()</td><td>返回配置器</td></tr></tbody></table><p><strong>致谢：</strong></p><blockquote><p><a href="http://c.biancheng.net/">C语言中文网</a>《<a href="http://c.biancheng.net/view/1441.html">C++ string类成员函数汇总（超全）</a>》</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>fatal: Cannot get https:// gerrit.googlesource.com /git-repo/clone.bundle</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/36453/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/36453/</url>
