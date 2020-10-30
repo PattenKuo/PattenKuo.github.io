@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>Ubuntu16.04仿Mac美化教程</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21597/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21597/</url>
+      
+        <content type="html"><![CDATA[<p>全部替换为Mac风格需要改动的东西太多，大致分为一下几个步骤：<br>1.分别安装Mac主题，光标，图标，壁纸，Dock,LOGO以及字体。<br>2.安装支持更改主题的相应软件。<br>3.配置并启用Mac主题。</p><h2 id="step1"><a class="markdownIt-Anchor" href="#step1"></a> STEP1：</h2><hr><p><strong>添加：</strong></p><pre><code>sudo add-apt-repository ppa:noobslab/macbuntu</code></pre><p><strong>刷新：</strong></p><pre><code>sudo apt-get update</code></pre><p><strong>安装图标：</strong></p><pre><code>sudo apt-get install macbuntu-os-icons-lts-v7</code></pre><p><strong>安装主题：</strong></p><pre><code>sudo apt-get install macbuntu-os-ithemes-lts-v7</code></pre><h2 id="step2"><a class="markdownIt-Anchor" href="#step2"></a> STEP2</h2><hr><p><strong>安装Slingscold</strong></p><pre><code>sudo add-apt-repository ppa:noobslab/macbuntu  sudo apt-get update  sudo apt-get install slingscold  </code></pre><p><strong>安装Tweak Tool</strong></p><pre><code>sudo apt-get install unity-tweak-tool  sudo apt-get install gnome-tweak-tool </code></pre><p><em>tips：如果出现依赖可进行强制安装（sudo apt-get -f install）</em></p><p><strong>安装Albert Spotlight</strong></p><pre><code>sudo add-apt-repository ppa:noobslab/macbuntu  sudo apt-get update  sudo apt-get install albert </code></pre><p><strong>安装 Plank Dock</strong></p><pre><code>sudo apt-get install plank</code></pre><p><strong>安装Dock主题</strong></p><pre><code>sudo add-apt-repository ppa:noobslab/macbuntu  sudo apt-get update  sudo apt-get install macbuntu-os-plank-theme-lts-v7  </code></pre><h2 id="step3"><a class="markdownIt-Anchor" href="#step3"></a> STEP3</h2><hr><p>**配置Mac **</p><pre><code>cd &amp;&amp; wget -O Mac.po http://drive.noobslab.com/data/Mac/change-name-on-panel/mac.pocd /usr/share/locale/en/LC_MESSAGES; sudo msgfmt -o unity.mo ~/Mac.po;rm ~/Mac.po;cd  </code></pre><p><strong>配置Logo</strong></p><pre><code>wget -O launcher_bfb.png http://drive.noobslab.com/data/Mac/launcher-logo/apple/launcher_bfb.png  sudo mv launcher_bfb.png /usr/share/unity/icons/</code></pre><p><strong>配置字体</strong></p><pre><code>wget -O mac-fonts.zip http://drive.noobslab.com/data/Mac/macfonts.zip  sudo unzip mac-fonts.zip -d /usr/share/fonts; rm mac-fonts.zip  sudo fc-cache -f -v  </code></pre><p><strong>配置启动</strong></p><pre><code>sudo add-apt-repository ppa:noobslab/themes  sudo apt-get update  sudo apt-get install macbuntu-os-bscreen-lts-v7sudo add-apt-repository ppa:noobslab/themes  sudo apt-get update  sudo apt-get install macbuntu-os-lightdm-lts-v7  </code></pre><p><strong>自动更换壁纸：</strong></p><pre><code>sudo add-apt-repository ppa:ubuntu-wine/ppa  sudo apt-get update  </code></pre><p>然后设置开机启动。<br>最后在Unity里更改Mac主题：</p><p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21597/mac1.JPG" alt="mac1"></p><p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21597/mac2.JPG" alt="mac2"></p><p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21597/mac3.JPG" alt="mac3"></p><h2 id="致谢"><a class="markdownIt-Anchor" href="#致谢"></a> 致谢</h2><p><a href="http://www.linuxdiyf.com/">红联</a>《<a href="http://www.linuxdiyf.com/linux/28587.html">Ubuntu16.04仿Mac美化教程</a>》</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> Linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++序列式容器（STL序列式容器）是什么</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/61932/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/61932/</url>
