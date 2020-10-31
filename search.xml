@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>C++传参时 const string&amp; 相对 const string 有哪些优势？</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/58597/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/58597/</url>
+      
+        <content type="html"><![CDATA[<p>C<ins>中值传递和引用传递的方式。<br>C</ins>的值传递（pass-by-value）,是从调用的地方把值复制一遍传给函数，这样做有两个问题，第一，需要将实参拷贝到形参处，形成实参的副本，有时间和空间的开销，若实参为结构体或者类的话,那么时空开销将会非常大；第二、函数中对实参副本的修改并不会影响到函数调用位置实参的值。<br>C<ins>的引用传递（pass-by-reference）,一方面，参数传递的是把实参的地址拷贝到形参，这样形参和实参对应的是同一块儿内存地址，那么对形参的修改自然会反映到实参上；另一方面，C</ins>中指针或者引用只占4字节，所以时空开销也能接受。</p><p>好了，我们现在来看一下const string &amp; parameter 和 const string parameter的比较</p><p>参数声明中const，const string parameter表明复制出来的副本（也就是形参）你不会修改。const string &amp; parameter表明你不会对调用函数的实参进行修改</p><p>另一方面：</p><p>因为 C++ 规定引用不能为空，所以一个函数传进来引用你就可以直接用，而传进来指针你还需要判断指针是否为空<br>如果直接传值的话，对于对象就要新建一个临时对象——这个步骤需要调用复制构造函数，如果对象本身比较大的话就会造成很严重的资源浪费。而传引用就可以避免这一点——如果我们需要只读地访问一个对象的话使用常引用可以有效避免资源浪费</p><p><strong>致谢：</strong><br><a href="https://blog.csdn.net/xiongchengluo1129">爱妃的博客</a>《<a href="https://blog.csdn.net/xiongchengluo1129/article/details/79123487">传参时 const string&amp; 相对 const string 有哪些优势？</a>》</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>HTML5之Javascript多线程</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2853/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/2853/</url>
