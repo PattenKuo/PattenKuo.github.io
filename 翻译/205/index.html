@@ -1,0 +1,362 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>如何在Windows10上安装Youtube-DL | 郭鹏真PattenKuo的博客</title><meta name="keywords" content="程序猿的学习笔记,翻译,工具,跨境电商"><meta name="author" content="郭鹏真PattenKuo"><meta name="copyright" content="郭鹏真PattenKuo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="前言   本文由郭鹏真于2020&#x2F;10&#x2F;31翻译自Dan Clowry《How to Install Youtube-DL on Windows》，英语水平比较好的可以直接看原文。   由于跨境电商运营的过程中，需要剪辑大量的视频用于广告推广，但是市面上搜到的视频下载软件总是难以满足我的需求，于是作为程序猿的我就找到了这种Youtube-DL，非常好用，可以下载几乎所有的视频网站视频，也可以用指">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在Windows10上安装Youtube-DL">
+<meta property="og:url" content="https://guopengzhen.com/%E7%BF%BB%E8%AF%91/205/index.html">
+<meta property="og:site_name" content="郭鹏真PattenKuo的博客">
+<meta property="og:description" content="前言   本文由郭鹏真于2020&#x2F;10&#x2F;31翻译自Dan Clowry《How to Install Youtube-DL on Windows》，英语水平比较好的可以直接看原文。   由于跨境电商运营的过程中，需要剪辑大量的视频用于广告推广，但是市面上搜到的视频下载软件总是难以满足我的需求，于是作为程序猿的我就找到了这种Youtube-DL，非常好用，可以下载几乎所有的视频网站视频，也可以用指">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://guopengzhen.com/img/avater.jpg">
+<meta property="article:published_time" content="2020-10-31T10:43:16.000Z">
+<meta property="article:modified_time" content="2020-10-31T11:48:52.234Z">
+<meta property="article:author" content="郭鹏真PattenKuo">
+<meta property="article:tag" content="程序猿的学习笔记">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="工具">
+<meta property="article:tag" content="跨境电商">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://guopengzhen.com/img/avater.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://guopengzhen.com/%E7%BF%BB%E8%AF%91/205/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin="crossorigin"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="360-site-verification" content="89d1ebd5a1eb3151d51240867c24a57e"/><meta name="yandex-verification" content="0557569d0f8ae26b"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1508b58379fb497f1ca8ce5eeb12737f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-180790879-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-180790879-1');
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 郭鹏真PattenKuo","link":"链接: ","source":"来源: 郭鹏真PattenKuo的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-10-31 19:48:52'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avater.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">89</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">15</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text"> 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E5%85%88%E5%87%86%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text"> 预先准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%92%8C%E5%AE%89%E8%A3%85"><span class="toc-number">3.</span> <span class="toc-text"> 下载和安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD-youtube-dl"><span class="toc-number">3.1.</span> <span class="toc-text"> 下载 Youtube-DL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86youtube-dl%E6%B7%BB%E5%8A%A0%E5%88%B0%E4%BD%A0%E7%9A%84%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E8%B7%AF%E5%BE%84%E6%8E%A8%E8%8D%90"><span class="toc-number">3.2.</span> <span class="toc-text"> 将Youtube-DL添加到你的全局变量路径(推荐)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#step-1%E5%A4%8D%E5%88%B6%E4%BD%A0%E7%9A%84youtube-dl%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E4%BD%8D%E7%BD%AE%E7%9A%84%E5%AE%8C%E6%95%B4%E8%B7%AF%E5%BE%84"><span class="toc-number">3.2.1.</span> <span class="toc-text"> Step 1:复制你的Youtube-DL下载安装位置的完整路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#step-2%E6%89%93%E5%BC%80%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">3.2.2.</span> <span class="toc-text"> Step 2:打开环境变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#step-3%E9%80%89%E6%8B%A9path%E5%8F%98%E9%87%8F"><span class="toc-number">3.2.3.</span> <span class="toc-text"> Step 3:选择Path变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#step-4%E5%B0%86youtube-dl%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84%E6%B7%BB%E5%8A%A0%E5%88%B0%E4%BD%A0%E6%83%B3%E8%A6%81%E6%B7%BB%E5%8A%A0%E7%9A%84%E7%BA%A7%E5%88%AB%E8%B7%AF%E5%BE%84%E4%B8%AD"><span class="toc-number">3.2.4.</span> <span class="toc-text"> Step 4:将Youtube-DL安装路径添加到你想要添加的级别路径中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#step-5-%E6%B5%8B%E8%AF%95"><span class="toc-number">3.2.5.</span> <span class="toc-text"> Step 5: 测试</span></a></li></ol></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://guopengzhen.com/img/avater.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">郭鹏真PattenKuo的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">如何在Windows10上安装Youtube-DL</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-10-31T10:43:16.000Z" title="发表于 2020-10-31 18:43:16">2020-10-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-10-31T11:48:52.234Z" title="更新于 2020-10-31 19:48:52">2020-10-31</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BF%BB%E8%AF%91/">翻译</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<p>  本文由<a href="https://guopengzhen.com/">郭鹏真</a>于2020/10/31翻译自<a target="_blank" rel="noopener" href="https://danclowry.com/">Dan Clowry</a>《<a target="_blank" rel="noopener" href="https://danclowry.com/blog/youtube-dl-windows-install/">How to Install Youtube-DL on Windows</a>》，英语水平比较好的可以直接看原文。</p>
+<p>  由于跨境电商运营的过程中，需要剪辑大量的视频用于广告推广，但是市面上搜到的视频下载软件总是难以满足我的需求，于是作为程序猿的我就找到了这种Youtube-DL，非常好用，可以下载几乎所有的视频网站视频，也可以用指令剪辑成自己所需要的视频片段。</p>
+<hr>
+<p><strong>原文</strong></p>
+<p>   <code>Youtube-DL</code>是一个很棒的小项目，通过它，你可以从互联网上几乎每个主流的视频网站下载视频。本教程将向您展示如何在Windows上下载、安装、配置和使用<code>Youtube-DL</code>。</p>
+<h2 id="预先准备"><a class="markdownIt-Anchor" href="#预先准备"></a> 预先准备</h2>
+<ul>
+<li>基本了解如何打开和使用Windows下的命令提示符CMD</li>
+<li><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-US/download/details.aspx?id=5555">Microsoft Visual C++ 2010 Redistributable Package (x86)</a></li>
+<li>【<strong>译者注</strong>：由于本人的计算机一直处于“科学上网”状态，实际操作是否需要科学上网，自己测试验证。】</li>
+</ul>
+<h2 id="下载和安装"><a class="markdownIt-Anchor" href="#下载和安装"></a> 下载和安装</h2>
+<h3 id="下载-youtube-dl"><a class="markdownIt-Anchor" href="#下载-youtube-dl"></a> 下载 <code>Youtube-DL</code></h3>
+<p>  我们将从下载和安装<code>Youtube-DL</code>开始。进入<code>Youtube-DL</code> Github存储库的发布页面【<strong>译者注</strong>：<code>Youtube-DL</code>的<a target="_blank" rel="noopener" href="https://github.com/ytdl-org/youtube-dl/releases/latest">Github仓库</a>由于<code>DMCA takedown notice</code>已经关闭，需要去<a target="_blank" rel="noopener" href="https://youtube-dl.org/">官网</a>下载，如果还是没找到，下面评论区留下邮箱，到时候我发你】。 <s>向下滚动，直到找到<code>assets</code>列表，单击名为“youtube-dl”的文件。开始下载Youtube-DL。</s> 您可以将该文件下载到除<code>System32</code>之外的任何位置。我建议为<code>Youtube-DL</code>单独创建一个文件夹，这样以后配置<code>Youtube-DL</code>会更容易。本教程中，我将该文件下载到<code>D:\Programs\Other Programs\Youtube-DL</code>。</p>
+<p>   现在您已经下载了<code>Youtube-DL</code>。您可能已经注意到，当您尝试双击运行程序时，什么也不会发生【<strong>译者注</strong>：现象就是命令窗口闪退】。这是因为<code>Youtube-DL</code>是一个命令行程序，它只能从命令行界面(如命令提示符<code>Command Prompt</code>)中使用。</p>
+<p>   但是，如果您打开命令提示符并尝试使用命令<code>youtube-dl</code>，您仍然会得到一个错误，说明该命令不被识别。要运行<code>Youtube-DL</code>，您需要将其添加到您的计算机路径<code>PATH</code>中，或者将其添加到您下载<code>Youtube-DL</code>的<code>cd</code>目录中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\guopz&gt;youtube-dl</span><br><span class="line">&#39;youtube-dl&#39; 不是内部或外部命令，也不是可运行的程序</span><br><span class="line">或批处理文件。</span><br></pre></td></tr></table></figure>
+<h3 id="将youtube-dl添加到你的全局变量路径推荐"><a class="markdownIt-Anchor" href="#将youtube-dl添加到你的全局变量路径推荐"></a> 将<code>Youtube-DL</code>添加到你的全局变量路径(推荐)</h3>
+<p>   将<code>Youtube-DL</code>添加到您的路径允许您从任何命令行界面(如命令提示符或PowerShell)运行<code>Youtube-dl</code>命令，而无需首先<code>cd</code>到您安装<code>Youtube-DL</code>的目录中。</p>
+<p><strong>将<code>Youtube-DL</code>添加到你的全局变量路径中：</strong></p>
+<h4 id="step-1复制你的youtube-dl下载安装位置的完整路径"><a class="markdownIt-Anchor" href="#step-1复制你的youtube-dl下载安装位置的完整路径"></a> Step 1:复制你的<code>Youtube-DL</code>下载安装位置的完整路径</h4>
+<p>   你可以通过导航到你在Windows资源管理器中下载<code>Youtube-DL</code>的任何地方，点击地址栏并复制文本来显示完整的路径。不要在路径中包含<code>.exe</code>，它应该只包含目录(例如<code>D:\Programs\Other Programs\Youtube-DL</code>，而不是<code>D:\Programs\Other Programs\Youtube-DL\Youtube-DL.exe</code>)。</p>
+<p><img src="/%E7%BF%BB%E8%AF%91/205/add_to_your_path.png" alt="Add to your own Path"></p>
+<h4 id="step-2打开环境变量"><a class="markdownIt-Anchor" href="#step-2打开环境变量"></a> Step 2:打开环境变量</h4>
+<p>   按<code>Win+R</code>键，输入<code>System propertiesadvanced</code>，打开【系统属性】菜单。在此菜单中，按下标签为【环境变量】的按钮。</p>
+<p><img src="/%E7%BF%BB%E8%AF%91/205/environment_variables.png" alt="environment variables"></p>
+<h4 id="step-3选择path变量"><a class="markdownIt-Anchor" href="#step-3选择path变量"></a> Step 3:选择<code>Path</code>变量</h4>
+<p>   您可以将<code>Youtube-DL</code>添加到用户User级别或系统System级别的路径。将其添加到系统路径将允许任何用户运行<code>youtube-dl</code>命令，而无需首先进入安装目录，而用户路径将仅应用于当前登录的用户。注意，在系统路径中设置它需要管理员权限，并且<code>youtube- dll.exe</code>不能位于用户级别下的特定位置(例如桌面或“我的文档”)。对于本教程，我将使用系统路径。</p>
+<p>   如果希望将其添加到用户级别路径中，请滚动上面第一个变量列表【某某的用户变量U】，直到找到一个指定路径<code>Path</code>。双击它，打开编辑器。<br>
+   如果希望将其添加到系统级别路径中，请滚动下面第二个变量列表【系统变量S】，直到找到一个指定路径<code>Path</code>。双击它以打开编辑器。</p>
+<p>   很可能已经有一些东西在路径<code>Path</code>中了。不要删除任何现有条目。它们很可能是由其他程序或Windows系统设置的，删除它们会导致程序无法工作，甚至会导致Windows无法启动。</p>
+<p><img src="/%E7%BF%BB%E8%AF%91/205/environment_variables.png" alt="environment variables"></p>
+<center>左边是用户和系统变量列表，右边是系统路径的编辑器</center>
+<h4 id="step-4将youtube-dl安装路径添加到你想要添加的级别路径中"><a class="markdownIt-Anchor" href="#step-4将youtube-dl安装路径添加到你想要添加的级别路径中"></a> Step 4:将<code>Youtube-DL</code>安装路径添加到你想要添加的级别路径中</h4>
+<p>   打开变量编辑器，并且您的<code>Youtube-DL</code>安装路径在剪贴板中，按下编辑器右侧的【新建】New按钮。这将在变量栏的底部创建一个新条目。粘贴到你的<code>Youtube-DL</code>路径，然后按enter【回车键】，然后按OK【确定】键，保存更改。</p>
+<p><img src="/%E7%BF%BB%E8%AF%91/205/add_to_all_path.png" alt="add_to_all_path"></p>
+<h4 id="step-5-测试"><a class="markdownIt-Anchor" href="#step-5-测试"></a> Step 5: 测试</h4>
+<p>   现在您已经将<code>Youtube-DL</code>添加到路径<code>Path</code>中，您现在可以打开一个新的命令提示窗口，并运行<code>Youtube-DL</code>。现在您可以转到“安装FFmpeg”一节来继续安装!</p>
+<p><img src="/%E7%BF%BB%E8%AF%91/205/test_youtube-dl.png" alt="Test it"></p>
+<p>如果你的CMD窗口仍然不能识别<code>youtube-dl</code>，并有错误提示，试试下面的方法:</p>
+<ul>
+<li>重新启动计算机强制刷新路径。</li>
+<li>请仔细检查Youtube-DL的路径是否正确。确保<code>youtube-dl.exe</code>不包含在路径中。</li>
+<li>如果您将<code>Youtube-DL</code>添加到系统级别路径<code>Path</code>，请尝试将其添加到用户级别路径<code>Path</code>(反之亦然)。</li>
+<li>在路径编辑器中，选择<code>Youtube-DL</code>条目，并尝试使用“上移”和“下移”按钮在路径条目列表中上下移动一下。</li>
+</ul>
+<p>   如果尝试了上面的方法仍然无效，在这篇文章的底部留下评论，看看是否有人可以帮助你。</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">郭鹏真PattenKuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://guopengzhen.com/%E7%BF%BB%E8%AF%91/205/">https://guopengzhen.com/%E7%BF%BB%E8%AF%91/205/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://guopengzhen.com" target="_blank">郭鹏真PattenKuo的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">程序猿的学习笔记</a><a class="post-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a><a class="post-meta__tags" href="/tags/%E5%B7%A5%E5%85%B7/">工具</a><a class="post-meta__tags" href="/tags/%E8%B7%A8%E5%A2%83%E7%94%B5%E5%95%86/">跨境电商</a></div><div class="post_share"><div class="social-share" data-image="https://guopengzhen.com/img/avater.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="Wechat Pay"/></a><div class="post-qr-code-desc">Wechat Pay</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="Alipay"/></a><div class="post-qr-code-desc">Alipay</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/47557/"><img class="next-cover" src="https://guopengzhen.com/img/avater.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">string中c_str()、data()、copy(p,n)函数的用法及区别</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/程序猿的学习笔记/61321/" title="基于CentOS7.2利用shadowsocks搭建VPN"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/61321/VPN_head-940x540.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-23</div><div class="title">基于CentOS7.2利用shadowsocks搭建VPN</div></div></a></div><div><a href="/翻译/14555/" title="Termius入门教程初探(Getting started with Termius)"><img class="cover" src="https://guopengzhen.com/%E7%BF%BB%E8%AF%91/14555/termiusLogo.svg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-28</div><div class="title">Termius入门教程初探(Getting started with Termius)</div></div></a></div><div><a href="/程序猿的学习笔记/57905/" title="Ubuntu16.04/18.04安装企业微信教程"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/57905/image-8.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-23</div><div class="title">Ubuntu16.04/18.04安装企业微信教程</div></div></a></div><div><a href="/程序猿的学习笔记/9699/" title="Ubuntu16.04/18.04安装钉钉教程"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/9699/dingdingLaunch.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-23</div><div class="title">Ubuntu16.04/18.04安装钉钉教程</div></div></a></div><div><a href="/程序猿的学习笔记/19770/" title="websocket断开重连解决方案初探和实现websocket心跳重连"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/19770/heartbeat.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-30</div><div class="title">websocket断开重连解决方案初探和实现websocket心跳重连</div></div></a></div><div><a href="/程序猿的学习笔记/32967/" title="Ubuntu16.04串口minicom安装、配置及实现串口通讯"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-28</div><div class="title">Ubuntu16.04串口minicom安装、配置及实现串口通讯</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><label><input id="switch-comments-btn" type="checkbox"/><span class="slider"></span></label><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By 郭鹏真PattenKuo</div><div class="framework-info"><span>Powered by </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'q3J83vICPB2taER4oq48LBuV-gzGzoHsz',
+      appKey: 'Sme7y8okowBtcEXM8OqIfQVf',
+      placeholder: '来都来了，随便说两句吧！',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://guopengzhen.com/%E7%BF%BB%E8%AF%91/205/'
+    this.page.identifier = '翻译/205/'
+    this.page.title = '如何在Windows10上安装Youtube-DL'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: true,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', 'UA-180790879-1', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script></div></body></html>
