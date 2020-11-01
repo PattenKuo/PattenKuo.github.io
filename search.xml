@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>javascript利用jquery 动态创建 DIV或子DIV</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/45204/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/45204/</url>
+      
+        <content type="html"><![CDATA[<p>在做音乐列表的时候碰到了这个需求，于是上网搜索相关解决方案，结果是<strong>千篇一律</strong>，几乎都是错的（报错“parentdiv.addClass is not a function(…)”）。后来通过查找资料解决了相关问题。</p><p>首先要记得引入<a href="https://jquery.com/download/">jQuery</a>的文件。</p><h1 id="方法一"><a class="markdownIt-Anchor" href="#方法一"></a> 方法一：</h1><pre><code>var creatediv= function()&#123;    var parentdiv=$('&lt;div&gt;&lt;/div&gt;');        //创建一个父div    parentdiv.attr('id','parent');        //给父div设置id    parentdiv.addClass('parentdiv');    //添加css样式    var childdiv=$('&lt;div&gt;&lt;/div&gt;');        //创建一个子div    childdiv.attr('id','child');            //给子div设置id    childdiv.addClass('childdiv');    //添加css样式    childdiv.appendTo(parentdiv);        //将子div添加到父div中    parentdiv.appendTo('body');            //将父div添加到body中&#125;</code></pre><p><strong>千万注意：Javascript大小写敏感case-sensetive，“addClass”的“c”一定要大写（还有“<strong>appendTo</strong>”），好多教程都抄成了“parentdiv.addclass(‘parentdiv’);”结果会报类似的错误——</strong></p><pre><code>parentdiv.addclass is not a function(…)</code></pre><h1 id="方法二"><a class="markdownIt-Anchor" href="#方法二"></a> 方法二</h1><pre><code>var boarddiv = &quot;&lt;div style='background:white;width:100%;height:100%;z-index:999;position:absolute;top:0;margin-top:100px;'&gt;加载中...&lt;/div&gt;&quot;; $(window).load(function()&#123; //window.alert(&quot;ok&quot;); $(document.body).append(boarddiv); &#125;);</code></pre><p>该方法我还未尝试，仅供参考。</p><p>感谢第一个提出该方法的网友，出处不详。</p><p>个人觉得<code>append</code>比<code>appendTo</code>好用些，可能我对后者的具体用法不太熟悉。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 前端 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Ubuntu 16.04添加全新硬盘流程步骤</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/47118/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/47118/</url>
