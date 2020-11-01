@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>C++11变长参数的宏定义以及&#39; __VA_ARGS__&#39;在Log输出中的应用</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62941/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62941/</url>
+      
+        <content type="html"><![CDATA[<p>  C<ins>自带的常用的“std::cout”和“printf()”之类作为log输出显然不是一个好的方法，笔者在学习《(C</ins>11)深入理解C<ins>11：C</ins>2011新特性解析与应用》的教程中，抽出如下的代码，在轻量级调试中是一个不错的选择。</p><p>  在 C99 标准中，程序员可以使用变长参数的宏定义。变长参数的宏定义是指在宏定义中 参数列表的最后一个参数为省略号，而预定义宏 __VA_ARGS__ 则可以在宏定义的实现部分替换省略号所代表的字符串。比如：</p><pre><code>#define PR(...) printf(__VA_ARGS__)</code></pre><p>  就可以定义一个 printf 的别名 PR。事实上，变长参数宏与 printf 是一对好搭档。我们可以看如下代码清单所示的一个简单的变长参数宏的应用。</p><pre><code>#include &lt;stdio.h&gt;#define LOG(...) &#123;\fprintf(stderr,&quot;%s: Line %d:\t&quot;, __FILE__, __LINE__);\fprintf(stderr, __VA_ARGS__);\fprintf(stderr,&quot;\n&quot;);\&#125;int main() &#123;    int x = 3;    // 一些代码 ...    LOG(&quot;x = %d&quot;, x); // 2-1-5.cpp: Line 12: x = 3&#125;// 编译选项 :g++ -std=c++11 2-1-5.cpp</code></pre><p>  如上代码清单，定义 LOG 宏用于记录代码位置中一些信息。程序员可以根据 stderr 产生的日志追溯到代码中产生这些记录的位置。引入这样的特性，对于轻量级调试，简单的 错误输出都是具有积极意义的。</p><p>  注意在使用“#define”进行的宏定义的过程中，换行符是宏定义结束的标志。</p><p>  宏定义分为<strong><strong>无参数宏定义</strong></strong>和<strong><strong>带参数宏定义</strong></strong>两种。</p><p>  无参数的宏定义的一般形式为：&quot;#define 标识符 字符序列&quot;，比如：</p><pre><code>#define PI 3.1415926</code></pre><p>  则在定义它们的源程序文件中，凡定义之后出现的单词PI将用3.1415926替代之。</p><p>  在宏定义的<code>＃</code>之前可以有若干个空格、制表符，但不允许有其它字符。宏定义在源程序中单独另起一行，<strong>换行符是宏定义的结束标志</strong>。如果一个宏定义太长，一行不够时，可采用续行的方法。<strong>续行是在键人回车符之前先键入符号&quot;<code>\</code>&quot;。注意回车要紧接在符号&quot;<code>\</code>&quot;之后，中间不能插入其它符号。</strong></p><p>  如有必要，宏名可被重复定义。被重复定义后，宏名原先的意义被新意义所代替。</p><p>  通常，无参数的宏定义多用于定义常量。程序中统一用宏名表示常量值，便于程序前后统一，不易出错，也便于修改，能提高程序的可读性和可移植性。特别是给数组元素个数一个宏定义，并用宏名定义数组元素个数能部分弥补数组元素个数固定的不足。<br>  注意：<strong><strong><strong>预处理程序在处理宏定义时</strong></strong></strong>，只作字符序列的替换工作，不作任何语法的检查。如果宏定义不当，错误要到预处理之后的编译阶段才能发现。宏定义以换行结束，不需要分号等符号作分隔符。</p><p><strong>相关文章</strong>：《<a href="https://blog.svenhetin.com/c-shu-ju-lei-xing-ji-ge-chong-xing-shi-de-shu-ru-shu-chu/">C++数据类型及各种形式的输入输出汇总</a>》</p><h1 id="致谢"><a class="markdownIt-Anchor" href="#致谢"></a> 致谢</h1><blockquote><p>（加）Michael Wong IBM XL编译器中国开发团队《(C<ins>11)深入理解C</ins>11：C++ 11新特性解析与应用 迷你》</p></blockquote><blockquote><p><a href="https://blog.csdn.net/pachonghanya">zyc_glboy</a>《<a href="https://blog.csdn.net/pachonghanya/article/details/6972632">宏定义\字符串 多行书写时换行</a>》</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++11 主要的新语言特性（中英文对照）</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/27575/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/27575/</url>
