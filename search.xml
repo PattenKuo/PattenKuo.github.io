@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>C++11 主要的新语言特性（中英文对照）</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/27575/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/27575/</url>
+      
+        <content type="html"><![CDATA[<p>如果谁说 C<ins>11 只是对 C</ins> 语言做了大幅度的改进，那么他很可能就错过了 C<ins>11 精 彩的地方。事实上，了解 C</ins>11 之后，读者只需要看一眼代码，就可以说出代码究竟是 C<ins>98/03 的，还是 C</ins>11 的。C<ins>11 为程序员创造了很多更有效、更便捷的代码编写方式，程序员可 以用简短的代码来完成 C</ins>98/03 中同样的功能，简单到你惊呼“天哪，怎么能这么简单”。 从一些简单的数据统计上看，比起 C<ins>98/03，C</ins>11 大大缩短了代码编写量，依情况最多可 以将代码缩短 30% ～ 80%。 那么 C<ins>11 相对于 C</ins>98/03 有哪些显著的增强呢？事实上，这包括以下几点：</p><ul><li>❑通过内存模型、线程、原子操作等来支持本地并行编程（Native Concurrency）。</li><li>❑通过统一初始化表达式、auto、declytype、移动语义等来统一对泛型编程的支持。</li><li>❑通过 constexpr、POD（概念）等更好地支持系统编程。</li><li>❑通过内联命名空间、继承构造函数和右值引用等，以更好地支持库的构建。</li></ul><p>下表列出了 C<ins>11 批准通过的语言特性。这是一张相当长的表， 而且一个个陌生的词汇足以让新手不知所措。不过现在还不是了解它们的时候。但看过这张表，读者至少会有这样一种感觉 ：C</ins>11 的确像是一门新的语言。如果我们将 C<ins>98/03 标 准中的特性和 C</ins>11 放到一起，C<ins>11 则像是个恐怖的“编程语言范型联盟”。利用它不仅 仅可以写出面向对象语言的代码，也可以写出过程式编程语言代码、泛型编程语言代码、函 数式编程语言代码、元编程编程语言代码，或者其他。多范型的支持使得 C</ins>11 语言的“硬 能力”几乎在编程语言中“无出其右”。</p><p><cneter><strong>C++11 主要的新语言特性（中英文对照）</strong></cneter></p><table><thead><tr><th>中文</th><th>English</th></tr></thead><tbody><tr><td>_cplusplus宏</td><td>_cplusplus macro</td></tr><tr><td>对齐支持</td><td>alignment support</td></tr><tr><td>通用属性</td><td>general attribute</td></tr><tr><td>原子操作</td><td>atomic operation</td></tr><tr><td>auto类型推导（初始化类型推导）</td><td>auto(type deduction from 18nitialize)</td></tr><tr><td>C99特性</td><td>C99</td></tr><tr><td>强类型枚举</td><td>enum class(scoped and strongly typed enums)</td></tr><tr><td>复制及再抛出异常</td><td>copy and rethrow exception</td></tr><tr><td>常量表达式</td><td>constexpr</td></tr><tr><td>decltype</td><td>decltype</td></tr><tr><td>函数的默认模板参数</td><td>default template parameters for function</td></tr><tr><td>显式默认及删除的函数（默认的控制）</td><td>defaulted and deleted functions(control of defaults)</td></tr><tr><td>委托构造函数</td><td>delegating construtors</td></tr><tr><td>并行动态初始化和析构</td><td>Dynamic Initialization and Destruction with Concurrency</td></tr><tr><td>显式转换操作符</td><td>explicit conversion operators</td></tr><tr><td>扩展的friend语法</td><td>extended friend syntax</td></tr><tr><td>扩展的整型</td><td>extended integer types</td></tr><tr><td>外部模板</td><td>extern templates</td></tr><tr><td>一般的SFINAE规则</td><td>generalized SFINAE rules</td></tr><tr><td>统一的初始化语法和语义</td><td>Uniform initialization syntax and semantics</td></tr><tr><td>非受限联合体</td><td>unrestricted union</td></tr><tr><td>用户定义的自变量</td><td>user-defined literals</td></tr><tr><td>变长模板</td><td>variadic templates</td></tr><tr><td>类成员初始化</td><td>in-class member initializers</td></tr><tr><td>继承构造函数</td><td>inherited constructors</td></tr><tr><td>初始化列表</td><td>initializer lists</td></tr><tr><td>lambda函数</td><td>lambda</td></tr><tr><td>局部类型用作模板参数</td><td>local classes as template arguments</td></tr><tr><td>long long 整型</td><td>long long integers</td></tr><tr><td>内存模型</td><td>memory model</td></tr><tr><td>移动语义（参见右值引用）</td><td>move semantics(see rvalue references)</td></tr><tr><td>内联命名空间</td><td>Inline namespace</td></tr><tr><td>防止类型收窄</td><td>Preventing narrowing</td></tr><tr><td>指针空值</td><td>nullptr</td></tr><tr><td>POD</td><td>POD(plain old data)</td></tr><tr><td>基于范围的for语句</td><td>range-based for statement</td></tr><tr><td>原生字符串字面量</td><td>raw string literals</td></tr><tr><td>右值引用</td><td>rvalue reference</td></tr><tr><td>静态断言</td><td>static assertions</td></tr><tr><td>追踪返回类型语法</td><td>trailing return type syntax</td></tr><tr><td>模板别名</td><td>template alias</td></tr><tr><td>线程本地存储</td><td>thread-local storage</td></tr><tr><td>Unicode</td><td>Unicode</td></tr></tbody></table><p>而从另一个角度看，编程中程序员往往需要将实物、流程、概念等进行抽象描述。但 通常情况下，程序员需要抽象出的不仅仅是对象，还有一些其他的概念，比如类型、类型 的类型、算法，甚至是资源的生命周期，这些实际上都是 C++ 语言可以描述的。在 C<ins>11 中，这些抽象概念常常被实现在库中，其使用将比在 C</ins>98/03 中更加方便，更加好用。从 这个角度上讲，C++11 则是一种所谓的“轻量级抽象编程语言”（Lightweight Abstraction Programming Language）。其好处就是程序员可以将程序设计的重点更多地放在设计、实现， 以及各种抽象概念的运用上。</p><p>总的来说，灵活的静态类型、小的抽象概念、绝佳的时间与空间运行性能，以及与硬件 紧密结合工作的能力都是 C<ins>11 突出的亮点。而反观 C</ins>98/03，其最强大的能力则可能是 体现在能够构建软件基础架构，或构建资源受限及资源不受限的项目上。因此，C<ins>11 也是 C</ins> 在编程语言领域上一次“泛化”与进步。</p><p>要实现表中的各种特性，需要编译器完成大量的工作。对于大多数编译器供应商来 说，只能分阶段地发布若干个编译版本，逐步支持所有特性（罗马从来就不是一天建成的， 对吧）。大多数编译器已经开始了对 C<ins>11 特性的支持。有 3 款编译器甚至从 2008 年前就开 始支持 C</ins>11 了：IBM 的 XL C/C++ 编译器从版本 10.1 开始。GNU 的 GCC 编译器从版本 4.3 开始，英特尔编译器从版本 10.1 开始。而微软则从 Visual Studio 2010 开始。最近，苹果的 clang/llvm 编译器也从 2010 年的版本 2.8 开始支持 C++11 新特性，并且急速追赶其他编译器 供应商。</p><h1 id="致谢"><a class="markdownIt-Anchor" href="#致谢"></a> 致谢</h1><blockquote><p>（加）Michael Wong IBM XL编译器中国开发团队《(C<ins>11)深入理解C</ins>11：C++ 11新特性解析与应用 迷你》</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>javascript利用jquery 动态创建 DIV或子DIV</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/45204/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/45204/</url>
