@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>linux中的dmesg和addr2line命令在没有core文件时定位core dump段错误 (核心已转储) 问题</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/60914/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/60914/</url>
+      
+        <content type="html"><![CDATA[<h2 id="dmesg命令的用途"><a class="markdownIt-Anchor" href="#dmesg命令的用途"></a> dmesg命令的用途</h2><p>dmesg命令用会把开机信息存到ring bufer中， 形成一个缓冲， 免得你我来不及看。 在root权限下， 可以用dmesg -c来清除这个消息。 单纯的一个dmesg命令则是用来输出这些记录信息的。</p><p><strong>功能说明</strong>：显示开机信息。</p><p><strong>语　　法</strong>：<code>dmesg \[-cn\]\[-s &lt;缓冲区大小&gt;\]</code></p><p><strong>补充说明</strong>：kernel会将开机信息存储在ring buffer中。您若是开机时来不及查看信息，可利用dmesg来查看。开机信息亦保存在/var/log目录中，名称为dmesg的文件里。</p><p><strong>参　　数：</strong></p><ul><li>-c 　显示信息后，清除ring buffer中的内容。</li><li>-s&lt;缓冲区大小&gt; 　预设置为8196，刚好等于ring buffer的大小。</li><li>-n 　设置记录信息的层级</li></ul><h2 id="addr2line命令使用"><a class="markdownIt-Anchor" href="#addr2line命令使用"></a> addr2line命令使用</h2><p>Addr2line 工具（它是标准的 GNU Binutils 中的一部分）是一个可以将指令的地址和可执行映像转换成文件名、函数名和源代码行数的工具。这种功能对于将跟踪地址转换成更有意义的内容来说简直是太棒了。</p><p>使用Addr2line 工具，就可以判断出函数名（main）、源文件（test.cpp）以及它在源文件中的行号。</p><p>在调用 Addr2line 工具时，要使用 -e 选项来指定可执行映像是 test。通过使用 -f 选项，可以告诉工具输出函数名。</p><h2 id="经典dmesg-addr2line命令的使用"><a class="markdownIt-Anchor" href="#经典dmesg-addr2line命令的使用"></a> 经典dmesg + addr2line命令的使用</h2><p>下面， 我们来看一下经典的dmesg + addr2line：</p><p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/60914/dmesg.png" alt></p><p>可见， 第5行有错。</p><p>为什么我的<code>dmesg</code>输出了几百几十行信息呢？当dmesg显示的信息较多时候， 我们通过grep来过滤， 比如 <code>dmesg | grep a.out</code></p><p>在实际开发中， 通常是从日志文件中看到堆栈异常， 同样是为了拿到堆栈出错的地方， 然后用addr2line来定位代码行， 此时， 可以将日志文件看成是dmesg命令的扩展。 在这两种情况下， 我么可以不依赖于core文件， 便可搞定core dump了。</p><h2 id="linux-addr2line-返回或0-如何解决"><a class="markdownIt-Anchor" href="#linux-addr2line-返回或0-如何解决"></a> linux addr2line 返回??:?或??:0 如何解决?</h2><p>按你的教程，为什么我的输出是下面这样子的呢？</p><p>为什么我的<code>addr2line -e a.out 000000000040085a</code>后输出了<code>?:??</code>呢？WTFaaaaaaaaa~~~~~</p><p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/60914/addr2line.png" alt></p><p>如果遇到addr2line得到??:?或??:0的情况，原因就是编译得到的so文件没有附加上符号表(symbolic)信息。</p><p>如果在android源码环境下，android编译环境会自动生成附带有符号表(symbolic)的so文件。标准android5.0中，附带有符号表(symbolic)的so文件在下面路径</p><p><code>out/target/product/[productname]/symbols/system/lib/****.so</code></p><p>如果是非android环境，需要在makefile中指定生成附带有符号表(symbolic)的so文件的选项，具体关于动态链接库以及符号表等，请参阅如下网站:<a href="http://tldp.org/HOWTO/Program-Library-HOWTO/shared-libraries.html">http://tldp.org/HOWTO/Program-Library-HOWTO/shared-libraries.html</a></p><p>你如果仔细比对了上面两图的指令，会发现编译的参数略有差异：</p><p>正常的编译选项是<code>g++ -std=c++11 -g test.cpp</code>，出现<code>?:??</code>的是<code>g++ -std=c++11 test.cpp</code>。也就是说少了<code>-g</code>参数，那这个参数是什么意思呢？复习一下——</p><ul><li>-o：指定生成可执行文件的名称。使用方法为：g++ -o afile file.cpp file.h … （可执行文件不可与待编译或链接文件同名，否则会生成相应可执行文件且覆盖原编译或链接文件），如果不使用-o选项，则会生成默认可执行文件a.out。</li><li>-c：只编译不链接，只生成目标文件。</li><li>-g：添加gdb调试选项。</li></ul><p>Over，现在大工告成了！</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>javascript浏览器禁止用户放大缩小的五种方法</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/26603/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/26603/</url>
