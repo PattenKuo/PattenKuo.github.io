@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>类似Windows的WinSCP的FTP工具FileZilla简介（WinSCP for linux）</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/28151/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/28151/</url>
+      
+        <content type="html"><![CDATA[<p>大多数从事windows操作系统界面的服务器端开发者对winSCP再熟悉不过，但是当我们转为Linux操作系统界面下的服务器端开发时，就将一脸懵。。。</p><p>怎么连WinSCP都没有，我又觉得“scp”的文件传输命令太麻烦，那你们copy文件是用的什么？于是在各个搜索引擎上搜索“WinSCP for Linux/Ubuntu/CentOS”，What？都是什么鬼？于是有了这篇博文。</p><h2 id="什么是-winscp"><a class="markdownIt-Anchor" href="#什么是-winscp"></a> 什么是 WinSCP</h2><p><a href="https://winscp.net/">WinSCP</a> 是一个 Windows 环境下使用的 SSH 的开源图形化 SFTP 客户端。同时支持 SCP 协议。它的主要功能是在本地与远程计算机间安全地复制文件，并且可以直接编辑文件。</p><p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/28151/winSCP.jpeg" alt></p><p>WinSCP，顾名思义，就是Windows下的SCP传输工具，嘿嘿，是不是本来Windows没有文件传输工具，把Linux的scp命令封装到了这个软件？这就不得而知了。</p><h3 id="scp和ftp简介"><a class="markdownIt-Anchor" href="#scp和ftp简介"></a> scp和ftp简介</h3><blockquote><p><strong>FTP（File Transfer Protocol）</strong>：是TCP/IP网络上两台计算机传送文件的协议，FTP是在TCP/IP网络和INTERNET上最早使用的协议之一，它属于网络协议组的应用层。FTP客户机可以给服务器发出命令来下载文件，上载文件，创建或改变服务器上的目录。相比于HTTP，FTP协议要复杂得多。复杂的原因，是因为FTP协议要用到两个TCP连接，一个是命令链路，用来在FTP客户端与服务器之间传递命令；另一个是数据链路，用来上传或下载数据。</p></blockquote><blockquote><p><strong>SCP（Secure Copy）</strong>：SCP就是Secure copy，是用来进行远程文件复制的，并且整个复制过程是加密的。数据传输使用ssh，并且和使用和ssh相同的认证方式，提供相同的安全保证。</p></blockquote><p>那“WinSCP for Linux/Ubuntu/CentOS”这个问题就变成了“linux下类似windows下的WinSCP的linux远程管理工具”。</p><p>啊，那FileZilla呼之欲出——</p><h2 id="什么是filezilla"><a class="markdownIt-Anchor" href="#什么是filezilla"></a> 什么是FileZilla</h2><p>先看英文原文：</p><blockquote><p>Welcome to the homepage of FileZilla®, the free FTP solution. The <em>FileZilla Client</em> not only supports FTP, but also FTP over TLS (FTPS) and SFTP. It is open source software distributed free of charge under the terms of the GNU General Public License.</p></blockquote><blockquote><p>We are also offering <em><a href="https://filezilla-project.org/filezilla_pro.php">FileZilla Pro</a></em>, with additional protocol support for WebDAV, Amazon S3, Backblaze B2, Dropbox, Microsoft OneDrive, Google Drive, Microsoft Azure Blob and File Storage, and Google Cloud Storage.</p></blockquote><blockquote><p>Last but not least, <em>FileZilla Server</em> is a free open source FTP and FTPS Server.</p></blockquote><blockquote><p>Support is available through our <a href="https://forum.filezilla-project.org/">forums</a>, the <a href="https://wiki.filezilla-project.org/Main_Page">wiki</a> and the <a href="https://trac.filezilla-project.org/">bug and feature request trackers.</a></p></blockquote><blockquote><p>In addition, you will find documentation on how to compile FileZilla and nightly builds for multiple platforms in the development section.</p></blockquote><p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/28151/FileZilla-details.png" alt></p><p>开始说中国话：</p><p><a href="https://filezilla-project.org/">FileZilla</a>是一个免费的FTP解决方案，FileZilla客户端不仅支持FTP，还支持基于FTP 的 TLS（FTPS）和SFTP。它是根据GNU通用公共许可证条款免费分发的开源软件。全平台适用，Windows/Linux等等。</p><h3 id="filezilla安装"><a class="markdownIt-Anchor" href="#filezilla安装"></a> FileZilla安装</h3><p>FileZilla Client 非常好用，以下是安装步骤。</p><h3 id="安装filezilla"><a class="markdownIt-Anchor" href="#安装filezilla"></a> 安装filezilla</h3><pre><code>sudo apt-get install filezilla</code></pre><h3 id="再装个语言包"><a class="markdownIt-Anchor" href="#再装个语言包"></a> 再装个语言包</h3><pre><code>sudo apt-get install filezilla-locales</code></pre><h3 id="安装完成"><a class="markdownIt-Anchor" href="#安装完成"></a> 安装完成</h3><p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/28151/searchFz-1.png" alt></p><p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/28151/FileZilla.png" alt></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> Linux </tag>
+            
+            <tag> 工具 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ubuntu16.04下python辅助bitbake编译脚本</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/60487/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/60487/</url>
