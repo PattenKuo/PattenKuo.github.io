@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>nodejs解析含中文的url或字符串中的百分号编码</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/45916/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/45916/</url>
+      
+        <content type="html"><![CDATA[<p>写网站的时候，前端表单发送数据到nodejs服务器，发送的数据会出现一些乱码，像下面这样：</p><pre><code>userName=%E7%8F%AD%E8%A1%A5&amp;email=zhaopin%40junmatek.com&amp;info=%E8%B7%AF1388%E5%8F%B7%E6%B0%91%E6%B6%A6%E5%A4%A7%E5%8E%A6%E4%B8%80%E5%8F%B7</code></pre><h2 id="百分号编码原理"><a class="markdownIt-Anchor" href="#百分号编码原理"></a> 百分号编码原理</h2><p>百分号编码（也被称为URI编码）的产生是为了防止SQL注入，所以将一些特殊字符转换为对应的百分号编码，详细原理可以自行搜索。</p><h2 id="nodejs如何解码"><a class="markdownIt-Anchor" href="#nodejs如何解码"></a> nodejs如何解码</h2><h3 id="decodeuri函数"><a class="markdownIt-Anchor" href="#decodeuri函数"></a> decodeURI()函数</h3><pre><code>let url = &quot;userName=%E7%8F%AD%E8%A1%A5&amp;email=zhaopin%40junmatek.com&amp;info=%E8%B7%AF1388%E5%8F%B7%E6%B0%91%E6%B6%A6%E5%A4%A7%E5%8E%A6%E4%B8%80%E5%8F%B7&quot;let decode_url = decodeURI(url)console.log(decode_url)</code></pre><p>控制台打印出来的结果如下：</p><pre><code>userName=班补&amp;email=zhaopin%40junmatek.com&amp;info=路1388号民润大厦一号</code></pre><p>可以看到“%40”（也就是“@”）没有转换，这是因为“@”在encodeURI()函数中属于保留字符，不会转换换为百分号编码，所以对应的解码函数decodeURI()也不会对其进行解码。（上面的url是firefox浏览器提交ajax表单的时候产生的）</p><h3 id="decodeuricomponent函数"><a class="markdownIt-Anchor" href="#decodeuricomponent函数"></a> decodeURIComponent()函数</h3><p>“@”“#”“$”…等符号不属于encodeURIComponent()函数的保留字，所以其对应的解码函数decodeURIComponent()函数可以将“%40”转为“@”符号。</p><pre><code>let url = &quot;userName=%E7%8F%AD%E8%A1%A5&amp;email=zhaopin%40junmatek.com&amp;info=%E8%B7%AF1388%E5%8F%B7%E6%B0%91%E6%B6%A6%E5%A4%A7%E5%8E%A6%E4%B8%80%E5%8F%B7&quot;let decode_url = decodeURIComponent(url)console.log(decode_url)</code></pre><p>控制台的输出如下：</p><pre><code>userName=班补&amp;email=zhaopin@junmatek.com&amp;info=路1388号民润大厦一号</code></pre><h2 id="不睡觉"><a class="markdownIt-Anchor" href="#不睡觉"></a> <a href="https://blog.csdn.net/weixin_42829466">不睡觉</a> 网友写的解码函数</h2><p>这个大家可以看看，理解一下解码的过程，其实挺简单的。</p><pre><code>function decode(url) &#123;    let reg = /(%(\w|[abcdef])(\w|[abcdef]))+/g       let code = url.match(reg)    let replace_reg = /%/g    let decode_reg = /(%(\w|[abcdef])(\w|[abcdef]))+/    for(let i = 0; i &lt; code.length; i ++) &#123;        code[i] = code[i].replace(replace_reg, &quot;&quot;)    //去掉百分号        code[i] = new Buffer(code[i], &quot;hex&quot;).toString()  //转换为utf-8字符        url = url.replace(decode_reg, code[i])  //替换百分号编码    &#125;    return url&#125;</code></pre><p>先将编码段用正则表达示匹配出来，存在code数组中。然后将code数组中的代码段去掉百分号，形成的十六进制编码段再转换为对应的编码（这里页面的编码为utf-8，有时候页面编码可能是gb2312，注意区分清楚），最后用生成的字符替换url中的百分号编码。</p><p>nodejs的&quot;querystring&quot;中也有相应的解码函数，详细可以参考nodejs的API文档。</p><h2 id="致谢"><a class="markdownIt-Anchor" href="#致谢"></a> 致谢</h2><blockquote><p>不睡觉《<a href="https://blog.csdn.net/weixin_42829466/article/details/81283671">nodejs处理url中的百分号编码</a>》</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> Linux </tag>
+            
+            <tag> Nodejs </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>linux下C++利用socket获取网络时间并更新到本地</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62276/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/62276/</url>
