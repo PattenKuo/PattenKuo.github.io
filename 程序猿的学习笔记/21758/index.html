@@ -1,0 +1,528 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>C++11/14中的新特性：对标准库的扩充 - 新增容器 | 郭鹏真PattenKuo的博客</title><meta name="keywords" content="程序猿的学习笔记,C++"><meta name="author" content="郭鹏真PattenKuo"><meta name="copyright" content="郭鹏真PattenKuo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="尊重原创，转载自实验楼，如需线上实操，请直接访问原教程网址：点击这里。 本博文仅作为备份，侵删。 “C++11&#x2F;14中的新特性”系列汇总：  C++11&#x2F;14中的新特性：语言可用性的强化 C++11&#x2F;14中的新特性：语言运行期的强化 C++11&#x2F;14中的新特性：对标准库的扩充 - 新增容器 C++11&#x2F;14中的新特性：对标准库的扩充 - 智能指针和引用计数 C++11&#x2F;14中的新特性：对标准库的扩">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++11&#x2F;14中的新特性：对标准库的扩充 - 新增容器">
+<meta property="og:url" content="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21758/index.html">
+<meta property="og:site_name" content="郭鹏真PattenKuo的博客">
+<meta property="og:description" content="尊重原创，转载自实验楼，如需线上实操，请直接访问原教程网址：点击这里。 本博文仅作为备份，侵删。 “C++11&#x2F;14中的新特性”系列汇总：  C++11&#x2F;14中的新特性：语言可用性的强化 C++11&#x2F;14中的新特性：语言运行期的强化 C++11&#x2F;14中的新特性：对标准库的扩充 - 新增容器 C++11&#x2F;14中的新特性：对标准库的扩充 - 智能指针和引用计数 C++11&#x2F;14中的新特性：对标准库的扩">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://guopengzhen.com/程序猿的学习笔记/13475/C++ New Features.png">
+<meta property="article:published_time" content="2020-12-06T09:42:09.000Z">
+<meta property="article:modified_time" content="2020-12-06T09:44:02.746Z">
+<meta property="article:author" content="郭鹏真PattenKuo">
+<meta property="article:tag" content="程序猿的学习笔记">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://guopengzhen.com/程序猿的学习笔记/13475/C++ New Features.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21758/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin="crossorigin"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><meta name="360-site-verification" content="89d1ebd5a1eb3151d51240867c24a57e"/><meta name="yandex-verification" content="0557569d0f8ae26b"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1508b58379fb497f1ca8ce5eeb12737f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-180790879-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-180790879-1');
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 郭鹏真PattenKuo","link":"链接: ","source":"来源: 郭鹏真PattenKuo的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-12-06 17:44:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avater.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">116</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">17</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-stdarray-%E5%92%8C-stdforward_list"><span class="toc-number">1.</span> <span class="toc-text"> 一、std::array 和 std::forward_list</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#stdarray"><span class="toc-number">1.1.</span> <span class="toc-text"> std::array</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stdforward_list"><span class="toc-number">1.2.</span> <span class="toc-text"> std::forward_list</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-%E6%97%A0%E5%BA%8F%E5%AE%B9%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text"> 二、无序容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89-%E5%85%83%E7%BB%84-stdtuple"><span class="toc-number">3.</span> <span class="toc-text"> 三、元组 std::tuple</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%83%E7%BB%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-number">3.1.</span> <span class="toc-text"> 元组基本操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E6%9C%9F%E7%B4%A2%E5%BC%95"><span class="toc-number">3.2.</span> <span class="toc-text"> 运行期索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%83%E7%BB%84%E5%90%88%E5%B9%B6%E4%B8%8E%E9%81%8D%E5%8E%86"><span class="toc-number">3.3.</span> <span class="toc-text"> 元组合并与遍历</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text"> 总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%B4%E8%B0%A2"><span class="toc-number">5.</span> <span class="toc-text"> 致谢</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://guopengzhen.com/程序猿的学习笔记/13475/C++ New Features.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">郭鹏真PattenKuo的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">C++11/14中的新特性：对标准库的扩充 - 新增容器</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-12-06T09:42:09.000Z" title="发表于 2020-12-06 17:42:09">2020-12-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T09:44:02.746Z" title="更新于 2020-12-06 17:44:02">2020-12-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">程序猿的学习笔记</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>尊重原创，转载自<a target="_blank" rel="noopener" href="https://www.shiyanlou.com/">实验楼</a>，如需线上实操，请直接访问原教程网址：<a target="_blank" rel="noopener" href="https://www.shiyanlou.com/courses/605">点击这里</a>。</p>
+<p>本博文仅作为备份，侵删。</p>
+<p><strong>“C++11/14中的新特性”系列汇总：</strong></p>
+<ol>
+<li><strong><a href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/13475/">C++11/14中的新特性：语言可用性的强化</a></strong></li>
+<li><strong><a href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/9365/">C++11/14中的新特性：语言运行期的强化</a></strong></li>
+<li><strong><a href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/18864/">C++11/14中的新特性：对标准库的扩充 - 新增容器</a></strong></li>
+<li><strong><a href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/19053/">C++11/14中的新特性：对标准库的扩充 - 智能指针和引用计数</a></strong></li>
+<li><strong><a target="_blank" rel="noopener" href="https://blog.svenhetin.com/dui-biao-zhun-ku-de-kuo-chong-zheng-ze-biao-da-shi/">C++11/14中的新特性：对标准库的扩充 - 正则表达式</a></strong></li>
+<li><strong><a target="_blank" rel="noopener" href="https://blog.svenhetin.com/c-11-14zhong-de-xin-te-xing-3/">C++11/14中的新特性：对标准库的扩充 - 语言级线程支持</a></strong></li>
+<li><strong><a target="_blank" rel="noopener" href="https://blog.svenhetin.com/c-11-14zhong-de-xin-te-xing-4/">C++11/14中的新特性：其他杂项</a></strong></li>
+</ol>
+<h2 id="一-stdarray-和-stdforward_list"><a class="markdownIt-Anchor" href="#一-stdarray-和-stdforward_list"></a> 一、std::array 和 std::forward_list</h2>
+<h3 id="stdarray"><a class="markdownIt-Anchor" href="#stdarray"></a> std::array</h3>
+<p>看到这个容器的时候肯定会出现这样的问题：</p>
+<ol>
+<li>为什么要引入 <code>std::array</code> 而不是直接使用 <code>std::vector</code>？</li>
+<li>已经有了传统数组，为什么要用 <code>std::array</code>?</li>
+</ol>
+<p>先回答第一个问题，<code>std::vecotr</code> 太强大了，以至于我们没有必要为了去敲碎一个鸡蛋而用一个钉锤。使用 <code>std::array</code> 保存在栈内存中，相比堆内存中的 <code>std::vector</code>，我们就能够灵活的访问这里面的元素，从而获得更高的性能；同时正式由于其堆内存存储的特性，有些时候我们还需要自己负责释放这些资源。</p>
+<p>而第二个问题就更加简单，使用<code>std::array</code>能够让代码变得更加现代，且封装了一些操作函数，同时还能够友好的使用标准库中的容器算法等等，比如 <code>std::sort</code>。</p>
+<p><code>std::array</code> 会在编译时创建一个固定大小的数组，<code>std::array</code> 不能够被隐式的转换成指针，使用 <code>std::array</code> 很简单，只需指定其类型和大小即可：</p>
+<pre><code>std::array&lt;int, 4&gt; arr= &#123;1,2,3,4&#125;;
+
+int len = 4;
+std::array&lt;int, len&gt; arr = &#123;1,2,3,4&#125;; // 非法, 数组大小参数必须是常量表达式
+</code></pre>
+<p>当我们开始用上了 <code>std::array</code> 时，难免会遇到要将其兼容 C 风格的接口，这里有三种做法：</p>
+<pre><code>void foo(int *p, int len) &#123;
+    return;
+&#125;
+
+std::array&lt;int 4&gt; arr = &#123;1,2,3,4&#125;;
+
+// C 风格接口传参
+// foo(arr, arr.size());           // 非法, 无法隐式转换
+foo(&amp;arr[0], arr.size());
+foo(arr.data(), arr.size());
+
+// 使用 `std::sort`
+std::sort(arr.begin(), arr.end());
+</code></pre>
+<h3 id="stdforward_list"><a class="markdownIt-Anchor" href="#stdforward_list"></a> std::forward_list</h3>
+<p><code>std::forward_list</code> 是一个列表容器，使用方法和 <code>std::list</code> 基本类似，因此我们就不花费篇幅进行介绍了。</p>
+<p>需要知道的是，和 <code>std::list</code> 的双向链表的实现不同，<code>std::forward_list</code> 使用单向链表进行实现，提供了 <code>O(1)</code> 复杂度的元素插入，不支持快速随机访问（这也是链表的特点），也是标准库容器中唯一一个不提供 <code>size()</code> 方法的容器。当不需要双向迭代时，具有比 <code>std::list</code> 更高的空间利用率。</p>
+<h2 id="二-无序容器"><a class="markdownIt-Anchor" href="#二-无序容器"></a> 二、无序容器</h2>
+<p>我们已经熟知了传统 C++ 中的有序容器 <code>std::map</code>/<code>std::set</code>，这些容器内部通过红黑树进行实现，插入和搜索的平均复杂度均为 <code>O(log(size))</code>。在插入元素时候，会根据 <code>&lt;</code> 操作符比较元素大小并判断元素是否相同，并选择合适的位置插入到容器中。当对这个容器中的元素进行遍历时，输出结果会按照 <code>&lt;</code> 操作符的顺序来逐个遍历。</p>
+<p>而无序容器中的元素是不进行排序的，内部通过 Hash 表实现，插入和搜索元素的平均复杂度为 <code>O(constant)</code>，在不关心容器内部元素顺序时，能够获得显著的性能提升。</p>
+<p>C++11 引入了两组无序容器：<code>std::unordered_map</code>/<code>std::unordered_multimap</code> 和 <code>std::unordered_set</code>/<code>std::unordered_multiset</code>。</p>
+<p>它们的用法和原有的 <code>std::map</code>/<code>std::multimap</code>/<code>std::set</code>/<code>set::multiset</code> 基本类似，由于这些容器我们已经很熟悉了，便不一一举例，我们直接来比较一下<code>std::map</code>和<code>std::multimap</code>：</p>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;unordered_map&gt;
+#include &lt;map&gt;
+
+int main() &#123;
+    // 两组结构按同样的顺序初始化
+    std::unordered_map&lt;int, std::string&gt; u = &#123;
+        &#123;1, &quot;1&quot;&#125;,
+        &#123;3, &quot;3&quot;&#125;,
+        &#123;2, &quot;2&quot;&#125;
+    &#125;;
+    std::map&lt;int, std::string&gt; v = &#123;
+        &#123;1, &quot;1&quot;&#125;,
+        &#123;3, &quot;3&quot;&#125;,
+        &#123;2, &quot;2&quot;&#125;
+    &#125;;
+
+    // 分别对两种容器进行遍历
+    std::cout &lt;&lt; &quot;std::unordered_map&quot; &lt;&lt; std::endl;
+    for( const auto &amp; n : u) 
+        std::cout &lt;&lt; &quot;Key:[&quot; &lt;&lt; n.first &lt;&lt; &quot;] Value:[&quot; &lt;&lt; n.second &lt;&lt; &quot;]\n&quot;;
+
+    std::cout &lt;&lt; std::endl;
+    std::cout &lt;&lt; &quot;std::map&quot; &lt;&lt; std::endl;
+    for( const auto &amp; n : v) 
+        std::cout &lt;&lt; &quot;Key:[&quot; &lt;&lt; n.first &lt;&lt; &quot;] Value:[&quot; &lt;&lt; n.second &lt;&lt; &quot;]\n&quot;;
+&#125;
+</code></pre>
+<p>最终的输出结果为：</p>
+<pre><code>std::unordered_map
+Key:[2] Value:[2]
+Key:[3] Value:[3]
+Key:[1] Value:[1]
+
+std::map
+Key:[1] Value:[1]
+Key:[2] Value:[2]
+Key:[3] Value:[3]
+</code></pre>
+<h2 id="三-元组-stdtuple"><a class="markdownIt-Anchor" href="#三-元组-stdtuple"></a> 三、元组 std::tuple</h2>
+<p>了解过 Python 的程序员应该知道元组的概念，纵观传统 C++ 中的容器，除了 <code>std::pair</code> 外，似乎没有现成的结构能够用来存放不同类型的数据（通常我们会自己定义结构）。但 <code>std::pair</code> 的缺陷是显而易见的，只能保存两个元素。</p>
+<h3 id="元组基本操作"><a class="markdownIt-Anchor" href="#元组基本操作"></a> 元组基本操作</h3>
+<p>关于元组的使用有三个核心的函数：</p>
+<ol>
+<li>
+<p><code>std::make_tuple</code>: 构造元组</p>
+</li>
+<li>
+<p><code>std::get</code>: 获得元组某个位置的值</p>
+</li>
+<li>
+<p><code>std::tie</code>: 元组拆包</p>
+<p>#include <tuple><br>
+#include <iostream></iostream></tuple></p>
+<p>auto get_student(int id)<br>
+{<br>
+// 返回类型被推断为 std::tuple&lt;double, char, std::string&gt;</p>
+<pre><code>if (id == 0)
+    return std::make_tuple(3.8, 'A', &quot;张三&quot;);
+if (id == 1)
+    return std::make_tuple(2.9, 'C', &quot;李四&quot;);
+if (id == 2)
+    return std::make_tuple(1.7, 'D', &quot;王五&quot;);
+return std::make_tuple(0.0, 'D', &quot;null&quot;);   
+// 如果只写 0 会出现推断错误, 编译失败
+</code></pre>
+<p>}</p>
+<p>int main()<br>
+{<br>
+auto student = get_student(0);<br>
+std::cout &lt;&lt; &quot;ID: 0, &quot;<br>
+&lt;&lt; &quot;GPA: &quot; &lt;&lt; std::get&lt;0&gt;(student) &lt;&lt; &quot;, &quot;<br>
+&lt;&lt; &quot;成绩: &quot; &lt;&lt; std::get&lt;1&gt;(student) &lt;&lt; &quot;, &quot;<br>
+&lt;&lt; &quot;姓名: &quot; &lt;&lt; std::get&lt;2&gt;(student) &lt;&lt; ‘\n’;</p>
+<pre><code>double gpa;
+char grade;
+std::string name;
+
+// 元组进行拆包
+std::tie(gpa, grade, name) = get_student(1);
+std::cout &lt;&lt; &quot;ID: 1, &quot;
+&lt;&lt; &quot;GPA: &quot; &lt;&lt; gpa &lt;&lt; &quot;, &quot;
+&lt;&lt; &quot;成绩: &quot; &lt;&lt; grade &lt;&lt; &quot;, &quot;
+&lt;&lt; &quot;姓名: &quot; &lt;&lt; name &lt;&lt; '\n';
+</code></pre>
+<p>}</p>
+</li>
+</ol>
+<p><code>std::get</code> 除了使用常量获取元组对象外，C++14 增加了使用类型来获取元组中的对象：</p>
+<pre><code>std::tuple&lt;std::string, double, double, int&gt; t(&quot;123&quot;, 4.5, 6.7, 8);
+std::cout &lt;&lt; std::get&lt;std::string&gt;(t) &lt;&lt; std::endl;
+std::cout &lt;&lt; std::get&lt;double&gt;(t) &lt;&lt; std::endl;   // 非法, 引发编译期错误
+std::cout &lt;&lt; std::get&lt;3&gt;(t) &lt;&lt; std::endl;
+</code></pre>
+<h3 id="运行期索引"><a class="markdownIt-Anchor" href="#运行期索引"></a> 运行期索引</h3>
+<p>如果你仔细思考一下可能就会发现上面代码的问题，<code>std::get&lt;&gt;</code> 依赖一个编译期的常量，所以下面的方式是不合法的：</p>
+<pre><code>int index = 1;
+std::get&lt;index&gt;(t);
+</code></pre>
+<p>那么要怎么处理？答案是，<strong>标准库做不到</strong>。这里介绍一个使用 <code>boost::variant</code> 配合变长模板参数的黑魔法：</p>
+<blockquote>
+<p><strong>提示</strong>：使用 <code>boost</code> 只是暂时性的解决方案，<code>variant</code> 已在 C++17 中被纳入标准库 <code>std::variant</code>，见扩展主题它的讨论。<a target="_blank" rel="noopener" href="http://en.cppreference.com/w/cpp/utility/variant">http://en.cppreference.com/w/cpp/utility/variant</a></p>
+</blockquote>
+<pre><code>#include &lt;boost/variant.hpp&gt;
+template &lt;size_t n, typename... T&gt;
+boost::variant&lt;T...&gt; _tuple_index(size_t i, const std::tuple&lt;T...&gt;&amp; tpl) &#123;
+    if (i == n)
+        return std::get&lt;n&gt;(tpl);
+    else if (n == sizeof...(T) - 1)
+        throw std::out_of_range(&quot;越界.&quot;);
+    else
+        return _tuple_index&lt;(n &lt; sizeof...(T)-1 ? n+1 : 0)&gt;(i, tpl);
+&#125;
+template &lt;typename... T&gt;
+boost::variant&lt;T...&gt; tuple_index(size_t i, const std::tuple&lt;T...&gt;&amp; tpl) &#123;
+    return _tuple_index&lt;0&gt;(i, tpl);
+&#125;
+</code></pre>
+<p>这样我们就能：</p>
+<pre><code>int i = 1;
+std::cout &lt;&lt; tuple_index(i, t) &lt;&lt; std::endl;
+</code></pre>
+<h3 id="元组合并与遍历"><a class="markdownIt-Anchor" href="#元组合并与遍历"></a> 元组合并与遍历</h3>
+<p>还有一个常见的需求就是合并两个元组，这可以通过 <code>std::tuple_cat</code> 来实现：</p>
+<pre><code>auto new_tuple = std::tuple_cat(get_student(1), std::move(t));
+</code></pre>
+<p>马上就能够发现，应该如何快速遍历一个元组？但是我们刚才介绍了如何在运行期通过非常数索引一个 <code>tuple</code> 那么遍历就变得简单了，首先我们需要知道一个元组的长度，可以：</p>
+<pre><code>template &lt;typename T&gt;
+auto tuple_len(T &amp;tpl) &#123;
+    return std::tuple_size&lt;T&gt;::value;
+&#125;
+</code></pre>
+<p>这样就能够对元组进行迭代了：</p>
+<pre><code>// 迭代
+for(int i = 0; i != tuple_len(new_tuple); ++i)
+    // 运行期索引
+    std::cout &lt;&lt; tuple_index(i, new_tuple) &lt;&lt; std::endl;
+</code></pre>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
+<p>本节简单介绍了 C<ins>11/14 中新增的容器，它们的用法和传统 C</ins> 中已有的容器类似，相对简单，可以根据实际场景丰富的选择需要使用的容器，从而获得更好的性能。</p>
+<p><code>std::tuple</code> 虽然有效，但是标准库提供的功能有限，没办法满足运行期索引和迭代的需求，好在我们还有其他的方法可以自行实现。</p>
+<p>本节的所有代码可以在下面的链接中获取：</p>
+<pre><code>wget http://labfile.oss.aliyuncs.com/courses/605/4.zip
+</code></pre>
+<p>其中包含一个用来编译例程的Makefile:</p>
+<pre><code>$ cd 4 # 4是解压4.zip后得到的文件夹
+$ make # 编译全部例程
+$ make 4.1 # 仅编译4.1.cpp
+</code></pre>
+<h2 id="致谢"><a class="markdownIt-Anchor" href="#致谢"></a> 致谢</h2>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.shiyanlou.com/">实验楼</a></p>
+</blockquote>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">郭鹏真PattenKuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21758/">https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21758/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://guopengzhen.com" target="_blank">郭鹏真PattenKuo的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">程序猿的学习笔记</a><a class="post-meta__tags" href="/tags/C/">C++</a></div><div class="post_share"><div class="social-share" data-image="https://guopengzhen.com/程序猿的学习笔记/13475/C++ New Features.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="Wechat Pay"/></a><div class="post-qr-code-desc">Wechat Pay</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="Alipay"/></a><div class="post-qr-code-desc">Alipay</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/19053/"><img class="next-cover" src="https://guopengzhen.com/程序猿的学习笔记/13475/C++ New Features.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C++11/14中的新特性：对标准库的扩充 - 正则表达式</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/程序猿的学习笔记/18864/" title="C++11/14中的新特性：对标准库的扩充 - 智能指针和引用计数"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/13475/C++ New Features.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-06</div><div class="title">C++11/14中的新特性：对标准库的扩充 - 智能指针和引用计数</div></div></a></div><div><a href="/程序猿的学习笔记/19053/" title="C++11/14中的新特性：对标准库的扩充 - 正则表达式"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/13475/C++ New Features.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-06</div><div class="title">C++11/14中的新特性：对标准库的扩充 - 正则表达式</div></div></a></div><div><a href="/程序猿的学习笔记/27575/" title="C++11 主要的新语言特性（中英文对照）"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-01</div><div class="title">C++11 主要的新语言特性（中英文对照）</div></div></a></div><div><a href="/程序猿的学习笔记/62941/" title="C++11变长参数的宏定义以及' __VA_ARGS__'在Log输出中的应用"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-01</div><div class="title">C++11变长参数的宏定义以及' __VA_ARGS__'在Log输出中的应用</div></div></a></div><div><a href="/uncategorized/8275/" title="C/C++文件IO操作open(), close(), read(), write()函数详解"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-04</div><div class="title">C/C++文件IO操作open(), close(), read(), write()函数详解</div></div></a></div><div><a href="/程序猿的学习笔记/21600/" title="C++ string类成员函数汇总（超全）"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-30</div><div class="title">C++ string类成员函数汇总（超全）</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><label><input id="switch-comments-btn" type="checkbox"/><span class="slider"></span></label><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By 郭鹏真PattenKuo</div><div class="framework-info"><span>Powered by </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'q3J83vICPB2taER4oq48LBuV-gzGzoHsz',
+      appKey: 'Sme7y8okowBtcEXM8OqIfQVf',
+      placeholder: '来都来了，随便说两句吧！',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21758/'
+    this.page.identifier = '程序猿的学习笔记/21758/'
+    this.page.title = 'C++11/14中的新特性：对标准库的扩充 - 新增容器'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: true,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', 'UA-180790879-1', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script><script>(function(){
+  const bp = document.createElement('script');
+  const curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https'){
+  bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  bp.dataset.pjax = ''
+  const s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})()</script></div></body></html>
