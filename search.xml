@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>C++11/14中的新特性：其他杂项</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/24359/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/24359/</url>
+      
+        <content type="html"><![CDATA[<p>尊重原创，转载自<a href="https://www.shiyanlou.com/">实验楼</a>，如需线上实操，请直接访问原教程网址：<a href="https://www.shiyanlou.com/courses/605">点击这里</a>。</p><p>本博文仅作为备份，侵删。</p><p><strong>“C++11/14中的新特性”系列汇总：</strong></p><ol><li><strong><a href="https://blog.svenhetin.com/c-1xzhong-de-nullptr-yu-constexpr/">C++11/14中的新特性：语言可用性的强化</a></strong></li><li><strong><a href="https://blog.svenhetin.com/yu-yan-yun-xing-qi-de-qiang-hua/">C++11/14中的新特性：语言运行期的强化</a></strong></li><li><strong><a href="https://blog.svenhetin.com/c-11-14zhong-de-xin-te-xing-2/">C++11/14中的新特性：对标准库的扩充 - 新增容器</a></strong></li><li><strong><a href="https://blog.svenhetin.com/c-11-14zhong-de-xin-te-xing/">C++11/14中的新特性：对标准库的扩充 - 智能指针和引用计数</a></strong></li><li><strong><a href="https://blog.svenhetin.com/dui-biao-zhun-ku-de-kuo-chong-zheng-ze-biao-da-shi/">C++11/14中的新特性：对标准库的扩充 - 正则表达式</a></strong></li><li><strong><a href="https://blog.svenhetin.com/c-11-14zhong-de-xin-te-xing-3/">C++11/14中的新特性：对标准库的扩充 - 语言级线程支持</a></strong></li><li><strong><a href="https://blog.svenhetin.com/c-11-14zhong-de-xin-te-xing-4/">C++11/14中的新特性：其他杂项</a></strong></li></ol><h2 id="一-新类型"><a class="markdownIt-Anchor" href="#一-新类型"></a> 一、新类型</h2><h3 id="long-long-int"><a class="markdownIt-Anchor" href="#long-long-int"></a> long long int</h3><p><code>long long int</code> 并不是 C<ins>11 最先引入的，其实早在 C99，<code>long long int</code> 就已经被纳入 C 标准中，所以大部分的编译器早已支持。C</ins>11 的工作则是正式把它纳入标准库，规定了一个 <code>long long int</code> 类型至少具备 64 位的比特数。</p><h2 id="二-noexcept-的修饰和操作"><a class="markdownIt-Anchor" href="#二-noexcept-的修饰和操作"></a> 二、noexcept 的修饰和操作</h2><p>C++ 相比于 C 的一大优势就在于 C++ 本身就定义了一套完整的异常处理机制。然而在 C<ins>11 之前，几乎没有人去使用在函数名后书写异常声明表达式，从 C</ins>11 开始，这套机制被弃用，所以我们不去讨论也不去介绍以前这套机制是如何工作如何使用，你更不应该主动去了解它。</p><p>C++11 将异常的声明简化为以下两种情况：</p><ol><li>函数可能抛出任何异常</li><li>函数不能抛出任何异常</li></ol><p>并使用 <code>noexcept</code> 对这两种行为进行限制，例如：</p><pre><code>void may_throw();           // 可能抛出异常void no_throw() noexcept;   // 不可能抛出异常</code></pre><p>使用 <code>noexcept</code> 修饰过的函数如果抛出异常，编译器会使用 <code>std::terminate()</code> 来立即终止程序运行。</p><p><code>noexcept</code> 还能用作操作符，用于操作一个表达式，当表达式无异常时，返回 <code>true</code>，否则返回 <code>false</code>。</p><pre><code>#include &lt;iostream&gt;void may_throw() &#123;    throw true;&#125;auto non_block_throw = []&#123;    may_throw();&#125;;void no_throw() noexcept &#123;    return;&#125;auto block_throw = []() noexcept &#123;    no_throw();&#125;;int main()&#123;    std::cout &lt;&lt; std::boolalpha    &lt;&lt; &quot;may_throw() noexcept? &quot; &lt;&lt; noexcept(may_throw()) &lt;&lt; std::endl    &lt;&lt; &quot;no_throw() noexcept? &quot; &lt;&lt; noexcept(no_throw()) &lt;&lt; std::endl    &lt;&lt; &quot;lmay_throw() noexcept? &quot; &lt;&lt; noexcept(non_block_throw()) &lt;&lt; std::endl    &lt;&lt; &quot;lno_throw() noexcept? &quot; &lt;&lt; noexcept(block_throw()) &lt;&lt; std::endl;    return 0;&#125;</code></pre><p><code>noexcept</code> 修饰完一个函数之后能够起到封锁异常扩散的功效，如果内部产生异常，外部也不会触发。例如：</p><pre><code>try &#123;    may_throw();&#125; catch (...) &#123;    std::cout &lt;&lt; &quot;捕获异常, 来自 my_throw()&quot; &lt;&lt; std::endl;&#125;try &#123;    non_block_throw();&#125; catch (...) &#123;    std::cout &lt;&lt; &quot;捕获异常, 来自 non_block_throw()&quot; &lt;&lt; std::endl;&#125;try &#123;    block_throw();&#125; catch (...) &#123;    std::cout &lt;&lt; &quot;捕获异常, 来自 block_throw()&quot; &lt;&lt; std::endl;&#125;</code></pre><p>最终输出为：</p><pre><code>捕获异常, 来自 my_throw()捕获异常, 来自 non_block_throw()</code></pre><h2 id="三-字面量"><a class="markdownIt-Anchor" href="#三-字面量"></a> 三、字面量</h2><h3 id="原始字符串字面量"><a class="markdownIt-Anchor" href="#原始字符串字面量"></a> 原始字符串字面量</h3><p>传统 C++ 里面要编写一个充满特殊字符的字符串其实是非常痛苦的一件事情，比如一个包含 HTML 本体的字符串需要添加大量的转义符，例如一个Windows 上的文件路径经常会：<code>C:\\What\\The\\Fxxk</code>。</p><p>C++11 提供了原始字符串字面量的写法，可以在一个字符串前方使用 <code>R</code> 来修饰这个字符串，同时，将原始字符串使用括号包裹，例如：</p><pre><code>#include &lt;iostream&gt;#include &lt;string&gt;int main() &#123;    std::string str = R&quot;(C:\\What\\The\\Fxxk)&quot;;    std::cout &lt;&lt; str &lt;&lt; std::endl;    return 0;&#125;</code></pre><h3 id="自定义字面量"><a class="markdownIt-Anchor" href="#自定义字面量"></a> 自定义字面量</h3><p>C++11 引进了自定义字面量的能力，通过重载双引号后缀运算符实现：</p><pre><code>// 字符串字面量自定义必须设置如下的参数列表std::string operator&quot;&quot; _wow1(const char *wow1, size_t len) &#123;    return std::string(wow1)+&quot;woooooooooow, amazing&quot;;&#125;std::string operator&quot;&quot; _wow2 (unsigned long long i) &#123;    return std::to_string(i)+&quot;woooooooooow, amazing&quot;;&#125;int main() &#123;    auto str = &quot;abc&quot;_wow1;    auto num = 1_wow2;    std::cout &lt;&lt; str &lt;&lt; std::endl;    std::cout &lt;&lt; num &lt;&lt; std::endl;    return 0;&#125;</code></pre><p>自定义字面量支持四种字面量：</p><ol><li>整型字面量：重载时必须使用 <code>unsigned long long</code>、<code>const char *</code>、模板字面量算符参数，在上面的代码中使用的是前者；</li><li>浮点型字面量：重载时必须使用 <code>long double</code>、<code>const char *</code>、模板字面量算符；</li><li>字符串字面量：必须使用 <code>(const char *, size_t)</code> 形式的参数表；</li><li>字符字面量：参数只能是 <code>char</code>, <code>wchar_t</code>, <code>char16_t</code>, <code>char32_t</code> 这几种类型。</li></ol><h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2><p>本节介绍的几个特性是从剩余 C++1x 新特性里挑出的使用频次较靠前的几个特性，其中 <code>noexcept</code> 是最为重要的特性，它的一个功能在于能够阻止异常的扩散传播，让编译器能最大限度的优化我们的代码。</p><p>本节的代码可以从下面的链接中获取：</p><pre><code>$ wget http://labfile.oss.aliyuncs.com/courses/605/8.zip</code></pre><p>附带的 Makefile 用法如下</p><pre><code>$ make all # 编译全部例程$ make 8.1 # 仅编译 8.1.cpp</code></pre><h2 id="致谢"><a class="markdownIt-Anchor" href="#致谢"></a> 致谢</h2><blockquote><p><a href="https://www.shiyanlou.com/">实验楼</a></p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++11/14中的新特性：对标准库的扩充 - 语言级线程支持</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40738/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40738/</url>
@@ -182,9 +209,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -211,9 +238,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> Linux </tag>
             
@@ -271,9 +298,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> 前端 </tag>
             
@@ -300,9 +327,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> Linux </tag>
             
@@ -331,9 +358,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> Linux </tag>
             
@@ -385,9 +412,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> JAVA </tag>
             
@@ -414,9 +441,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> JAVA </tag>
             
@@ -470,9 +497,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -499,9 +526,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -555,9 +582,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -605,9 +632,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -634,9 +661,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -1126,9 +1153,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> 工具 </tag>
             
@@ -1265,9 +1292,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
         </tags>
       
@@ -1292,9 +1319,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> Bug </tag>
             
@@ -1400,9 +1427,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
         </tags>
       
@@ -1427,9 +1454,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> 工具 </tag>
             
@@ -2207,9 +2234,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> 工具 </tag>
             
@@ -2236,9 +2263,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> 工具 </tag>
             
@@ -2375,9 +2402,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> Linux </tag>
             
@@ -2406,9 +2433,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> Linux </tag>
             
@@ -2437,9 +2464,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
         </tags>
       
@@ -2464,9 +2491,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
         </tags>
       
@@ -3216,9 +3243,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> 跨境电商 </tag>
             
@@ -3272,9 +3299,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> Linux </tag>
             
