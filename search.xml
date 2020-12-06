@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>C++11/14中的新特性：对标准库的扩充 - 语言级线程支持</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40738/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40738/</url>
+      
+        <content type="html"><![CDATA[<p>尊重原创，转载自<a href="https://www.shiyanlou.com/">实验楼</a>，如需线上实操，请直接访问原教程网址：<a href="https://www.shiyanlou.com/courses/605">点击这里</a>。</p><p>本博文仅作为备份，侵删。</p><p><strong>“C++11/14中的新特性”系列汇总：</strong></p><ol><li><strong><a href="https://blog.svenhetin.com/c-1xzhong-de-nullptr-yu-constexpr/">C++11/14中的新特性：语言可用性的强化</a></strong></li><li><strong><a href="https://blog.svenhetin.com/yu-yan-yun-xing-qi-de-qiang-hua/">C++11/14中的新特性：语言运行期的强化</a></strong></li><li><strong><a href="https://blog.svenhetin.com/c-11-14zhong-de-xin-te-xing-2/">C++11/14中的新特性：对标准库的扩充 - 新增容器</a></strong></li><li><strong><a href="https://blog.svenhetin.com/c-11-14zhong-de-xin-te-xing/">C++11/14中的新特性：对标准库的扩充 - 智能指针和引用计数</a></strong></li><li><strong><a href="https://blog.svenhetin.com/dui-biao-zhun-ku-de-kuo-chong-zheng-ze-biao-da-shi/">C++11/14中的新特性：对标准库的扩充 - 正则表达式</a></strong></li><li><strong><a href="https://blog.svenhetin.com/c-11-14zhong-de-xin-te-xing-3/">C++11/14中的新特性：对标准库的扩充 - 语言级线程支持</a></strong></li><li><strong><a href="https://blog.svenhetin.com/c-11-14zhong-de-xin-te-xing-4/">C++11/14中的新特性：其他杂项</a></strong></li></ol><blockquote><p>提示：本节代码编译需要使用 <code>-pthread</code> 选项，例如：</p></blockquote><pre><code>g++ main.cpp -std=c++14 -pthread</code></pre><h2 id="一-stdthread"><a class="markdownIt-Anchor" href="#一-stdthread"></a> 一、std::thread</h2><p><code>std::thread</code> 用于创建一个执行的线程实例，所以它是一切并发编程的基础，使用时需要包含<thread>头文件，它提供了很多基本的线程操作，例如<code>get_id()</code>来获取所创建线程的线程 ID，例如使用 <code>join()</code> 来加入一个线程等等，例如：</thread></p><pre><code>#include &lt;iostream&gt;#include &lt;thread&gt;void foo() &#123;    std::cout &lt;&lt; &quot;hello world&quot; &lt;&lt; std::endl;&#125;int main() &#123;    std::thread t(foo);    t.join();    return 0;&#125;</code></pre><h2 id="二-stdmutex-stdunique_lock"><a class="markdownIt-Anchor" href="#二-stdmutex-stdunique_lock"></a> 二、 std::mutex, std::unique_lock</h2><p>我们在操作系统的相关知识中已经了解过了有关并发技术的基本知识，mutex 就是其中的核心之一。C++11引入了 mutex 相关的类，其所有相关的函数都放在 <code>&lt;mutex&gt;</code> 头文件中。</p><p><code>std::mutex</code> 是 C<ins>11 中最基本的 <code>mutex</code> 类，通过实例化 <code>std::mutex</code> 可以创建互斥量，而通过其成员函数 <code>lock()</code> 可以仅此能上锁，<code>unlock()</code> 可以进行解锁。但是在在实际编写代码的过程中，最好不去直接调用成员函数，因为调用成员函数就需要在每个临界区的出口处调用 <code>unlock()</code>，当然，还包括异常。这时候 C</ins>11 还为互斥量提供了一个 RAII 语法的模板类<code>std::lock_gurad</code>。RAII 在不失代码简洁性的同时，很好的保证了代码的异常安全性。</p><p>在 RAII 用法下，对于临界区的互斥量的创建只需要在作用域的开始部分，例如：</p><pre><code>void some_operation(const std::string &amp;message) &#123;    static std::mutex mutex;    std::lock_guard&lt;std::mutex&gt; lock(mutex);    // ...操作    // 当离开这个作用域的时候，互斥锁会被析构，同时unlock互斥锁    // 因此这个函数内部的可以认为是临界区&#125;</code></pre><p>由于 C++保证了所有栈对象在声明周期结束时会被销毁，所以这样的代码也是异常安全的。无论 <code>some_operation()</code> 正常返回、还是在中途抛出异常，都会引发堆栈回退，也就自动调用了 <code>unlock()</code>。</p><p>而 <code>std::unique_lock</code> 则相对于 <code>std::lock_guard</code> 出现的，<code>std::unique_lock</code> 更加灵活，<code>std::unique_lock</code> 的对象会以独占所有权（没有其他的 <code>unique_lock</code> 对象同时拥有某个 <code>mutex</code> 对象的所有权）的方式管理 <code>mutex</code> 对象上的上锁和解锁的操作。所以在并发编程中，推荐使用 <code>std::unique_lock</code>。例如：</p><pre><code>#include &lt;iostream&gt;#include &lt;thread&gt;#include &lt;mutex&gt;std::mutex mtx;void block_area() &#123;    std::unique_lock&lt;std::mutex&gt; lock(mtx);    //...临界区&#125;int main() &#123;    std::thread thd1(block_area);    thd1.join();    return 0;&#125;</code></pre><h3 id="stdfuture-stdpackaged_task"><a class="markdownIt-Anchor" href="#stdfuture-stdpackaged_task"></a> std::future, std::packaged_task</h3><p><code>std::future</code> 则是提供了一个访问异步操作结果的途径，这句话很不好理解。为了理解这个特性，我们需要先理解一下在 C++11之前的多线程行为。</p><p>试想，如果我们的主线程 A 希望新开辟一个线程 B 去执行某个我们预期的任务，并返回我一个结果。而这时候，线程 A 可能正在忙其他的事情，无暇顾及 B 的结果，所以我们会很自然的希望能够在某个特定的时间获得线程 B 的结果。</p><p>在 C++11 的 <code>std::future</code> 被引入之前，通常的做法是：创建一个线程A，在线程A里启动任务 B，当准备完毕后发送一个事件，并将结果保存在全局变量中。而主函数线程 A 里正在做其他的事情，当需要结果的时候，调用一个线程等待函数来获得执行的结果。</p><p>而 C++11 提供的 <code>std::future</code> 简化了这个流程，可以用来获取异步任务的结果。自然地，我们很容易能够想象到把它作为一种简单的线程同步手段。</p><p>此外，<code>std::packaged_task</code> 可以用来封装任何可以调用的目标，从而用于实现异步的调用。例如：</p><pre><code>#include &lt;iostream&gt;#include &lt;future&gt;#include &lt;thread&gt;int main() &#123;    // 将一个返回值为7的 lambda 表达式封装到 task 中    // std::packaged_task 的模板参数为要封装函数的类型    std::packaged_task&lt;int()&gt; task([]()&#123;return 7;&#125;);    // 获得 task 的 future    std::future&lt;int&gt; result = task.get_future();    // 在一个线程中执行 task    std::thread(std::move(task)).detach();    std::cout &lt;&lt; &quot;Waiting...&quot;;    result.wait();    // 输出执行结果    std::cout &lt;&lt; &quot;Done!&quot; &lt;&lt; std:: endl &lt;&lt; &quot;Result is &quot; &lt;&lt; result.get() &lt;&lt; '\n';&#125;</code></pre><p>在封装好要调用的目标后，可以使用 <code>get_future()</code> 来获得一个 <code>std::future</code> 对象，以便之后事实线程同步。</p><h3 id="stdcondition_variable"><a class="markdownIt-Anchor" href="#stdcondition_variable"></a> std::condition_variable</h3><p><code>std::condition_variable</code> 是为了解决死锁而生的。当互斥操作不够用而引入的。比如，线程可能需要等待某个条件为真才能继续执行，而一个忙等待循环中可能会导致所有其他线程都无法进入临界区使得条件为真时，就会发生死锁。所以，<code>condition_variable</code> 实例被创建出现主要就是用于唤醒等待线程从而避免死锁。<code>std::condition_variable</code>的 <code>notify_one()</code> 用于唤醒一个线程；<code>notify_all()</code> 则是通知所有线程。下面是一个生产者和消费者模型的例子：</p><pre><code>#include &lt;condition_variable&gt;#include &lt;mutex&gt;#include &lt;thread&gt;#include &lt;iostream&gt;#include &lt;queue&gt;#include &lt;chrono&gt;int main()&#123;    // 生产者数量    std::queue&lt;int&gt; produced_nums;    // 互斥锁    std::mutex m;    // 条件变量    std::condition_variable cond_var;    // 结束标志    bool done = false;    // 通知标志    bool notified = false;    // 生产者线程    std::thread producer([&amp;]() &#123;        for (int i = 0; i &lt; 5; ++i) &#123;            std::this_thread::sleep_for(std::chrono::seconds(1));            // 创建互斥锁            std::unique_lock&lt;std::mutex&gt; lock(m);            std::cout &lt;&lt; &quot;producing &quot; &lt;&lt; i &lt;&lt; '\n';            produced_nums.push(i);            notified = true;            // 通知一个线程            cond_var.notify_one();        &#125;           done = true;        cond_var.notify_one();    &#125;);     // 消费者线程    std::thread consumer([&amp;]() &#123;        std::unique_lock&lt;std::mutex&gt; lock(m);        while (!done) &#123;            while (!notified) &#123;  // 循环避免虚假唤醒                cond_var.wait(lock);            &#125;               while (!produced_nums.empty()) &#123;                std::cout &lt;&lt; &quot;consuming &quot; &lt;&lt; produced_nums.front() &lt;&lt; '\n';                produced_nums.pop();            &#125;               notified = false;        &#125;       &#125;);     producer.join();    consumer.join();&#125;</code></pre><h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2><p>C++11 语言层提供了并发编程的相关支持，本节简单的介绍了 <code>std::thread</code>/<code>std::mutex</code>/<code>std::future</code> 这些并发编程中不可回避的重要工具。</p><blockquote><p>本节提到的内容足以让我们使用不超过 100 行代码编写一个简单的线程池库</p></blockquote><blockquote><p>关于这方面的使用技巧，可以通过项目课：<a href="https://www.shiyanlou.com/courses/565">100 行 C++ 代码实现线程池</a> 进行进一步巩固学习。</p></blockquote><p>本节代码：</p><pre><code>http://labfile.oss.aliyuncs.com/courses/605/7.zip</code></pre><h2 id="致谢"><a class="markdownIt-Anchor" href="#致谢"></a> 致谢</h2><blockquote><p><a href="https://www.shiyanlou.com/">实验楼</a></p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++11/14中的新特性：对标准库的扩充 - 新增容器</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21758/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/21758/</url>
@@ -155,9 +182,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -184,9 +211,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> Linux </tag>
             
@@ -244,9 +271,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> 前端 </tag>
             
@@ -273,9 +300,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> Linux </tag>
             
@@ -304,9 +331,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> Linux </tag>
             
@@ -358,9 +385,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> JAVA </tag>
             
@@ -387,9 +414,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> JAVA </tag>
             
@@ -443,9 +470,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -472,9 +499,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -528,9 +555,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -578,9 +605,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -607,9 +634,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -1099,9 +1126,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> 工具 </tag>
             
@@ -1238,9 +1265,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
         </tags>
       
@@ -1265,9 +1292,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> Bug </tag>
             
@@ -1373,9 +1400,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
         </tags>
       
@@ -1400,9 +1427,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> 工具 </tag>
             
@@ -2180,9 +2207,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> 工具 </tag>
             
@@ -2209,9 +2236,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> 工具 </tag>
             
@@ -2348,9 +2375,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> Linux </tag>
             
@@ -2379,9 +2406,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> Linux </tag>
             
@@ -2410,9 +2437,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
         </tags>
       
@@ -2437,9 +2464,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
         </tags>
       
@@ -3189,9 +3216,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> 跨境电商 </tag>
             
@@ -3245,9 +3272,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> Linux </tag>
             
