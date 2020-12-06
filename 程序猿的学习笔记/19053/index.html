@@ -1,0 +1,448 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>C++11/14中的新特性：对标准库的扩充 - 正则表达式 | 郭鹏真PattenKuo的博客</title><meta name="keywords" content="程序猿的学习笔记,C++"><meta name="author" content="郭鹏真PattenKuo"><meta name="copyright" content="郭鹏真PattenKuo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="尊重原创，转载自实验楼，如需线上实操，请直接访问原教程网址：点击这里。 本博文仅作为备份，侵删。 “C++11&#x2F;14中的新特性”系列汇总：  C++11&#x2F;14中的新特性：语言可用性的强化 C++11&#x2F;14中的新特性：语言运行期的强化 C++11&#x2F;14中的新特性：对标准库的扩充 - 新增容器 C++11&#x2F;14中的新特性：对标准库的扩充 - 智能指针和引用计数 C++11&#x2F;14中的新特性：对标准库的扩">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++11&#x2F;14中的新特性：对标准库的扩充 - 正则表达式">
+<meta property="og:url" content="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/19053/index.html">
+<meta property="og:site_name" content="郭鹏真PattenKuo的博客">
+<meta property="og:description" content="尊重原创，转载自实验楼，如需线上实操，请直接访问原教程网址：点击这里。 本博文仅作为备份，侵删。 “C++11&#x2F;14中的新特性”系列汇总：  C++11&#x2F;14中的新特性：语言可用性的强化 C++11&#x2F;14中的新特性：语言运行期的强化 C++11&#x2F;14中的新特性：对标准库的扩充 - 新增容器 C++11&#x2F;14中的新特性：对标准库的扩充 - 智能指针和引用计数 C++11&#x2F;14中的新特性：对标准库的扩">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://guopengzhen.com/程序猿的学习笔记/13475/C++ New Features.png">
+<meta property="article:published_time" content="2020-12-06T09:36:49.000Z">
+<meta property="article:modified_time" content="2020-12-06T09:37:40.346Z">
+<meta property="article:author" content="郭鹏真PattenKuo">
+<meta property="article:tag" content="程序猿的学习笔记">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://guopengzhen.com/程序猿的学习笔记/13475/C++ New Features.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/19053/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin="crossorigin"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><meta name="360-site-verification" content="89d1ebd5a1eb3151d51240867c24a57e"/><meta name="yandex-verification" content="0557569d0f8ae26b"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1508b58379fb497f1ca8ce5eeb12737f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-180790879-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-180790879-1');
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 郭鹏真PattenKuo","link":"链接: ","source":"来源: 郭鹏真PattenKuo的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-12-06 17:37:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avater.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">115</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">17</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text"> 一、正则表达式简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%AE%E9%80%9A%E5%AD%97%E7%AC%A6"><span class="toc-number">1.1.</span> <span class="toc-text"> 普通字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6"><span class="toc-number">1.2.</span> <span class="toc-text"> 特殊字符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%90%E5%AE%9A%E7%AC%A6"><span class="toc-number">1.3.</span> <span class="toc-text"> 限定符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C-stdregex-%E5%8F%8A%E5%85%B6%E7%9B%B8%E5%85%B3"><span class="toc-number">2.</span> <span class="toc-text"> 二、std::regex 及其相关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text"> 总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%B4%E8%B0%A2"><span class="toc-number">4.</span> <span class="toc-text"> 致谢</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://guopengzhen.com/程序猿的学习笔记/13475/C++ New Features.png)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">郭鹏真PattenKuo的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">C++11/14中的新特性：对标准库的扩充 - 正则表达式</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-12-06T09:36:49.000Z" title="发表于 2020-12-06 17:36:49">2020-12-06</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-06T09:37:40.346Z" title="更新于 2020-12-06 17:37:40">2020-12-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">程序猿的学习笔记</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><p>尊重原创，转载自<a target="_blank" rel="noopener" href="https://www.shiyanlou.com/">实验楼</a>，如需线上实操，请直接访问原教程网址：<a target="_blank" rel="noopener" href="https://www.shiyanlou.com/courses/605">点击这里</a>。</p>
+<p>本博文仅作为备份，侵删。</p>
+<p><strong>“C++11/14中的新特性”系列汇总：</strong></p>
+<ol>
+<li><strong><a target="_blank" rel="noopener" href="https://blog.svenhetin.com/c-1xzhong-de-nullptr-yu-constexpr/">C++11/14中的新特性：语言可用性的强化</a></strong></li>
+<li><strong><a target="_blank" rel="noopener" href="https://blog.svenhetin.com/yu-yan-yun-xing-qi-de-qiang-hua/">C++11/14中的新特性：语言运行期的强化</a></strong></li>
+<li><strong><a target="_blank" rel="noopener" href="https://blog.svenhetin.com/c-11-14zhong-de-xin-te-xing-2/">C++11/14中的新特性：对标准库的扩充 - 新增容器</a></strong></li>
+<li><strong><a target="_blank" rel="noopener" href="https://blog.svenhetin.com/c-11-14zhong-de-xin-te-xing/">C++11/14中的新特性：对标准库的扩充 - 智能指针和引用计数</a></strong></li>
+<li><strong><a target="_blank" rel="noopener" href="https://blog.svenhetin.com/dui-biao-zhun-ku-de-kuo-chong-zheng-ze-biao-da-shi/">C++11/14中的新特性：对标准库的扩充 - 正则表达式</a></strong></li>
+<li><strong><a target="_blank" rel="noopener" href="https://blog.svenhetin.com/c-11-14zhong-de-xin-te-xing-3/">C++11/14中的新特性：对标准库的扩充 - 语言级线程支持</a></strong></li>
+<li><strong><a target="_blank" rel="noopener" href="https://blog.svenhetin.com/c-11-14zhong-de-xin-te-xing-4/">C++11/14中的新特性：其他杂项</a></strong></li>
+</ol>
+<h2 id="一-正则表达式简介"><a class="markdownIt-Anchor" href="#一-正则表达式简介"></a> 一、正则表达式简介</h2>
+<p>正则表达式不是 C++ 语言的一部分，这里仅做简单的介绍。</p>
+<p>正则表达式描述了一种字符串匹配的模式。一般使用正则表达式主要是实现下面三个需求：</p>
+<ol>
+<li>检查一个串是否包含某种形式的子串；</li>
+<li>将匹配的子串替换；</li>
+<li>从某个串中取出符合条件的子串。</li>
+</ol>
+<p>正则表达式是由普通字符（例如 a 到 z）以及特殊字符组成的文字模式。模式描述在搜索文本时要匹配的一个或多个字符串。正则表达式作为一个模板，将某个字符模式与所搜索的字符串进行匹配。</p>
+<h3 id="普通字符"><a class="markdownIt-Anchor" href="#普通字符"></a> 普通字符</h3>
+<p>普通字符包括没有显式指定为元字符的所有可打印和不可打印字符。这包括所有大写和小写字母、所有数字、所有标点符号和一些其他符号。</p>
+<h3 id="特殊字符"><a class="markdownIt-Anchor" href="#特殊字符"></a> 特殊字符</h3>
+<p>特殊字符是正则表达式里有特殊含义的字符，也是正则表达式的核心匹配语法。参见下表：</p>
+<p>特别字符</p>
+<p>描述</p>
+<p><code>$</code></p>
+<p>匹配输入字符串的结尾位置。</p>
+<p><code>(</code>,<code>)</code></p>
+<p>标记一个子表达式的开始和结束位置。子表达式可以获取供以后使用。</p>
+<p><code>*</code></p>
+<p>匹配前面的子表达式零次或多次。</p>
+<p><code>+</code></p>
+<p>匹配前面的子表达式一次或多次。</p>
+<p><code>.</code></p>
+<p>匹配除换行符 <code>\n</code> 之外的任何单字符。</p>
+<p><code>[</code></p>
+<p>标记一个中括号表达式的开始。</p>
+<p><code>?</code></p>
+<p>匹配前面的子表达式零次或一次，或指明一个非贪婪限定符。</p>
+<p><code>\</code></p>
+<p>将下一个字符标记为或特殊字符、或原义字符、或向后引用、或八进制转义符。例如， <code>n</code> 匹配字符 <code>n</code>。<code>\n</code> 匹配换行符。序列 <code>\\</code> 匹配 <code>'\'</code> 字符，而 <code>\(</code> 则匹配 <code>'('</code> 字符。</p>
+<p><code>^</code></p>
+<p>匹配输入字符串的开始位置，除非在方括号表达式中使用，此时它表示不接受该字符集合。</p>
+<p><code>&#123;</code></p>
+<p>标记限定符表达式的开始。</p>
+<p>|</p>
+<p>指明两项之间的一个选择。</p>
+<h3 id="限定符"><a class="markdownIt-Anchor" href="#限定符"></a> 限定符</h3>
+<p>限定符用来指定正则表达式的一个给定的组件必须要出现多少次才能满足匹配。见下表：</p>
+<p>字符</p>
+<p>描述</p>
+<p><code>*</code></p>
+<p>匹配前面的子表达式零次或多次。例如，<code>foo*</code> 能匹配 <code>fo</code> 以及 <code>foooo</code>。<code>*</code> 等价于<code>&#123;0,&#125;</code>。</p>
+<p><code>+</code></p>
+<p>匹配前面的子表达式一次或多次。例如，<code>foo+</code> 能匹配 <code>foo</code> 以及 <code>foooo</code>，但不能匹配 <code>fo</code>。<code>+</code> 等价于 <code>&#123;1,&#125;</code>。</p>
+<p><code>?</code></p>
+<p>匹配前面的子表达式零次或一次。例如，<code>Your(s)?</code> 可以匹配 <code>Your</code> 或 <code>Yours</code> 中的<code>Your</code> 。<code>?</code> 等价于 <code>&#123;0,1&#125;</code>。</p>
+<p><code>&#123;n&#125;</code></p>
+<p><code>n</code> 是一个非负整数。匹配确定的 <code>n</code> 次。例如，<code>f&#123;2&#125;</code> 不能匹配 <code>for</code> 中的 <code>o</code>，但是能匹配 <code>foo</code> 中的两个 <code>o</code>。</p>
+<p><code>&#123;n,&#125;</code></p>
+<p><code>n</code> 是一个非负整数。至少匹配 <code>n</code> 次。例如，<code>f&#123;2,&#125;</code> 不能匹配 <code>for</code> 中的 <code>o</code>，但能匹配 <code>foooooo</code> 中的所有 <code>o</code>。<code>o&#123;1,&#125;</code> 等价于 <code>o+</code>。<code>o&#123;0,&#125;</code> 则等价于 <code>o*</code>。</p>
+<p><code>&#123;n,m&#125;</code></p>
+<p><code>m</code> 和 <code>n</code> 均为非负整数，其中 <code>n</code> 小于等于 <code>m</code>。最少匹配 <code>n</code> 次且最多匹配 <code>m</code> 次。例如，<code>o&#123;1,3&#125;</code> 将匹配 <code>foooooo</code> 中的前三个 <code>o</code>。<code>o&#123;0,1&#125;</code> 等价于 <code>o?</code>。注意，在逗号和两个数之间不能有空格。</p>
+<p>有了这三张表，我们通常就能够读懂几乎所有的正则表达式了。</p>
+<h2 id="二-stdregex-及其相关"><a class="markdownIt-Anchor" href="#二-stdregex-及其相关"></a> 二、std::regex 及其相关</h2>
+<p>对字符串内容进行匹配的最常见手段就是使用正则表达式。可惜在传统 C++ 中正则表达式一直没有得到语言层面的支持，没有纳入标准库，而 C++ 作为一门高性能语言，在后台服务的开发中，对 URL 资源链接进行判断时，使用正则表达式也是工业界最为成熟的普遍做法。</p>
+<p>一般的解决方案就是使用 <code>boost</code> 的正则表达式库。而 C++11 正式将正则表达式的的处理方法纳入标准库的行列，从语言级上提供了标准的支持，不再依赖第三方。</p>
+<p>C++11 提供的正则表达式库操作 <code>std::string</code> 对象，模式 <code>std::regex</code> (本质是 <code>std::basic_regex</code>)进行初始化，通过 <code>std::regex_match</code> 进行匹配，从而产生 <code>std::smatch</code> （本质是 <code>std::match_results</code> 对象）。</p>
+<p>我们通过一个简单的例子来简单介绍这个库的使用。考虑下面的正则表达式</p>
+<ul>
+<li><code>[a-z]+\.txt</code>: 在这个正则表达式中, <code>[a-z]</code> 表示匹配一个小写字母, <code>+</code> 可以使前面的表达式匹配多次，因此 <code>[a-z]+</code> 能够匹配一个小写字母组成的字符串。在正则表达式中一个 <code>.</code> 表示匹配任意字符，而 <code>\.</code> 则表示匹配字符 <code>.</code>，最后的 <code>txt</code> 表示严格匹配 <code>txt</code> 则三个字母。因此这个正则表达式的所要匹配的内容就是由纯小写字母组成的文本文件。</li>
+</ul>
+<p><code>std::regex_match</code> 用于匹配字符串和正则表达式，有很多不同的重载形式。最简单的一个形式就是传入<code>std::string</code> 以及一个 <code>std::regex</code> 进行匹配，当匹配成功时，会返回 <code>true</code>，否则返回 <code>false</code>。例如：</p>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;regex&gt;
+
+int main() &#123;
+    std::string fnames[] = &#123;&quot;foo.txt&quot;, &quot;bar.txt&quot;, &quot;test&quot;, &quot;a0.txt&quot;, &quot;AAA.txt&quot;&#125;;
+    // 在 C++ 中 `\` 会被作为字符串内的转义符，为使 `\.` 作为正则表达式传递进去生效，需要对 `\` 进行二次转义，从而有 `\\.`
+    std::regex txt_regex(&quot;[a-z]+\\.txt&quot;);
+    for (const auto &amp;fname: fnames)
+        std::cout &lt;&lt; fname &lt;&lt; &quot;: &quot; &lt;&lt; std::regex_match(fname, txt_regex) &lt;&lt; std::endl;
+&#125;
+</code></pre>
+<p>另一种常用的形式就是依次传入 <code>std::string</code>/<code>std::smatch</code>/<code>std::regex</code> 三个参数，其中 <code>std::smatch</code> 的本质其实是 <code>std::match_results</code>，在标准库中， <code>std::smatch</code> 被定义为了 <code>std::match_results&lt;std::string::const_iterator&gt;</code>，也就是一个子串迭代器类型的 <code>match_results</code>。使用 <code>std::smatch</code> 可以方便的对匹配的结果进行获取，例如：</p>
+<pre><code>std::regex base_regex(&quot;([a-z]+)\\.txt&quot;);
+std::smatch base_match;
+for(const auto &amp;fname: fnames) &#123;
+    if (std::regex_match(fname, base_match, base_regex)) &#123;
+        // sub_match 的第一个元素匹配整个字符串
+        // sub_match 的第二个元素匹配了第一个括号表达式
+        if (base_match.size() == 2) &#123;
+            std::string base = base_match[1].str();
+            std::cout &lt;&lt; &quot;sub-match[0]: &quot; &lt;&lt; base_match[0].str() &lt;&lt; std::endl;
+            std::cout &lt;&lt; fname &lt;&lt; &quot; sub-match[1]: &quot; &lt;&lt; base &lt;&lt; std::endl;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>以上两个代码段的输出结果为：</p>
+<pre><code>foo.txt: 1
+bar.txt: 1
+test: 0
+a0.txt: 0
+AAA.txt: 0
+sub-match[0]: foo.txt
+foo.txt sub-match[1]: foo
+sub-match[0]: bar.txt
+bar.txt sub-match[1]: bar
+</code></pre>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
+<p>本节简单介绍了正则表达式本身，然后根据使用正则表达式的主要需求，通过一个实际的例子介绍了正则表达式库的使用。</p>
+<p>本节提到的内容足以让我们开发编写一个简单的 Web 框架中关于URL匹配的功能。</p>
+<p>关于这方面的开发和细节，可以通过项目课：<a target="_blank" rel="noopener" href="https://www.shiyanlou.com/courses/568">C++ 开发 Web 服务框架</a> 进行进一步学习。</p>
+<p>本节代码：</p>
+<pre><code>http://labfile.oss.aliyuncs.com/courses/605/6.zip
+</code></pre>
+<h2 id="致谢"><a class="markdownIt-Anchor" href="#致谢"></a> 致谢</h2>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.shiyanlou.com/">实验楼</a></p>
+</blockquote>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">郭鹏真PattenKuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/19053/">https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/19053/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://guopengzhen.com" target="_blank">郭鹏真PattenKuo的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">程序猿的学习笔记</a><a class="post-meta__tags" href="/tags/C/">C++</a></div><div class="post_share"><div class="social-share" data-image="https://guopengzhen.com/程序猿的学习笔记/13475/C++ New Features.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="Wechat Pay"/></a><div class="post-qr-code-desc">Wechat Pay</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="Alipay"/></a><div class="post-qr-code-desc">Alipay</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/18864/"><img class="next-cover" src="https://guopengzhen.com/程序猿的学习笔记/13475/C++ New Features.png" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C++11/14中的新特性：对标准库的扩充 - 智能指针和引用计数</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/程序猿的学习笔记/18864/" title="C++11/14中的新特性：对标准库的扩充 - 智能指针和引用计数"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/13475/C++ New Features.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-06</div><div class="title">C++11/14中的新特性：对标准库的扩充 - 智能指针和引用计数</div></div></a></div><div><a href="/程序猿的学习笔记/27575/" title="C++11 主要的新语言特性（中英文对照）"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-01</div><div class="title">C++11 主要的新语言特性（中英文对照）</div></div></a></div><div><a href="/程序猿的学习笔记/62941/" title="C++11变长参数的宏定义以及' __VA_ARGS__'在Log输出中的应用"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-01</div><div class="title">C++11变长参数的宏定义以及' __VA_ARGS__'在Log输出中的应用</div></div></a></div><div><a href="/uncategorized/8275/" title="C/C++文件IO操作open(), close(), read(), write()函数详解"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-04</div><div class="title">C/C++文件IO操作open(), close(), read(), write()函数详解</div></div></a></div><div><a href="/程序猿的学习笔记/21600/" title="C++ string类成员函数汇总（超全）"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-30</div><div class="title">C++ string类成员函数汇总（超全）</div></div></a></div><div><a href="/程序猿的学习笔记/10762/" title="C++中std::lock_guard 使用"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-29</div><div class="title">C++中std::lock_guard 使用</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><label><input id="switch-comments-btn" type="checkbox"/><span class="slider"></span></label><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By 郭鹏真PattenKuo</div><div class="framework-info"><span>Powered by </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'q3J83vICPB2taER4oq48LBuV-gzGzoHsz',
+      appKey: 'Sme7y8okowBtcEXM8OqIfQVf',
+      placeholder: '来都来了，随便说两句吧！',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://guopengzhen.com/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/19053/'
+    this.page.identifier = '程序猿的学习笔记/19053/'
+    this.page.title = 'C++11/14中的新特性：对标准库的扩充 - 正则表达式'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: true,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', 'UA-180790879-1', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script><script>(function(){
+  const bp = document.createElement('script');
+  const curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https'){
+  bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  bp.dataset.pjax = ''
+  const s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})()</script></div></body></html>
