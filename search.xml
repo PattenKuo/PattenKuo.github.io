@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>C++数据类型及各种形式的输入输出汇总</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/44614/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/44614/</url>
+      
+        <content type="html"><![CDATA[<h2 id="数据类型输入输出汇总"><a class="markdownIt-Anchor" href="#数据类型输入输出汇总"></a> 数据类型输入输出汇总</h2><p>巩固C++知识时数据类型及输入输出形式汇总：</p><table><thead><tr><th>数据类型</th><th>位</th><th>中文名</th><th>输入输出形式</th></tr></thead><tbody><tr><td>char</td><td>1个字节</td><td>字符型</td><td>%c</td></tr><tr><td>int</td><td>4个字节</td><td>整型</td><td>%d</td></tr><tr><td>short(short int)</td><td>2个字节</td><td>短整型</td><td>%d</td></tr><tr><td>long(long int)</td><td>8个字节</td><td>长整型</td><td>%ld</td></tr><tr><td>long long(long long int)</td><td>8个字节</td><td>长整型（C++标准）</td><td>%lld</td></tr><tr><td>float</td><td>4个字节</td><td>浮点型</td><td>%f</td></tr><tr><td>double</td><td>8个字节</td><td>双精度浮点型</td><td>% lf</td></tr></tbody></table><h2 id="补充"><a class="markdownIt-Anchor" href="#补充"></a> 补充</h2><p>另外，补充如下：</p><ul><li><code>%e</code> 表示按指数形式的浮点数的格式输出</li><li><code>%g</code> 表示自动选择合适的表示法输出</li><li><code>%u</code> 表示输出无符号的<code>unsigned</code>（比如<code>unsigned long long int</code> 的输入输出形式就是<code>%llu</code>）;</li><li><code>printf(&quot;%%&quot;);</code>这样才能输出符号%</li></ul><h2 id="数据类型简介"><a class="markdownIt-Anchor" href="#数据类型简介"></a> 数据类型简介</h2><ul><li><code>char</code>：<code>char</code>为一个字节，所以<code>char</code>的<code>unsigned</code>的范围是0到255，<code>signed</code>类型的话就是-128到127(-28-&gt;27-1)；<strong>输入输出</strong>：<code>%c</code></li><li><code>int</code>：在32位系统中（现在普遍是int32位），<code>signed</code>的范围是(-216到215-1)，即是-2147483648~+2147483647，<code>unsigned</code>类型 的<code>int</code> 范围：0~4294967295 即（ 0到232-1）；<strong>输入输出</strong>：<code>%d</code></li><li><code>short int</code>：<code>short int</code> 只有<code>int</code>的一半， 也就是216， 范围为(0到65536-1)；<strong>输入输出</strong>：<code>%d</code></li><li><code>long</code>：<code>long</code>和<code>long int</code> 都是4字节， 要注意：<code>long int</code>的大小和系统是32位还是64位的有关系，事实上，<code>long</code>整型与<code>int</code>能储存的长度差不多；输入输出：<code>%ld</code></li><li><code>long long int</code>：<code>long long int</code>有8字节， 表示范围为-263到263-1，也就是10的18次方左右；<strong>输入输出</strong>：<code>%lld</code></li><li><code>float</code>：<code>float</code>占用的内存为4个字节， 和<code>int</code>占用的空间是一样的， 只是保存的方式不同， <code>float</code>采用的是指数的方式保存数字， 精确度会有问题，储存长度大概与<code>int</code>相差无几。（稍微比<code>int</code>大）；<strong>输入输出</strong>：<code>%f</code></li><li><code>double</code>：<code>double</code>占用的8个字节的内存， 所以表示范围会比<code>float</code>更大， <code>double</code>保存数值的方式也是为指数保存， 所以也有精确度的问题，表示的长度大概是10的32次方。<strong>输入输出</strong>：<code>%lf</code></li></ul><h2 id="scanf和print函数"><a class="markdownIt-Anchor" href="#scanf和print函数"></a> scanf()和print()函数</h2><blockquote><p><code>scanf()</code>函数一般格式是：scanf(格式控制, 输出表列)<br><code>printf()</code>函数的一般格式是:printf(格式控制,输出表列)</p></blockquote><h3 id="用scanf和printf函数进行输入和输出"><a class="markdownIt-Anchor" href="#用scanf和printf函数进行输入和输出"></a> 用scanf和printf函数进行输入和输出</h3><p>例子：</p><pre><code>#include &lt;iostream&gt;using namespace std;int main( )&#123;  int a; float b; char c;  scanf(&quot;%d %c %f&quot;,&amp;a,&amp;c,&amp;b);  //注意在变量名前要加地址运算符&amp;  printf(&quot;a=%d,b=%f,c=%c\n&quot;,a,b,c);  return 0;&#125;</code></pre><p>输入输出如下：</p><pre><code>patten@patten-PC:~/Desktop/cpp$ g++ test.cpp patten@patten-PC:~/Desktop/cpp$ ./a.out 2 g 2.19a=2,b=2.190000,c=gpatten@patten-PC:~/Desktop/cpp$</code></pre><p><strong><strong>相关文章</strong></strong>：《<strong><a href="https://blog.svenhetin.com/bian-chang-can-shu-de-hong-ding-yi-yi-ji-__va_args__/">C++11变长参数的宏定义以及 “__VA_ARGS__”在Log输出中的应用</a></strong>》</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>类似Windows的WinSCP的FTP工具FileZilla简介（WinSCP for linux）</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/28151/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/28151/</url>
