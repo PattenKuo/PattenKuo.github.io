@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>C++ 中实现类似split()的字符串分割函数</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/8319/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/8319/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2><p>C++ 至今为止（2019/09/05）没有官方实现的字符串分割函数。相比 Python、Java 等语言，多少是有些不便的。</p><blockquote><p><strong>参考资料</strong>：<br>1、《<a href="https://www.zhihu.com/question/36642771">C++ 的 string 为什么不提供 split 函数？</a>》<br>2、《<a href="https://www.reddit.com/r/cpp/comments/5dxnwm/why_doesnt_stdstring_have_a_split_function/">Why doesn’t std::string have a split function</a>》</p></blockquote><p>这里我们来在 C++ 中实现字符串分割函数。</p><h2 id="编译环境"><a class="markdownIt-Anchor" href="#编译环境"></a> <strong><strong><strong>编译环境</strong></strong></strong></h2><p><strong><strong><strong><strong>系统环境：</strong></strong></strong></strong></p><pre><code>patten@patten-hp:~$ sudo lsb_release -aNo LSB modules are available.Distributor ID:UbuntuDescription:Ubuntu 16.04.6 LTSRelease:16.04Codename:xenialpatten@patten-hp:~$</code></pre><p><strong><strong><strong><strong>IDE环境</strong></strong></strong></strong>：Visual Studio Code，Version: 1.36.1</p><h2 id="利用来自-c-的-strtok-函数"><a class="markdownIt-Anchor" href="#利用来自-c-的-strtok-函数"></a> 利用来自 C 的 <code>strtok</code> 函数</h2><p>C 语言的 <code>string.h</code> 中提供了名为 <code>strtok</code> 函数，用于对 C 风格的字符串进行分割。其函数签名为：</p><pre><code>char* strtok(char* str, const char* delim);</code></pre><p>当 <code>str</code> 不是空指针时，<code>strtok</code> 会从头开始寻找第一个合法的分隔符，而后将分隔符替换成 <code>\0</code>，并将分隔符的位置保存在一个静态变量中，最后返回 <code>str</code>。这样，按照 C 风格的字符串，我们就能获取分割得到的第一个 token。当 <code>str</code> 是空指针时，<code>strtok</code> 将会从记录的空指针处继续尝试分割。</p><p>因此，我们可以定义这样的 <code>split()</code> 函数。</p><pre><code>// main.cpp#include &lt;unistd.h&gt;#include &lt;cstdio&gt;#include &lt;iostream&gt;#include &lt;sstream&gt;#include &lt;string&gt;#include &lt;cstring&gt;#include &lt;vector&gt;using namespace std;void split(const std::string&amp; s, std::vector&lt;std::string&gt;&amp; sv, const char* delim = &quot; &quot;) &#123;  sv.clear();                             // 1.  char* buffer = new char[s.size() + 1];  // 2.  std::copy(s.begin(), s.end(), buffer);  // 3.  char* p = std::strtok(buffer, delim);   // 4.  do &#123;    sv.push_back(p);                         // 5.  &#125; while ((p = std::strtok(NULL, delim)));  // 6.  return;&#125;int main() &#123;  string pos(&quot;-5,6,0&quot;);  int buf[3];  std::vector&lt;std::string&gt; sv;  split(pos, sv, &quot;,&quot;);  for (int i = 0; i &lt; 3; i++) &#123;    buf[i] = std::stoi(sv.at(i));  &#125;  printf(&quot;(%d, %d, %d) \n&quot;, buf[0], buf[1], buf[2]);&#125;</code></pre><p>对于 <code>split</code> 函数来说，它无法预知传入的 <code>sv</code> 变量的情况。因此，在 (1) 处，我们将 <code>sv</code> 这个 <code>std::vector&lt;std::string&gt;</code> 清空备用。由于 <code>std::strtok</code> 函数需要修改传入的 <code>str</code> 的内容，所以它需要 <code>char*</code> 类型的参数。故而，在 (2)(3) 两处，我们将 <code>std::string</code> 当中的内容复制一份。(4)(6) 两处对 <code>std::strtok</code> 的调用，帮助我们将 token 逐个压入 <code>sv</code> 当中。</p><p>在 C++11 及更高版本中，(5) 可替换为 <code>sv.emplace_back(p)</code>，以避免额外的拷贝。</p><p>上述代码的结果是：</p><pre><code>patten@patten-hp:~/workspace/others/cpp/split$ g++ main.cpp  -std=c++11patten@patten-hp:~/workspace/others/cpp/split$ ./a.out (-5, 6, 0) patten@patten-hp:~/workspace/others/cpp/split$</code></pre><h2 id="利用-c-中的流"><a class="markdownIt-Anchor" href="#利用-c-中的流"></a> <strong><strong>利用 C++ 中的流</strong></strong></h2><p>实际上，利用纯 C++ 风格的代码，也是可以实现一个优雅的字符串分割函数的。</p><p>在《<a href="https://liam.page/2017/03/13/read-substrings-from-paired-delimiters-in-Cpp/">在 C++ 中读取字符串中成对定界符中的子串</a>》中，介绍了 C++ 的 <code>std::getline</code> 函数。它接收一个输入流，将输入流至行末/分隔符部分的字符串保存在临时的字符串中；同时，返回输入流的左值引用。考虑到输入流本身可以用作条件判断，我们可以将 <code>std::getline</code> 与 <code>while</code> 循环联用，达成目的。</p><p>简单实现如下：</p><pre><code>//main.cpp#include &lt;unistd.h&gt;#include &lt;cstdio&gt;#include &lt;iostream&gt;#include &lt;sstream&gt;#include &lt;string&gt;#include &lt;vector&gt;using namespace std;void split(const std::string&amp; s, std::vector&lt;std::string&gt;&amp; sv, const char delim = ' ') &#123;  sv.clear();  std::istringstream iss(s);  std::string temp;  while (std::getline(iss, temp, delim)) &#123;    sv.emplace_back(std::move(temp));  &#125;  return;&#125;int main() &#123;  string pos(&quot;-5,6,0&quot;);  int buf[3];  std::vector&lt;std::string&gt; sv;  split(pos, sv, ',');  for (int i = 0; i &lt; 3; i++) &#123;    buf[i] = std::stoi(sv.at(i));  &#125;  printf(&quot;(%d, %d, %d) \n&quot; , buf[0], buf[1], buf[2]);&#125;</code></pre><p>代码中，我们借助字符串输入流 <code>istringstream</code> 处理带分割的字符串 <code>s</code>。而后将各个 <code>delim</code> 之间的内容，保存在临时字符串 <code>temp</code> 当中，并移动到向量 <code>sv</code> 的末尾。</p><p>上述代码的结果是：</p><pre><code>patten@patten-hp:~/workspace/others/cpp/split$ g++ main.cpp  -std=c++11patten@patten-hp:~/workspace/others/cpp/split$ ./a.out (-5, 6, 0) patten@patten-hp:~/workspace/others/cpp/split$</code></pre><h2 id="致谢"><a class="markdownIt-Anchor" href="#致谢"></a> 致谢</h2><blockquote><p><a href="https://liam.page/">始终</a>《<a href="https://liam.page/2017/03/13/read-substrings-from-paired-delimiters-in-Cpp/">在 C++ 中读取字符串中成对定界符中的子串</a>》</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Android 将后台应用自动切换到前台</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/12496/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/12496/</url>
