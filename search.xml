@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>C/C++中的_access函数判断文件是否存在</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/3461/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/3461/</url>
+      
+        <content type="html"><![CDATA[<h3 id="引言"><a class="markdownIt-Anchor" href="#引言"></a> 引言：</h3><p><code>access</code>函数主要用于文件读取方面——判断文件是否存在，并判断文件是否可写。Linux下，该函数为access，位于头文件&lt;unistd.h&gt;中，而在标准C++中，该函数为_access，位于头文件&lt;io.h&gt;中，两者的使用方法基本相同，只是在一些参数方面可能会有一些不同的宏定义。</p><h2 id="windows环境"><a class="markdownIt-Anchor" href="#windows环境"></a> windows环境</h2><h3 id="windows下函数原型"><a class="markdownIt-Anchor" href="#windows下函数原型"></a> windows下函数原型：</h3><p><strong>头文件</strong>：<code>&lt;io.h&gt;</code><br><strong>函数原型</strong>：<code>int _access(const char *pathname, int mode);</code><br><strong>参数</strong>：<code>pathname</code> 为文件路径或目录路径 <code>mode</code> 为访问权限（在不同系统中可能用不能的宏定义重新定义）<br><strong>返回值</strong>：如果文件具有指定的访问权限，则函数返回<code>0</code>；如果文件不存在或者不能访问指定的权限，则返回<code>-1</code>.<br><strong>备注</strong>：当<code>pathname</code>为文件时，<code>_access</code>函数判断文件是否存在，并判断文件是否可以用<code>mode</code>值指定的模式进行访问。当<code>pathname</code>为目录时，<code>_access</code>只判断指定目录是否存在，在<code>Windows NT</code>和<code>Windows 2000</code>中，所有的目录都只有读写权限。<br><code>mode</code>的值和含义如下所示：</p><ul><li><code>00</code>——只检查文件是否存在</li><li><code>02</code>——写权限</li><li><code>04</code>——读权限</li><li><code>06</code>——读写权限<br>对应的还有<code>_access</code>的宽字符版本，用法相同。</li></ul><h3 id="windows下英文原文定义"><a class="markdownIt-Anchor" href="#windows下英文原文定义"></a> windows下英文原文定义：</h3><p><strong>access</strong><br>Synopsis：<br>　　#include<br>　　<code>int _access(const char *path,int mode);</code><br><strong>Description</strong><br>　　The access function, when used with files, determines whether the specified file exists and can be accessed as specified by the value of mode. When used with directories, _access determines only whether the specified directory exists; since under Windows all directories have read and write access.</p><p>The mode argument can be one of :<br>　　<code>00</code> Existence only<br>　　<code>02</code> Write permission<br>　　<code>04</code> Read permission<br>　　<code>06</code> Read and write permission<br><strong>Returns</strong><br>　　Zero if the file has the given mode, <code>-1</code> if an error occurs.<br><strong>Portability :</strong><br>　　Windows. Under Unix a similar function exists too.<br>　　Note that lcc-win32 accepts both _access (Microsoft convention) and access.</p><h3 id="windows下代码实例"><a class="markdownIt-Anchor" href="#windows下代码实例"></a> Windows下代码实例：</h3><p>该段代码未做验证，请读者自行验证：</p><pre><code>#include &lt;stdio.h&gt;#include &lt;stdlib.h&gt;#include &lt;windows.h&gt;#include &lt;io.h&gt;#include &lt;map&gt;#include &lt;math.h&gt;#include &lt;list&gt;#include &lt;string&gt;#include &lt;sstream&gt;#include &lt;algorithm&gt;// std::find(...)#include &lt;vector&gt;using namespace std;//#include &quot;stdafx.h&quot;#include &lt;iostream&gt;#include &lt;windows.h&gt;#include &lt;math.h&gt;using namespace std;void main()&#123;    int iRtn = _access(&quot;D:/G_资料_2018/20181119_xx&quot;, 0);// 这个文件夹是 存在的    printf(&quot;_access return(1) : %d\n&quot;, iRtn);    iRtn = _access(&quot;D:/G_资料_2018/20181119_xx_No&quot;, 0);// 这个文件夹是 不存在的    printf(&quot;_access return(2) : %d\n&quot;, iRtn);    iRtn = _access(&quot;D:/G_资料_2018/20181119_xx/芜湖两条线路/华二112线.g&quot;, 0);// 这个文件是 存在的    printf(&quot;_access return(3) : %d\n&quot;, iRtn);    iRtn = _access(&quot;D:/G_资料_2018/20181119_xx/芜湖两条线路/华二112线.no.g&quot;, 0);// 这个文件是 不存在的    printf(&quot;_access return(4) : %d\n&quot;, iRtn);    system(&quot;pause&quot;);&#125;</code></pre><h2 id="linux环境"><a class="markdownIt-Anchor" href="#linux环境"></a> Linux环境</h2><h3 id="linux下函数原型"><a class="markdownIt-Anchor" href="#linux下函数原型"></a> Linux下函数原型：</h3><p><strong>函数功能</strong>：检查调用进程是否可以对指定的文件执行某种操作。<br><strong>函数头文件</strong>：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">#include &lt;unistd.h&gt;</span><br></pre></td></tr></table></figure><p><strong>函数</strong></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int access(const char * pathname, int mode)</span><br></pre></td></tr></table></figure><p><strong>形参</strong><br><code>pathname</code>:需要检测的文件路劲名<br><code>mode</code>:需要测试的操作模式。<br><strong>函数返回值说明</strong><br>成功执行时，返回<code>0</code>。失败返回<code>-1</code>，errno被设为以下的某个值：</p><ul><li><code>EINVAL</code>： 模式值无效</li><li><code>EACCES</code>： 文件或路径名中包含的目录不可访问</li><li><code>ELOOP</code>： 解释路径名过程中存在太多的符号连接</li><li><code>ENAMETOOLONG</code>：路径名太长</li><li><code>ENOENT</code>：路径名中的目录不存在或是无效的符号连接</li><li><code>ENOTDIR</code>： 路径名中当作目录的组件并非目录</li><li><code>EROFS</code>： 文件系统只读</li><li><code>EFAULT</code>： 路径名指向可访问的空间外</li><li><code>EIO</code>：输入输出错误</li><li><code>ENOMEM</code>： 不能获取足够的内核内存</li><li><code>ETXTBSY</code>：对程序写入出错<br><strong>mode说明</strong></li></ul><table><thead><tr><th>参数名</th><th>功用</th></tr></thead><tbody><tr><td>R_OK</td><td>测试读许可权</td></tr><tr><td>W_OK</td><td>测试写许可权</td></tr><tr><td>X_OK</td><td>测试执行许可权</td></tr><tr><td>F_OK</td><td>测试文件是否存在</td></tr></tbody></table><h3 id="linux下代码实例"><a class="markdownIt-Anchor" href="#linux下代码实例"></a> Linux下代码实例：</h3><pre><code>//main.cpp#include &lt;stdio.h&gt;#include &lt;unistd.h&gt;int main(void) &#123;  if (access(&quot;test.txt&quot;, R_OK) == 0) printf(&quot;READ OK\n&quot;);  if (access(&quot;test.txt&quot;, W_OK) == 0) printf(&quot;WRITE OK\n&quot;);  if (access(&quot;test.txt&quot;, X_OK) == 0) printf(&quot;EXEC OK\n&quot;);  if (access(&quot;test.txt&quot;, F_OK) == 0) &#123;    printf(&quot;File exist\n&quot;);  &#125; else &#123;    printf(&quot;File doesn't exist\n&quot;);  &#125;  return 0;&#125;</code></pre><h3 id="编译运行结果"><a class="markdownIt-Anchor" href="#编译运行结果"></a> 编译运行结果</h3><pre><code>patten@patten-hp:~/workspace/others/cpp/demo$ g++ main.cpp -std=c++11patten@patten-hp:~/workspace/others/cpp/demo$ ./a.out File doesn't existpatten@patten-hp:~/workspace/others/cpp/demo$</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++11/14中的新特性：其他杂项</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/24359/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/24359/</url>
