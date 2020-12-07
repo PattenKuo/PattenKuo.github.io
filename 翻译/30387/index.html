@@ -1,0 +1,387 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>size_t为什么重要-Why size_t matters | 郭鹏真PattenKuo的博客</title><meta name="keywords" content="程序猿的学习笔记,翻译"><meta name="author" content="郭鹏真PattenKuo"><meta name="copyright" content="郭鹏真PattenKuo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="翻译自Dan Saks（7&#x2F;3&#x2F;2007 12:27 PM）《Why size_t matters》   写在翻译前的话 为unsigned int不是唯一的无符号整数类型。 size_t可以是unsigned char，unsigned short，unsigned int，unsigned long或unsigned long long中的任何一个，具体取决于实现。  if it is us">
+<meta property="og:type" content="article">
+<meta property="og:title" content="size_t为什么重要-Why size_t matters">
+<meta property="og:url" content="https://guopengzhen.com/%E7%BF%BB%E8%AF%91/30387/index.html">
+<meta property="og:site_name" content="郭鹏真PattenKuo的博客">
+<meta property="og:description" content="翻译自Dan Saks（7&#x2F;3&#x2F;2007 12:27 PM）《Why size_t matters》   写在翻译前的话 为unsigned int不是唯一的无符号整数类型。 size_t可以是unsigned char，unsigned short，unsigned int，unsigned long或unsigned long long中的任何一个，具体取决于实现。  if it is us">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://guopengzhen.com/img/avater.jpg">
+<meta property="article:published_time" content="2020-12-07T01:16:43.000Z">
+<meta property="article:modified_time" content="2020-12-07T01:23:06.996Z">
+<meta property="article:author" content="郭鹏真PattenKuo">
+<meta property="article:tag" content="程序猿的学习笔记">
+<meta property="article:tag" content="翻译">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://guopengzhen.com/img/avater.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://guopengzhen.com/%E7%BF%BB%E8%AF%91/30387/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin="crossorigin"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><meta name="360-site-verification" content="89d1ebd5a1eb3151d51240867c24a57e"/><meta name="yandex-verification" content="0557569d0f8ae26b"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1508b58379fb497f1ca8ce5eeb12737f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-180790879-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-180790879-1');
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 郭鹏真PattenKuo","link":"链接: ","source":"来源: 郭鹏真PattenKuo的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-12-07 09:23:06'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avater.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">124</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">18</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E7%BF%BB%E8%AF%91%E5%89%8D%E7%9A%84%E8%AF%9D"><span class="toc-number">1.</span> <span class="toc-text"> 写在翻译前的话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">2.</span> <span class="toc-text"> 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%8F%AF%E7%A7%BB%E6%A4%8D%E6%80%A7%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text"> 一个可移植性的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8size_t"><span class="toc-number">4.</span> <span class="toc-text"> 使用size_t</span></a></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://guopengzhen.com/img/avater.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">郭鹏真PattenKuo的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">size_t为什么重要-Why size_t matters</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-12-07T01:16:43.000Z" title="发表于 2020-12-07 09:16:43">2020-12-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-07T01:23:06.996Z" title="更新于 2020-12-07 09:23:06">2020-12-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BF%BB%E8%AF%91/">翻译</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>8分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><blockquote>
+<p>翻译自<strong>Dan Saks</strong>（7/3/2007 12:27 PM）《<a target="_blank" rel="noopener" href="http://web.archive.org/web/20101209143037/http://www.eetimes.com/discussion/programming-pointers/4026076/Why-size-t-matters?">Why size_t matters</a>》</p>
+</blockquote>
+<h2 id="写在翻译前的话"><a class="markdownIt-Anchor" href="#写在翻译前的话"></a> 写在翻译前的话</h2>
+<p>为<code>unsigned int</code>不是唯一的无符号整数类型。 <code>size_t</code>可以是<code>unsigned char</code>，<code>unsigned short</code>，<code>unsigned int</code>，<code>unsigned long</code>或<code>unsigned long long</code>中的任何一个，具体取决于实现。</p>
+<blockquote>
+<p>if it is use to represent non negative value so why we not using <code>unsigned int</code> instead of <code>size_t</code> .</p>
+</blockquote>
+<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<p><strong>适当地使用<code>size_t</code>可以改善你代码的可移植性、高效性或者可读性。或许同时提高三者。</strong></p>
+<p>标准C库中的许多函数接受参数或返回以字节表示对象大小的值。例如，<code>malloc(n)</code>中的惟一参数指定要分配的对象的大小，<code>memcpy(s1, s2, n)</code>中的最后一个参数指定要复制的对象的大小。<code>strlen(s)</code>的返回值生成以<code>null</code>结尾的字符数组<code>s</code>的长度(其中的字符数)，不包括<code>null</code>字符，它的大小并不完全等于<code>s</code>，但大致相同。</p>
+<p>您可能合理地期望这些表示大小的参数和返回类型使用<code>int</code>类型声明(可能是<code>long</code>和/或<code>unsigned</code>)，但是它们不是。然而，C标准将他们声明为<code>size_t</code>类型。根据标准规范，<code>malloc</code>的声明应该出现在<code>&lt;stdlib.h&gt;</code>等价于：</p>
+<pre><code>void *malloc(size_t n);
+</code></pre>
+<p>并且<code>memcpy</code>和<code>strlen</code>的声明应该出现在<code>&lt;string.h&gt;</code>，看起来更像：</p>
+<pre><code>void *memcpy(void *s1, void const *s2, size_t n);
+size_t strlen(char const *s);
+</code></pre>
+<p>类型<code>size_t</code>也出现在整个c<ins>标准库中。另外，C</ins>库用了一个相关的标识符<code>size_type</code>，可能比使用<code>size_t</code>还要多。</p>
+<p>根据我的经验，大多数C和C++程序员都知道标准库使用<code>size_t</code>，但是他们真的不知道<code>size_t</code>代表什么，也不知道为什么库像他们那样使用<code>size_t</code>。此外，他们不知道自己是否以及何时应该使用<code>size_t</code>。</p>
+<p>在本专栏中，我将向你阐释<code>size_t</code>是什么，它为什么存在？你如何在自己的代码中运用它？</p>
+<h2 id="一个可移植性的问题"><a class="markdownIt-Anchor" href="#一个可移植性的问题"></a> 一个可移植性的问题</h2>
+<p>经典C（Brian Kernighan 和 Dennis Ritchie 在 “<em>The C Programming Language</em>, Prentice-Hall, 1978”描述的早期C方言）没有提供<code>size_t</code>。C标准委员会引入<code>size_t</code>来消除可移植性问题，如下例所示。</p>
+<p>让我们通过写一个简洁的标准<code>memcpy</code>函数来测试一下这个问题。我们将研究一些不同的声明，并查看它们在具有不同大小的地址空间和数据路径的不同体系结构下编译时是如何工作的。</p>
+<p>回想一下，调用<code>memcpy(s1, s2, n)</code>将前<code>n</code>个字节从<code>s2</code>指向的对象复制到<code>s1</code>指向的对象，并返回<code>s1</code>。此函数可以复制任何类型的对象，所以指针参数和返回值应该被声明为“指向<code>void</code>的指针”。并且<code>memcpy</code>不会更改源对象，所以第二个对象应该是“指向<code>const void</code>的指针”。这些都不是问题。</p>
+<p>真正需要关心的是如何区分声明此函数的第三个表示源对象大小的参数，我怀疑许多程序员都会选择普通的<code>int</code>类型，比如：</p>
+<pre><code>void *memcpy(void *s1, void const *s2, int n);
+</code></pre>
+<p>使用<code>int</code>类型在大部分情况下都是可以的，但是并不是所有情况下都可以。普通的<code>int</code>是有符号的——它可以表示负值。然而，大小的<code>n</code>是永远不可能为负值的。在不造成额外浪费的情况下，使用<code>unsigned int</code>代替<code>int</code>作为<code>memcpy</code>的第三个参数可以赋值更大的对象。</p>
+<p>在大多数机器上，最大的<code>unsigned int</code>值大约是最大的正<code>int</code>的两倍。例如，在16位双补码机器上，最大的<code>unsigned int</code>值是65,535，最大的正<code>int</code>值是32,767。使用<code>unsigned int</code>作为<code>memcpy</code>的第三个参数，可以复制比使用<code>int</code>大两倍的对象。</p>
+<p>尽管在C实现中<code>int</code>的大小各不相同，但是在任何给定的实现上<code>int</code>对象的大小总是与<code>unsigned int</code>对象相同。因此，传递<code>unsigned int</code>参数的代价总是与传递int相同。</p>
+<p>使用<code>unsigned int</code>作为参数类型，如:</p>
+<pre><code>void *memcpy(void *s1, void const *s2, unsigned int n);
+</code></pre>
+<p>在任何平台上都可以很好地工作，其中<code>unsigned int</code>可以表示最大数据对象的大小。在任何整数和指针大小相同的平台上，通常都是这样，比如IP16，其中整数和指针都占16位，或者IP32，两者都占32位。(请参阅侧栏关于C数据模型符号。)</p>
+<blockquote>
+<p><strong>C数据模型表示法</strong><br>
+最近，我读了几篇文章，它们使用了一种紧凑的表示法来描述不同目标平台上的C语言数据表示。我还没有找到这个符号的起源，一个正式的语法，甚至它的名字，但是它看起来足够简单，不需要一个正式的定义就可以使用。表示法的一般形式似乎是:<br>
+<strong>In<sub>I</sub>  Ln<sub>L</sub>  LLn<sub>LL</sub>  Pn<sub>P</sub></strong><br>
+其中，每个(或其两个)大写字母表示一个C数据类型，每个对应的<code>n</code>是该类型占用的位数。<code>I</code>代表<code>int</code>, <code>L</code>代表<code>long</code>, <code>LL</code>代表<code>long long</code>, <code>P</code>代表指针(指向数据，而不是指向函数)。每个字母和数字都是可选的。<br>
+例如，一个 I16P32架构支持16位的<code>int</code>和32位的指针，而没有描述它支持<code>long</code>还是<code>long long</code>。如果两个连续类型具有相同的大小，则通常省略第一个数字。例如，通常将I16L32P32编写为I16LP32，这是一个支持16位<code>int</code>、32位<code>long</code>和32位指针的体系结构。符号通常排列字母，使其对应的数字按升序出现。例如，IL32LL64P32表示具有32位int、32位long、64位long long和32位指针的体系结构;然而，它更常见的名称是ILP32LL64。<br>
+标记通常把字母分类在一起，所以可以按照其对应的数字升序排列。例如，IL32LL64P32表示具有32位<code>int</code>、32位<code>long</code>、64位<code>long long</code>和32位指针的体系结构;然而，它更常见的名称是ILP32LL64。</p>
+</blockquote>
+<p>不幸的是，<code>memcpy</code>的声明在I16LP32处理器(16位用于<code>int</code>, 32位用于<code>long</code>和指针)上出现不足，比如第一代摩托罗拉68000。在本例中，处理器可以复制大于65,536字节的对象，但是这个<code>memcpy</code>不能，因为参数<code>n</code>不能处理那么大的值。</p>
+<p>什么？你说很容易就可以改正？只需要把<code>memcpy</code>的第三个参数的类型修改一下：</p>
+<pre><code>void *memcpy(void *s1, void const *s2, unsigned long  n); 
+</code></pre>
+<p>您可以使用此声明为I16LP32目标编写<code>memcpy</code>，它将能够复制大型对象。它还将在IP16和IP32平台上工作，因此它确实为<code>memcpy</code>提供了一个可移植的声明。不幸的是，在IP16平台上，这里使用<code>unsigned int</code>得到的机器代码几乎肯定比使用<code>unsigned int</code>得到的效率要低一些(代码既大又慢)。</p>
+<p>在标准C中，<code>long</code>(无论是带符号的还是无符号的)必须至少占用32位。因此，支持标准C的IP16平台必须是IP16L32平台。这样的平台通常实现每一个32位长的16位的块。在这种情况下，移动一个32位的数据块通常需要两个机器指令，一个机器指令移动每个16位的数据块。事实上，这些平台上几乎所有32位操作都至少需要两条指令，如果不是更多的话。</p>
+<p>因此，以可移植性的名义将<code>memcpy</code>的第三个参数声明为<code>unsigned long</code>会对某些平台造成性能损失，这是我们希望避免的。使用<code>size_t</code>可以避免这种代价。</p>
+<p>类型<code>size_t</code>是一个类型定义，它是一些<code>unsigned int</code>类型的别名，通常是<code>unsigned int</code>或<code>unsigned long</code>，但也可能是<code>unsigned long long</code> 。每个标准C实现都应该选择足够大的无符号整数(但不要超过所需)来表示目标平台上可能最大的对象的大小。</p>
+<h2 id="使用size_t"><a class="markdownIt-Anchor" href="#使用size_t"></a> 使用size_t</h2>
+<p><code>size_t</code>的定义在<code>&lt;stddef.h&gt;, &lt;stdio.h&gt;, &lt;stdlib.h&gt;, &lt;string.h&gt;, &lt;time.h&gt;和&lt;wchar.h&gt;</code>这些标准C头文件中，也出现在相应的C++头文件, 等等中，你应该在你的头文件中至少包含一个这样的头文件在使用<code>size_t</code>之前。</p>
+<p>包含以上任何C头文件（由C或C<ins>编译的程序）表明将<code>size_t</code>作为全局关键字。包含以上任何C</ins>头文件（当你只能在C++中做某种操作时）表明将<code>size_t</code>作为<code>std</code>命名空间的成员。</p>
+<p>根据定义，<code>size_t</code>是<code>sizeof</code>关键字（注：<code>sizeof</code>是关键字，并非运算符）运算结果的类型。所以，应当通过适当的方式声明<code>n</code>来完成赋值：</p>
+<pre><code>n = sizeof(thing);
+</code></pre>
+<p>可移植且高效的方法是使用<code>size_t</code>类型声明<code>foo</code>的参数。参数类型为<code>size_t</code>的函数通常有一些局部变量，这些局部变量的大小和索引都在数组中，而<code>size_t</code>通常是这些变量的好类型。</p>
+<p>适当地使用<code>size_t</code>可以使您的源代码更加自文档化。当您看到一个对象声明为<code>size_t</code>时，您立即知道它表示的是以字节或索引为单位的大小，而不是错误代码或一般算术值。</p>
+<p>希望在以后的专栏文章中看到我在其他示例中使用<code>size_t</code>。</p>
+<blockquote>
+<p><em><strong>Dan Saks</strong> is president of Saks &amp; Associates, a C/C++ training and consulting company. For more information about Dan Saks, visit his website at <a target="_blank" rel="noopener" href="http://web.archive.org/web/20101211160220/http://www.dansaks.com/">www.dansaks.com</a>. Dan also welcomes your feedback: e-mail him at <a target="_blank" rel="noopener" href="http://web.archive.org/web/20101211160220/mailto:dsaks@wittenberg.edu">dsaks@wittenberg.edu</a>. For more information about Dan <a target="_blank" rel="noopener" href="http://web.archive.org/web/20101211160220/http://www.embedded.com/staff/dan.htm">click here</a></em> .</p>
+</blockquote>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">郭鹏真PattenKuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://guopengzhen.com/%E7%BF%BB%E8%AF%91/30387/">https://guopengzhen.com/%E7%BF%BB%E8%AF%91/30387/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://guopengzhen.com" target="_blank">郭鹏真PattenKuo的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">程序猿的学习笔记</a><a class="post-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a></div><div class="post_share"><div class="social-share" data-image="https://guopengzhen.com/img/avater.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="Wechat Pay"/></a><div class="post-qr-code-desc">Wechat Pay</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="Alipay"/></a><div class="post-qr-code-desc">Alipay</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/4566/"><img class="next-cover" src="https://guopengzhen.com/img/avater.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">浏览器touchmove及mousemove延迟测试demo：单元素连续随手滑动</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/翻译/23701/" title="Koenig Editor - Beta Release（Koenig Editor中文快速入门教程）"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-01</div><div class="title">Koenig Editor - Beta Release（Koenig Editor中文快速入门教程）</div></div></a></div><div><a href="/翻译/14555/" title="Termius入门教程初探(Getting started with Termius)"><img class="cover" src="https://guopengzhen.com/%E7%BF%BB%E8%AF%91/14555/termiusLogo.svg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-28</div><div class="title">Termius入门教程初探(Getting started with Termius)</div></div></a></div><div><a href="/翻译/59837/" title="Alexa avs-device-sdk Ubuntu Linux快速入门指南／Ubuntu Linux Quick Start Guide"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-31</div><div class="title">Alexa avs-device-sdk Ubuntu Linux快速入门指南／Ubuntu Linux Quick Start Guide</div></div></a></div><div><a href="/翻译/61546/" title="avs-device-sdk Alexa是什么?"><img class="cover" src="https://guopengzhen.com/%E7%BF%BB%E8%AF%91/61546/alexa.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-27</div><div class="title">avs-device-sdk Alexa是什么?</div></div></a></div><div><a href="/翻译/29267/" title="习立风翻译手写数字的MNIST数据库（THE MNIST DATABASE of handwritten digits）"><img class="cover" src="https://guopengzhen.com/%E7%BF%BB%E8%AF%91/29267/mnist.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-25</div><div class="title">习立风翻译手写数字的MNIST数据库（THE MNIST DATABASE of handwritten digits）</div></div></a></div><div><a href="/翻译/205/" title="如何在Windows10上安装Youtube-DL"><img class="cover" src="https://guopengzhen.com/%E7%BF%BB%E8%AF%91/205/HowToDownloadAnyVideoFromTheInternet-1200x900.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-31</div><div class="title">如何在Windows10上安装Youtube-DL</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><label><input id="switch-comments-btn" type="checkbox"/><span class="slider"></span></label><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By 郭鹏真PattenKuo</div><div class="framework-info"><span>Powered by </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'q3J83vICPB2taER4oq48LBuV-gzGzoHsz',
+      appKey: 'Sme7y8okowBtcEXM8OqIfQVf',
+      placeholder: '来都来了，随便说两句吧！',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://guopengzhen.com/%E7%BF%BB%E8%AF%91/30387/'
+    this.page.identifier = '翻译/30387/'
+    this.page.title = 'size_t为什么重要-Why size_t matters'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: true,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', 'UA-180790879-1', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script><script>(function(){
+  const bp = document.createElement('script');
+  const curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https'){
+  bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  bp.dataset.pjax = ''
+  const s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})()</script></div></body></html>
