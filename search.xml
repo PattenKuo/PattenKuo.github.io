@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>浏览器touchmove及mousemove延迟测试demo：单元素连续随手滑动</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/4566/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/4566/</url>
+      
+        <content type="html"><![CDATA[<p>话不多说，直接上代码：</p><h2 id="效果展示"><a class="markdownIt-Anchor" href="#效果展示"></a> 效果展示</h2><p><img src="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/4566/follow.gif" alt></p><h2 id="代码实现"><a class="markdownIt-Anchor" href="#代码实现"></a> 代码实现</h2><p>注意：本代码仅在chrome上测试（版本 76.0.3809.100（正式版本）snap （64 位））。</p><pre><code>&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;    &lt;style&gt;        #div1 &#123;            width: 100px;            height: 100px;            background: red;            position: absolute;            border-radius: 50px;        &#125;    &lt;/style&gt;    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;    &lt;title&gt;SingleItem&lt;/title&gt;    &lt;script&gt;        document.onmousemove = function (ev) &#123;            var oEvent = ev || event;            var oDiv = document.getElementById('div1');            oDiv.style.left = oEvent.clientX + 'px';            oDiv.style.top = oEvent.clientY + 'px';        &#125;;    &lt;/script&gt;&lt;/head&gt;&lt;body&gt;    &lt;div id=&quot;div1&quot;&gt;    &lt;/div&gt;    &lt;script type=&quot;text/javascript&quot;&gt;        function touchMoveFunc(ev) &#123;            var oEvent = ev || event;            var oDiv = document.getElementById('div1');            oDiv.style.left = oEvent.touches[0].pageX - 50 + 'px';            oDiv.style.top = oEvent.touches[0].pageY - 50 + 'px';        &#125;;        window.onload = function () &#123;            document.addEventListener('touchmove', touchMoveFunc, false);        &#125;    &lt;/script&gt;&lt;/body&gt;&lt;/html&gt;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 前端 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++中字符串的查找find()及erase()系列</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/39201/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/39201/</url>
