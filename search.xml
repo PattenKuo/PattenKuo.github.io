@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>python在ubuntu下爬取金庸作品集</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/50695/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/50695/</url>
+      
+        <content type="html"><![CDATA[<p>准备爬取金庸作品集后做一个语录搜索引擎，找到了某位<a href="https://blog.csdn.net/wardseptember">大神</a>的源码，稍微修改就成了，以备后续使用。</p><p><strong>目标网站</strong>：<a href="http://jinyong.zuopinj.com/">金庸作品集</a></p><p>代码实现（文件所在路径<code>/home/patten/workspace/others/python/jyyl.python</code>）：</p><pre><code>#!/usr/bin/python3# -*- coding:utf-8 -*-# @Time:2019/08/07 20:00# @Author: PattenKuo# @File: jyyl.pythonimport requestsfrom bs4 import BeautifulSoupimport time#获取每本书的章节内容def get_chapter(url):    # 获取网页的源代码    try:        html=requests.get(url,timeout=100)        html.encoding = html.apparent_encoding        content=html.content        # 将网页源代码解析成HTML格式        soup = BeautifulSoup(content, &quot;lxml&quot;)        title = soup.find('h1').text    #获取章节的标题        text = soup.find('div', id='htmlContent')    #获取章节的内容        #处理章节的内容，使得格式更加整洁、清晰        content = text.get_text('\n','br/').replace('\n', '\n    ')        content = content.replace('　　', '\n　　')        return title, '    '+content    except Exception as e:        print(str(e))        return &quot;超时，未下载成功&quot;def main():    # 书本列表    books = ['射雕英雄传','天龙八部','鹿鼎记','神雕侠侣','笑傲江湖','碧血剑','倚天屠龙记',\             '飞狐外传','书剑恩仇录','连城诀','侠客行','越女剑','鸳鸯刀','白马啸西风',\             '雪山飞狐']    order = [1,2,3,4,5,6,7,8,10,11,12,14,15,13,9]  #order of books to scrapy    #list to store each book's scrapying range    page_range = [1,43,94,145,185,225,248,289,309,329,341,362,363,364,374,385]    for i,book in enumerate(books):        with open('//home//patten//workspace//others//python//%s.txt'%book, 'w', encoding='gb18030') as f1:            f1.close()            pass        for num in range(page_range[i],page_range[i+1]):        #for num in range(185,225):            url = &quot;http://jinyong.zuopinj.com/%s/%s.html&quot;%(order[i],num)            # 错误处理机制            try:                title, chapter = get_chapter(url)                time.sleep(2)                with open('//home//patten//workspace//others//python//%s.txt'%book, 'a', encoding='gb18030') as f:                    print(book+':'+title+'--&gt;写入成功！')                    f.write(title+'\n\n\n')                    f.write(chapter+'\n\n\n')                    f.close()            except Exception as e:                print(str(e))    print('全部写入完毕!')main()</code></pre><p>运行结果：</p><pre><code>patten@patten-hp:~/workspace/others/python$ jyyl.python 射雕英雄传:第01章 风雪惊变--&gt;写入成功！射雕英雄传:第02章 江南七怪--&gt;写入成功！射雕英雄传:第03章 大漠风沙--&gt;写入成功！射雕英雄传:第04章 黑风双煞--&gt;写入成功！射雕英雄传:第05章 弯弓射雕--&gt;写入成功！射雕英雄传:第06章 崖顶疑阵--&gt;写入成功！射雕英雄传:第07章 比武招亲--&gt;写入成功！射雕英雄传:第08章 各显神通--&gt;写入成功！射雕英雄传:第09章 铁枪破犁--&gt;写入成功！射雕英雄传:第10章 冤家聚头--&gt;写入成功！射雕英雄传:第11章 长春服输--&gt;写入成功！射雕英雄传:第12章 亢龙有悔--&gt;写入成功！射雕英雄传:第13章 五湖废人--&gt;写入成功！射雕英雄传:第14章 桃花岛主--&gt;写入成功！射雕英雄传:第15章 神龙摆尾--&gt;写入成功！射雕英雄传:第16章 九阴真经--&gt;写入成功！射雕英雄传:第17章 双手互搏--&gt;写入成功！射雕英雄传:第18章 三道试题--&gt;写入成功！射雕英雄传:第19章 洪涛群鲨--&gt;写入成功！射雕英雄传:第20章 窜改经文--&gt;写入成功！射雕英雄传:第21章 千钧巨岩--&gt;写入成功！射雕英雄传:第22章 骑鲨遨游--&gt;写入成功！射雕英雄传:第23章 大闹禁宫--&gt;写入成功！射雕英雄传:第24章 密室疗伤--&gt;写入成功！射雕英雄传:第25章 荒村野店--&gt;写入成功！射雕英雄传:第26章 新盟旧约--&gt;写入成功！射雕英雄传:第27章 轩辕台前--&gt;写入成功！射雕英雄传:第28章 铁掌峰顶--&gt;写入成功！射雕英雄传:第29章 黑沼隐女--&gt;写入成功！射雕英雄传:第30章 一灯大师--&gt;写入成功！......</code></pre><p><strong>致谢</strong>：</p><blockquote><p>《<a href="https://blog.csdn.net/wardseptember/article/details/82934851">python爬取金庸小说全集</a>》</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> Python </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C/C++中的_access函数判断文件是否存在</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/3461/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/3461/</url>
