@@ -5,12 +5,26 @@
     
     <entry>
       <title>C/C++读写csv文件</title>
-      <link href="uncategorized/49766/"/>
-      <url>uncategorized/49766/</url>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/49766/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/49766/</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<p><code>csv</code>文件其实就是文本文件，每行字段用逗号分隔。项目需要对<code>csv</code>文件进行数据操作，故搜到了一个比较好用的方案，并做了一定程度的修改，代码如下：</p><h2 id="编译环境"><a class="markdownIt-Anchor" href="#编译环境"></a> <strong><strong><strong>编译环境</strong></strong></strong></h2><p><strong><strong><strong><strong>系统环境：</strong></strong></strong></strong></p><pre><code>patten@patten-hp:~$ sudo lsb_release -aNo LSB modules are available.Distributor ID:UbuntuDescription:Ubuntu 16.04.6 LTSRelease:16.04Codename:xenialpatten@patten-hp:~$</code></pre><p><strong><strong><strong><strong>IDE环境</strong></strong></strong></strong>：Visual Studio Code，Version: 1.38.1</p><h2 id="代码示例"><a class="markdownIt-Anchor" href="#代码示例"></a> 代码示例</h2><pre><code>//collide.cpp#include &lt;fstream&gt;  //定义读写已命名文件的类型#include &lt;iostream&gt;#include &lt;sstream&gt;  //多定义的类型则用于读写存储在内存中的string对象#include &lt;vector&gt;using namespace std;int main() &#123;  //写文件  ofstream outFile;  //输出文件流(输出到文件)  //你的文件路径如果文件不存在，可以自动创建，打开模式可省略  outFile.open(&quot;/home/patten/workspace/others/data1.csv&quot;, ios::out);  outFile &lt;&lt; &quot;name&quot; &lt;&lt; ',' &lt;&lt; &quot;age&quot;          &lt;&lt; &quot;,&quot;          &lt;&lt; &quot;hobby&quot; &lt;&lt; endl;  outFile &lt;&lt; &quot;xiaoming&quot; &lt;&lt; ',' &lt;&lt; 18 &lt;&lt; &quot;,&quot;          &lt;&lt; &quot;music&quot; &lt;&lt; endl;  outFile &lt;&lt; &quot;Mike&quot; &lt;&lt; ',' &lt;&lt; 21 &lt;&lt; &quot;,&quot;          &lt;&lt; &quot;football&quot; &lt;&lt; endl;  outFile &lt;&lt; &quot;Tom&quot; &lt;&lt; ',' &lt;&lt; 23 &lt;&lt; &quot;,&quot;          &lt;&lt; &quot;basketball&quot; &lt;&lt; endl;  //读文件  // inFile来自fstream,ifstream为输入文件流(从文件读入)  ifstream inFile(&quot;/home/patten/workspace/others/data1.csv&quot;, ios::in);  string lineStr;  //部分编译器对“&gt;&gt;”编译会报错“error: ‘&gt;&gt;’ should be ‘&gt; &gt;’ within a nested template argument list”  //所见建议对“&lt;vector&lt;string&gt;&gt;”添加一个空格“&lt;vector&lt;string&gt; &gt;”  vector&lt;vector&lt;string&gt; &gt; strArray;  // getline来自sstream  while (getline(inFile, lineStr)) &#123;    //打印整行字符串    // cout&lt;&lt;lineStr&lt;&lt;endl;    //存成二维表结构    stringstream ss(lineStr);  //来自sstream    string str;    vector&lt;string&gt; lineArray;    //按照逗号分隔    //一行数据以vector保存    while (getline(ss, str, ',')) lineArray.push_back(str);    //每一行vector数据都放到strArray中去    strArray.push_back(lineArray);  &#125;  //输出结果  for (int i = 0; i &lt; strArray.size(); i++) &#123;    for (int j = 0; j &lt; strArray[i].size(); j++) cout &lt;&lt; strArray[i][j] &lt;&lt; &quot;  &quot;;    cout &lt;&lt; endl;  &#125;  getchar();  //用户输入的字符被存放在键盘缓冲区中，直到用户按回车为止（防止程序一闪而过）  return 0;&#125;</code></pre><h2 id="编译运行结果"><a class="markdownIt-Anchor" href="#编译运行结果"></a> 编译运行结果</h2><p>结果如下：</p><pre><code>patten@patten-hp:~/workspace/xjCollide$ g++ collide.cpp patten@patten-hp:~/workspace/xjCollide$ ./a.out name  age  hobby  xiaoming  18  music  Mike  21  football  Tom  23  basketball  patten@patten-hp:~/workspace/xjCollide$ </code></pre><p>生成如下文件（<code>/home/patten/workspace/others/data1.csv</code>）：</p><pre><code>name,age,hobbyxiaoming,18,musicMike,21,footballTom,23,basketball</code></pre><h2 id="致谢"><a class="markdownIt-Anchor" href="#致谢"></a> 致谢</h2><p><a href="https://blog.csdn.net/u012234115">踏莎行的博客</a>《<a href="https://blog.csdn.net/u012234115/article/details/64465398">C/C++读写csv文件</a>》</p>]]></content>
       
       
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
       
     </entry>
     
