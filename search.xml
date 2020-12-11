@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>CMakeLists.txt在add_definitions添加-lpthread，仍报错：对pthread_create未定义的引用</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40912/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40912/</url>
+      
+        <content type="html"><![CDATA[<h2 id="bug描述"><a class="markdownIt-Anchor" href="#bug描述"></a> Bug描述</h2><p>在ubuntu16.04下采用<code>CMake</code>编译<code>c++</code>代码，在<code>CMakeLists.txt</code>里的<code>add_definitions()</code>已添加<code>-lpthread</code>（即<code>add_definitions(&quot;-g -std=c++11 -lpthread&quot;)</code>），<code>CMakeLists.txt</code>文件内容如下：</p><pre><code>cmake_minimum_required(VERSION 3.5)project(xjc_cpp11)set(CMAKE_CXX_STANDARD 14)add_definitions(&quot;-g -std=c++11 -lpthread&quot;)add_executable(xjc_cpp11   main.cppAlgorithmTwo.cppCrashIdentifier.cppGps.cppGsensor.cppMotion.cppStay.cpp)</code></pre><p>执行如下命令时仍然报错——</p><pre><code>patten@patten-hp:~/workspace/xj_collide/xj_collide/OO_solution_cpp98/src$ cmake .-- Configuring done-- Generating done-- Build files have been written to: /home/patten/workspace/xj_collide/xj_collide/OO_solution_cpp98/srcpatten@patten-hp:~/workspace/xj_collide/xj_collide/OO_solution_cpp98/src$ make[ 12%] Linking CXX executable xjc_cpp11CMakeFiles/xjc_cpp11.dir/main.cpp.o：在函数‘threadGps_data_capture()’中：/home/patten/workspace/xj_collide/xj_collide/OO_solution_cpp98/src/main.cpp:44：对‘pthread_create’未定义的引用/home/patten/workspace/xj_collide/xj_collide/OO_solution_cpp98/src/main.cpp:45：对‘pthread_detach’未定义的引用CMakeFiles/xjc_cpp11.dir/main.cpp.o：在函数‘threadSensor_data_capture()’中：/home/patten/workspace/xj_collide/xj_collide/OO_solution_cpp98/src/main.cpp:68：对‘pthread_create’未定义的引用/home/patten/workspace/xj_collide/xj_collide/OO_solution_cpp98/src/main.cpp:69：对‘pthread_detach’未定义的引用CMakeFiles/xjc_cpp11.dir/main.cpp.o：在函数‘threadStayPointDetect()’中：/home/patten/workspace/xj_collide/xj_collide/OO_solution_cpp98/src/main.cpp:91：对‘pthread_create’未定义的引用/home/patten/workspace/xj_collide/xj_collide/OO_solution_cpp98/src/main.cpp:92：对‘pthread_detach’未定义的引用collect2: error: ld returned 1 exit statusCMakeFiles/xjc_cpp11.dir/build.make:250: recipe for target 'xjc_cpp11' failedmake[2]: *** [xjc_cpp11] Error 1CMakeFiles/Makefile2:67: recipe for target 'CMakeFiles/xjc_cpp11.dir/all' failedmake[1]: *** [CMakeFiles/xjc_cpp11.dir/all] Error 2Makefile:83: recipe for target 'all' failedmake: *** [all] Error 2patten@patten-hp:~/workspace/xj_collide/xj_collide/OO_solution_cpp98/src$</code></pre><h2 id="解决方案"><a class="markdownIt-Anchor" href="#解决方案"></a> 解决方案</h2><p>由之前经验可知，采用<code>g++</code>编译时会有如下情况：</p><ul><li>执行<code>g++ -g -std=c++11 *.cpp -lpthread</code>编译可以通过pass</li><li>执行<code>g++ -g -std=c++11 -lpthread *.cpp</code>编译不可以通过not-pass</li></ul><p>如下所示：</p><pre><code>patten@patten-hp:~/workspace/xj_collide/xj_collide/OO_solution_cpp98/src$ g++ -g -std=c++11 *.cpp -lpthreadpatten@patten-hp:~/workspace/xj_collide/xj_collide/OO_solution_cpp98/src$ g++ -g -std=c++11  -lpthread *.cpp/tmp/ccuE659E.o：在函数‘threadGps_data_capture()’中：/home/patten/workspace/xj_collide/xj_collide/OO_solution_cpp98/src/main.cpp:44：对‘pthread_create’未定义的引用/home/patten/workspace/xj_collide/xj_collide/OO_solution_cpp98/src/main.cpp:45：对‘pthread_detach’未定义的引用/tmp/ccuE659E.o：在函数‘threadSensor_data_capture()’中：/home/patten/workspace/xj_collide/xj_collide/OO_solution_cpp98/src/main.cpp:68：对‘pthread_create’未定义的引用/home/patten/workspace/xj_collide/xj_collide/OO_solution_cpp98/src/main.cpp:69：对‘pthread_detach’未定义的引用/tmp/ccuE659E.o：在函数‘threadStayPointDetect()’中：/home/patten/workspace/xj_collide/xj_collide/OO_solution_cpp98/src/main.cpp:91：对‘pthread_create’未定义的引用/home/patten/workspace/xj_collide/xj_collide/OO_solution_cpp98/src/main.cpp:92：对‘pthread_detach’未定义的引用collect2: error: ld returned 1 exit statuspatten@patten-hp:~/workspace/xj_collide/xj_collide/OO_solution_cpp98/src$ </code></pre><p>所以接下来要解决的问题就是要把<code>-lpthread</code>放在编译选项最后，添加如下两行即可解决问题：</p><pre><code>find_package(Threads)target_link_libraries ($&#123;PROJECT_NAME&#125; $&#123;CMAKE_THREAD_LIBS_INIT&#125;)</code></pre><p>最终的<code>CMakeLists.txt</code>文件为：</p><pre><code>cmake_minimum_required(VERSION 3.5)project(xjc_cpp11)set(CMAKE_CXX_STANDARD 14)find_package(Threads)add_definitions(&quot;-g -std=c++11 -lpthread&quot;)add_executable(xjc_cpp11   main.cppAlgorithmTwo.cppCrashIdentifier.cppGps.cppGsensor.cppMotion.cppStay.cpp)target_link_libraries ($&#123;PROJECT_NAME&#125; $&#123;CMAKE_THREAD_LIBS_INIT&#125;)</code></pre><p>Congratulations！编译通过——</p><pre><code>patten@patten-hp:~/workspace/xj_collide/xj_collide/OO_solution_cpp98/src$ cmake .-- Configuring done-- Generating done-- Build files have been written to: /home/patten/workspace/xj_collide/xj_collide/OO_solution_cpp98/srcpatten@patten-hp:~/workspace/xj_collide/xj_collide/OO_solution_cpp98/src$ makeScanning dependencies of target xjc_cpp11[ 12%] Building CXX object CMakeFiles/xjc_cpp11.dir/main.cpp.o[ 25%] Building CXX object CMakeFiles/xjc_cpp11.dir/AlgorithmTwo.cpp.o[ 37%] Building CXX object CMakeFiles/xjc_cpp11.dir/CrashIdentifier.cpp.o[ 50%] Building CXX object CMakeFiles/xjc_cpp11.dir/Gps.cpp.o[ 62%] Building CXX object CMakeFiles/xjc_cpp11.dir/Gsensor.cpp.o[ 75%] Building CXX object CMakeFiles/xjc_cpp11.dir/Motion.cpp.o[ 87%] Building CXX object CMakeFiles/xjc_cpp11.dir/Stay.cpp.o[100%] Linking CXX executable xjc_cpp11[100%] Built target xjc_cpp11patten@patten-hp:~/workspace/xj_collide/xj_collide/OO_solution_cpp98/src$ ./xjc_cpp11 ^Cpatten@patten-hp:~/workspace/xj_collide/xj_collide/OO_solution_cpp98/src$</code></pre><h2 id="致谢"><a class="markdownIt-Anchor" href="#致谢"></a> 致谢</h2><p><a href="https://justchen.com/">网网’Blog</a>《<a href="https://justchen.com/2017/02/27/cmake%E7%BC%96%E8%AF%91%E7%BC%BA%E5%A4%B1pthread_create%E7%AD%89thread%E5%BA%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88.html">cmake编译缺失pthread_create等thread库解决方案</a>》</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> Bug </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C++矩阵运算库Eigen3入门中文教程</title>
       <link href="%E7%BF%BB%E8%AF%91/3053/"/>
       <url>%E7%BF%BB%E8%AF%91/3053/</url>
