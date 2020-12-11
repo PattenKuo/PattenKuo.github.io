@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>罗马数字转整数-算法题-C++实现-Leetcode</title>
+      <link href="%E7%AE%97%E6%B3%95/24515/"/>
+      <url>%E7%AE%97%E6%B3%95/24515/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2><p>近期准备把<strong>力扣leetcode</strong><a href="https://leetcode-cn.com/problemset/algorithms/">算法题</a>刷一遍，算是一个Flag吗？几千道题啊啊啊啊啊。。。。。。我是不是膨胀了？</p><p>把我的C++解决方案记录在这里，与大家分享。</p><h2 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h2><p>罗马数字包含以下七种字符: <code>I</code>， <code>V</code>， <code>X</code>， <code>L</code>，<code>C</code>，<code>D</code> 和 <code>M</code>。</p><table><thead><tr><th>字符</th><th>数值</th></tr></thead><tbody><tr><td>I</td><td>1</td></tr><tr><td>V</td><td>5</td></tr><tr><td>X</td><td>10</td></tr><tr><td>L</td><td>50</td></tr><tr><td>C</td><td>100</td></tr><tr><td>D</td><td>500</td></tr><tr><td>M</td><td>1000</td></tr></tbody></table><p>例如， 罗马数字 <code>2</code> 写做 <code>II</code> ，即为两个并列的 <code>1</code>。<code>12</code> 写做 <code>XII</code> ，即为 <code>X</code> + <code>II</code> 。 <code>27</code> 写做  <code>XXVII</code>, 即为 <code>XX</code> + <code>V</code> + <code>II</code> 。<br>通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，例如 <code>4</code> 不写做 <code>IIII</code>，而是 <code>IV</code>。数字 <code>1</code> 在数字 <code>5</code> 的左边，所表示的数等于大数 <code>5</code> 减小数 <code>1</code> 得到的数值 <code>4</code> 。同样地，数字 <code>9</code> 表示为 <code>IX</code>。这个特殊的规则只适用于以下六种情况：</p><ul><li><code>I</code> 可以放在 <code>V</code> (5) 和 <code>X</code> (10) 的左边，来表示 <code>4</code> 和 <code>9</code>。</li><li><code>X</code> 可以放在 <code>L</code> (50) 和 <code>C</code> (100) 的左边，来表示 <code>40</code> 和 <code>90</code>。</li><li><code>C</code> 可以放在 <code>D</code> (500) 和 <code>M</code> (1000) 的左边，来表示 <code>400</code> 和 <code>900</code>。</li></ul><p>给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。</p><p><strong>示例 1:</strong></p><pre><code>输入: &quot;III&quot;输出: 3</code></pre><p><strong>示例 2:</strong></p><pre><code>输入: &quot;IV&quot;输出: 4</code></pre><p><strong>示例 3:</strong></p><pre><code>输入: &quot;IX&quot;输出: 9</code></pre><p><strong>示例 4:</strong></p><pre><code>输入: &quot;LVIII&quot;输出: 58解释: L = 50, V= 5, III = 3.</code></pre><p><strong>示例 5:</strong></p><pre><code>输入: &quot;MCMXCIV&quot;输出: 1994解释: M = 1000, CM = 900, XC = 90, IV = 4.</code></pre><h2 id="c代码实现"><a class="markdownIt-Anchor" href="#c代码实现"></a> C++代码实现</h2><pre><code>class Solution &#123; private:  size_t result = 0;  //存储最终结果 public:  int romanToInt(string s) &#123;    string::iterator pos = s.begin();  //定义迭代器    for (; pos != s.end(); pos++) &#123;      switch (*pos) &#123;        case 'I': &#123;          if ('V' == *(pos + 1)) &#123;  //'I'的后面是不是'V'            result += 4;  //'IV'等于4            pos++;  //跳过'IV'          &#125; else if ('X' == *(pos + 1)) &#123;            result += 9;            pos++;          &#125; else &#123;            result += 1;          &#125;        &#125;; break;        case 'V':          result += 5;          break;        case 'X': &#123;          if ('L' == *(pos + 1)) &#123;            result += 40;            pos++;          &#125; else if ('C' == *(pos + 1)) &#123;            result += 90;            pos++;          &#125; else &#123;            result += 10;          &#125;        &#125;; break;        case 'L':          result += 50;          break;        case 'C': &#123;          if ('D' == *(pos + 1)) &#123;            result += 400;            pos++;          &#125; else if ('M' == *(pos + 1)) &#123;            result += 900;            pos++;          &#125; else &#123;            result += 100;          &#125;        &#125;; break;        case 'D':          result += 500;          break;        case 'M':          result += 1000;          break;        default:          cout &lt;&lt; &quot;Input Error&quot; &lt;&lt; endl;      &#125;    &#125;    return result;  //返回结果  &#125;&#125;;</code></pre><h2 id="代码性能"><a class="markdownIt-Anchor" href="#代码性能"></a> 代码性能</h2><p><img src="/%E7%AE%97%E6%B3%95/24515/romanToInt.png" alt></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+            <tag> LeetCode力扣 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>CMakeLists.txt在add_definitions添加-lpthread，仍报错：对pthread_create未定义的引用</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40912/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/40912/</url>
