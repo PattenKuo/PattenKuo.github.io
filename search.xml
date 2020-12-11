@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>机器人能否返回原点-算法题-C++实现-Leetcode</title>
+      <link href="%E7%AE%97%E6%B3%95/10077/"/>
+      <url>%E7%AE%97%E6%B3%95/10077/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>前言</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></h2><p>近期准备把<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>力扣leetcode</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong><a href="https://leetcode-cn.com/problemset/algorithms/">算法题</a>刷一遍，算是一个Flag吗？几千道题啊啊啊啊啊。。。。。。我是不是膨胀了？</p><p>把我的C++解决方案记录在这里，与大家分享。</p><h2 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>题目描述</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></h2><p>在二维平面上，有一个机器人从原点 (0, 0) 开始。给出它的移动顺序，判断这个机器人在完成移动后是否在 (0, 0) 处结束。</p><p>移动顺序由字符串表示。字符 <code>move[i]</code> 表示其第 i 次移动。机器人的有效动作有 <code>R</code>（右），<code>L</code>（左），<code>U</code>（上）和 <code>D</code>（下）。如果机器人在完成所有动作后返回原点，则返回 <code>true</code>。否则，返回 <code>false</code>。</p><p>注意：机器人“面朝”的方向无关紧要。 “<code>R</code>” 将始终使机器人向右移动一次，“<code>L</code>” 将始终向左移动等。此外，假设每次移动机器人的移动幅度相同。</p><p><strong>示例 1:</strong></p><pre><code>输入: &quot;UD&quot;输出: true解释：机器人向上移动一次，然后向下移动一次。所有动作都具有相同的幅度，因此它最终回到它开始的原点。因此，我们返回 true。</code></pre><p><strong>示例 2:</strong></p><pre><code>输入: &quot;LL&quot;输出: false解释：机器人向左移动两次。它最终位于原点的左侧，距原点有两次 “移动” 的距离。我们返回 false，因为它在移动结束时没有返回原点。</code></pre><h2 id="c代码实现"><a class="markdownIt-Anchor" href="#c代码实现"></a> <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>C++代码实现</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></h2><pre><code>class Solution &#123;public:    bool judgeCircle(string moves) &#123;        int start[2] = &#123;0, 0&#125;;  //start[0]表示左右方向，start[1]表示上下方向        string::iterator pos = moves.begin();        for(; pos != moves.end(); pos++)&#123;            switch(*pos)&#123;                    case 'R': start[0]++;break;                    case 'L': start[0]--;break;                    case 'U': start[1]++;break;                    case 'D': start[1]--;break;                default:&#123;&#125;;                                &#125;        &#125;        if(start[0] == 0 &amp;&amp; start[1] == 0)&#123;            return true;        &#125;else&#123;            return false;        &#125;    &#125;&#125;;</code></pre><h2 id="代码性能"><a class="markdownIt-Anchor" href="#代码性能"></a> <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>代码性能</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></h2><p>这个比较简单，没什么好解释的。</p><p><img src="/%E7%AE%97%E6%B3%95/10077/judgeCircle.png" alt></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+            <tag> LeetCode力扣 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>转换成小写字母-算法题-C++实现-Leetcode</title>
       <link href="%E7%AE%97%E6%B3%95/2984/"/>
       <url>%E7%AE%97%E6%B3%95/2984/</url>
