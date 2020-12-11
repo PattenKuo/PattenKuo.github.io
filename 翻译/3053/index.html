@@ -1,0 +1,507 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>C++矩阵运算库Eigen3入门中文教程 | 郭鹏真PattenKuo的博客</title><meta name="keywords" content="程序猿的学习笔记,C++,翻译"><meta name="author" content="郭鹏真PattenKuo"><meta name="copyright" content="郭鹏真PattenKuo"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="前言 由于项目需要，需采用C实现数以百万量级的数据运算，原本已经采用C单文件实现了所有客户算法需求，但性能较低，在优化的过程中找到了该矩阵运算库Eigen3，手记一下。 本文档翻译整理自：《Overview》及《Getting started》  概览Overview 这是Eigen3的API文档。你可以下载它作为tgz档案离线阅读。 你已经是Eigen2用户了?这里有一个从Eigen2到Eig">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++矩阵运算库Eigen3入门中文教程">
+<meta property="og:url" content="https://guopengzhen.com/%E7%BF%BB%E8%AF%91/3053/index.html">
+<meta property="og:site_name" content="郭鹏真PattenKuo的博客">
+<meta property="og:description" content="前言 由于项目需要，需采用C实现数以百万量级的数据运算，原本已经采用C单文件实现了所有客户算法需求，但性能较低，在优化的过程中找到了该矩阵运算库Eigen3，手记一下。 本文档翻译整理自：《Overview》及《Getting started》  概览Overview 这是Eigen3的API文档。你可以下载它作为tgz档案离线阅读。 你已经是Eigen2用户了?这里有一个从Eigen2到Eig">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://guopengzhen.com/img/avater.jpg">
+<meta property="article:published_time" content="2020-12-11T11:56:53.000Z">
+<meta property="article:modified_time" content="2020-12-11T11:58:16.671Z">
+<meta property="article:author" content="郭鹏真PattenKuo">
+<meta property="article:tag" content="程序猿的学习笔记">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="翻译">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://guopengzhen.com/img/avater.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://guopengzhen.com/%E7%BF%BB%E8%AF%91/3053/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin="crossorigin"/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="preconnect" href="//zz.bdstatic.com"/><meta name="360-site-verification" content="89d1ebd5a1eb3151d51240867c24a57e"/><meta name="yandex-verification" content="0557569d0f8ae26b"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?1508b58379fb497f1ca8ce5eeb12737f";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-180790879-1"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-180790879-1');
+</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  hexoversion: '5.2.0',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 郭鹏真PattenKuo","link":"链接: ","source":"来源: 郭鹏真PattenKuo的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#121212","position":"bottom-left"},
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-12-11 19:58:16'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/img/avater.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/archives/"><div class="headline">文章</div><div class="length_num">131</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/tags/"><div class="headline">标签</div><div class="length_num">18</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/categories/"><div class="headline">分类</div><div class="length_num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text"> 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%A7%88overview"><span class="toc-number">2.</span> <span class="toc-text"> 概览Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97getting-started"><span class="toc-number">3.</span> <span class="toc-text"> 入门指南Getting started</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85install-eigen"><span class="toc-number">3.1.</span> <span class="toc-text"> 如何安装“install” Eigen？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E7%A8%8B%E5%BA%8F"><span class="toc-number">3.2.</span> <span class="toc-text"> 第一个简单的程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%B9%B6%E8%BF%90%E8%A1%8C%E6%82%A8%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F"><span class="toc-number">3.3.</span> <span class="toc-text"> 编译并运行您的第一个程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%A7%A3%E9%87%8A"><span class="toc-number">3.4.</span> <span class="toc-text"> 第一个程序的解释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B2%E7%9F%A9%E9%98%B5%E5%92%8C%E5%90%91%E9%87%8F"><span class="toc-number">3.5.</span> <span class="toc-text"> 例2:矩阵和向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E4%BE%8B%E5%AD%90%E7%9A%84%E8%AF%B4%E6%98%8E"><span class="toc-number">3.6.</span> <span class="toc-text"> 第二个例子的说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E4%B8%80%E6%AD%A5%E8%AF%A5%E5%8E%BB%E5%93%AA%E5%84%BF"><span class="toc-number">3.7.</span> <span class="toc-text"> 下一步该去哪儿？</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://guopengzhen.com/img/avater.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">郭鹏真PattenKuo的博客</a></span><span id="menus"><div id="search_button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">C++矩阵运算库Eigen3入门中文教程</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-12-11T11:56:53.000Z" title="发表于 2020-12-11 19:56:53">2020-12-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-11T11:58:16.671Z" title="更新于 2020-12-11 19:58:16">2020-12-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BF%BB%E8%AF%91/">翻译</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<p>由于项目需要，需采用C<ins>实现数以百万量级的数据运算，原本已经采用C</ins>单文件实现了所有客户算法需求，但性能较低，在优化的过程中找到了该矩阵运算库<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org">Eigen3</a>，手记一下。</p>
+<p>本文档翻译整理自：《<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/">Overview</a>》及《<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/GettingStarted.html">Getting started</a>》</p>
+<h2 id="概览overview"><a class="markdownIt-Anchor" href="#概览overview"></a> 概览Overview</h2>
+<p>这是<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org">Eigen3</a>的API文档。你可以<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/eigen-doc.tgz">下载</a>它作为tgz档案离线阅读。</p>
+<p>你已经是Eigen2用户了?这里有一个<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/Eigen2ToEigen3.html">从Eigen2到Eigen3指南</a>来帮助移植你的应用程序。</p>
+<p>如果你是第一次接触<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/namespaceEigen.html">Eigen</a>，你最好先看一下入门页面的文档页<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/GettingStarted.html">Getting started</a>（译者按：即本文的<a target="_blank" rel="noopener" href="https://blog.svenhetin.com/c-ju-zhen-yun-suan-ku/#%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97Getting-started">下一部分</a>），它向您展示了如何使用<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/namespaceEigen.html">Eigen</a>编写和编译您的第一个程序。</p>
+<p>然后，<strong>快速参考页面</strong>以一种非常简洁的格式为您提供了一个非常完整的API描述，这对于回忆特定功能的语法或快速查看API非常有用。它们目前包括以下两个功能集，将来还会有更多的功能集:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/group__QuickRefPage.html">[快速索引]密集矩阵和数组操作</a>（译者按：为避免翻译有误，附原文<code>Dense matrix and array manipulations</code>）</li>
+<li><a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/group__SparseQuickRefPage.html">[快速索引]稀疏线性代数</a>（译者按：为避免翻译有误，附原文<code>Sparse linear algebra</code>）</li>
+</ul>
+<p>你是MatLab用户?还有一个Matlab译文<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/AsciiQuickReference.txt">简短ASCII参考</a>。</p>
+<p><strong>主文档</strong>被组织成涵盖不同功能领域的章节。它们本身由全面描述不同功能的用户手册页面组成，并且参考页提供了相关<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/namespaceEigen.html">Eigen</a> 的模块与类的API文档。</p>
+<p>在_扩展/自定义Eigen_（<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/UserManual_CustomizingEigen.html"><em>Extending/Customizing Eigen</em></a>）部分，您将找到关于扩展Eigen功能和支持自定义标量类型的讨论和示例。</p>
+<p>在_通用规则_（<em><a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/UserManual_Generalities.html">General topics</a></em>）部分，您将找到关于更多通用规则的文档，如预处理程序指令（preprocessor directives）、控制断言（controlling assertions）、多线程（multi-threading）、MKL支持（MKL support）、一些Eigen的内部见解，以及更多……</p>
+<p>最后，不要错过<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/">本页面</a>的搜索引擎，这对快速获得给定类或函数的文档很有用。</p>
+<p>还想了解更多？请查看（Checkout）<em>不支持的功能模块</em>（<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/unsupported/index.html"><em>unsupported</em> <em>modules</em></a>）文档。</p>
+<h2 id="入门指南getting-started"><a class="markdownIt-Anchor" href="#入门指南getting-started"></a> 入门指南Getting started</h2>
+<p>这是一个关于如何开始使用<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/namespaceEigen.html">Eigen</a>的非常简短的指南。它有双重目的：对于那些希望尽快开始编码的人来说，它只是对Eigen库的一个简单介绍;你也可以阅读这一页作为教程的第一部分，它更详细地解释了这个库，在这种情况下，您将继续使用_矩阵类_（<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/group__TutorialMatrixClass.html"><em>The Matrix class</em></a>）。</p>
+<h3 id="如何安装install-eigen"><a class="markdownIt-Anchor" href="#如何安装install-eigen"></a> 如何安装“install” Eigen？</h3>
+<p>为了使用<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/namespaceEigen.html">Eigen</a>，您只需要下载并提取<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/namespaceEigen.html">Eigen</a>的源代码(下载说明请参阅<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/index.php?title=Main_Page#Download">wiki</a>)。事实上，<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/namespaceEigen.html">Eigen</a>子目录中的头文件是使用<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/namespaceEigen.html">Eigen</a>编译程序所需的惟一文件。所有平台的头文件都是相同的，不需要使用<code>CMake</code>或安装任何东西。</p>
+<h3 id="第一个简单的程序"><a class="markdownIt-Anchor" href="#第一个简单的程序"></a> 第一个简单的程序</h3>
+<p>这里有一个非常简单的程序可以帮助您入门。</p>
+<pre><code>// test.cpp
+
+#include &lt;iostream&gt;
+#include &quot;Eigen/Dense&quot;  //原程序是#include &lt;Eigen/Dense&gt;
+
+using Eigen::MatrixXd;
+int main() &#123;
+  MatrixXd m(2, 2);
+  m(0, 0) = 3;
+  m(1, 0) = 2.5;
+  m(0, 1) = -1;
+  m(1, 1) = m(1, 0) + m(0, 1);
+  std::cout &lt;&lt; m &lt;&lt; std::endl;
+&#125;
+</code></pre>
+<p>我们将在告诉你如何编译它之后解释程序。</p>
+<blockquote>
+<p>译者按：本人在Ubuntu16.04下的VScode下编程实现，并做了一定改动，文档结构如下，即将压缩包解压后的<code>Eigen</code>子目录放在与<code>test.cpp</code>同一目录下。</p>
+</blockquote>
+<pre><code>patten@patten-hp:~/workspace/xj_collide/xj_collide/eigen_solution$ tree ./ -L 2
+./
+├── Eigen
+│   ├── Cholesky
+│   ├── CholmodSupport
+│   ├── CMakeLists.txt
+│   ├── Core
+│   ├── Dense
+│   ├── Eigen
+│   ├── Eigenvalues
+│   ├── Geometry
+│   ├── Householder
+│   ├── IterativeLinearSolvers
+│   ├── Jacobi
+│   ├── LU
+│   ├── MetisSupport
+│   ├── OrderingMethods
+│   ├── PardisoSupport
+│   ├── PaStiXSupport
+│   ├── QR
+│   ├── QtAlignedMalloc
+│   ├── Sparse
+│   ├── SparseCholesky
+│   ├── SparseCore
+│   ├── SparseLU
+│   ├── SparseQR
+│   ├── SPQRSupport
+│   ├── src
+│   ├── StdDeque
+│   ├── StdList
+│   ├── StdVector
+│   ├── SuperLUSupport
+│   ├── SVD
+│   └── UmfPackSupport
+└── test.cpp
+
+2 directories, 31 files
+patten@patten-hp:~/workspace/xj_collide/xj_collide/eigen_solution$
+</code></pre>
+<h3 id="编译并运行您的第一个程序"><a class="markdownIt-Anchor" href="#编译并运行您的第一个程序"></a> 编译并运行您的第一个程序</h3>
+<p>没有需要链接到的任何库。在编译上述程序时，您需要记住的唯一一件事是：编译器必须能够找到<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/namespaceEigen.html">Eigen</a>头文件，即放置<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/namespaceEigen.html">Eigen</a>源代码的目录必须位于包含路径中。在<code>GCC</code>中，你使用<code>-I</code>选项来实现这个，所以你可以用这样的命令来编译程序:</p>
+<pre><code>g++ -I /path/to/eigen/ my_program.cpp -o my_program
+</code></pre>
+<p>在Linux或Mac OS X上，另一个选项是符号链接或将<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/namespaceEigen.html">Eigen</a>文件夹复制到<code>/usr/local/include/</code>中。这样，你可以用下面的语句编译程序:</p>
+<pre><code>g++ my_program.cpp -o my_program 
+</code></pre>
+<p>当你运行程序，它产生以下输出:</p>
+<pre><code>3  -1
+2.5 1.5
+</code></pre>
+<blockquote>
+<p>译者按：本人在Visual Studio Code（Version: 1.38.1）内编译运行，结果如下：</p>
+</blockquote>
+<pre><code>patten@patten-hp:~/workspace/xj_collide/xj_collide/eigen_solution$ g++ test.cpp -o test
+patten@patten-hp:~/workspace/xj_collide/xj_collide/eigen_solution$ ./test
+  3  -1
+2.5 1.5
+patten@patten-hp:~/workspace/xj_collide/xj_collide/eigen_solution$
+</code></pre>
+<h3 id="第一个程序的解释"><a class="markdownIt-Anchor" href="#第一个程序的解释"></a> 第一个程序的解释</h3>
+<p><a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/namespaceEigen.html">Eigen</a>头文件定义了许多类型，但是对于简单的应用程序来说，只使用<code>MatrixXd</code>类型就足够了。这表示一个任意大小的矩阵(此处指<code>MatrixXd</code>中的<code>X</code>)，其中每个条目都是双精度的(此处指<code>MatrixXd</code>中的<code>d</code>)。有关可用于表示矩阵的不同类型的概述，请参阅_快速参考指南_（<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/group__QuickRefPage.html#QuickRef_Types"><em>quick reference guide</em></a> ）。</p>
+<p><code>Eigen/density</code>头文件定义了<code>MatrixXd</code>类型和相关类型的所有成员函数(参见头文件表)。在这个头文件(和其他_Eigen头文件_[<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/group__QuickRefPage.html#QuickRef_Headers"><em>table of header files</em></a>])中定义的所有类和函数都在<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/namespaceEigen.html">Eigen</a>名称空间中。</p>
+<p><code>main</code>函数的第一行声明了一个类型为<code>MatrixXd</code>的变量，并指定它是一个<code>2</code>行<code>2</code>列的矩阵(条目没有初始化)。语句<code>m(0,0) = 3</code>将左上角的条目设置为<code>3</code>。您需要使用圆括号<code>()</code>来索引矩阵中的元素。通常在计算机科学中，第一个索引的索引是<code>0</code>，而在数学中，第一个索引是<code>1</code>。</p>
+<p>接下来的三个语句设置了其他三个条目。最后一行将矩阵<code>m</code>输出到标准输出流。</p>
+<h3 id="例2矩阵和向量"><a class="markdownIt-Anchor" href="#例2矩阵和向量"></a> 例2:矩阵和向量</h3>
+<p>这是另一个例子，它结合了矩阵和向量。现在把注意力集中在左边的程序（在运行时设置大小）上;我们稍后会讨论右边的程序（在编译时设置大小）。</p>
+<p><strong>在运行时设置大小：</strong></p>
+<pre><code>// test.cpp
+
+#include &lt;iostream&gt;
+#include &quot;Eigen/Dense&quot;
+
+using namespace Eigen;
+using namespace std;
+int main() &#123;
+  MatrixXd m = MatrixXd::Random(3, 3);
+  m = (m + MatrixXd::Constant(3, 3, 1.2)) * 50;
+  cout &lt;&lt; &quot;m =&quot; &lt;&lt; endl &lt;&lt; m &lt;&lt; endl;
+  VectorXd v(3);
+  v &lt;&lt; 1, 2, 3;
+  cout &lt;&lt; &quot;m * v =&quot; &lt;&lt; endl &lt;&lt; m * v &lt;&lt; endl;
+&#125;
+</code></pre>
+<p><strong>在编译时设置大小：</strong></p>
+<pre><code>// test.cpp
+
+#include &lt;iostream&gt;
+#include &quot;Eigen/Dense&quot;
+
+using namespace Eigen;
+using namespace std;
+int main()
+&#123;
+  Matrix3d m = Matrix3d::Random();
+  m = (m + Matrix3d::Constant(1.2)) * 50;
+  cout &lt;&lt; &quot;m =&quot; &lt;&lt; endl &lt;&lt; m &lt;&lt; endl;
+  Vector3d v(1,2,3);
+  
+  cout &lt;&lt; &quot;m * v =&quot; &lt;&lt; endl &lt;&lt; m * v &lt;&lt; endl;
+&#125;
+</code></pre>
+<p>输出如下:</p>
+<p><strong>在运行时设置大小：</strong></p>
+<pre><code>patten@patten-hp:~/workspace/xj_collide/xj_collide/eigen_solution$ g++ test.cpp -o test
+patten@patten-hp:~/workspace/xj_collide/xj_collide/eigen_solution$ ./test
+m =
+94.0188  89.844 43.5223
+49.4383 101.165  86.823
+88.3099 29.7551 37.7775
+m * v =
+404.274
+512.237
+261.153
+patten@patten-hp:~/workspace/xj_collide/xj_collide/eigen_solution$
+</code></pre>
+<p><strong>在编译时设置大小：</strong></p>
+<pre><code>patten@patten-hp:~/workspace/xj_collide/xj_collide/eigen_solution$ g++ test.cpp -o test
+patten@patten-hp:~/workspace/xj_collide/xj_collide/eigen_solution$ ./test
+m =
+94.0188  89.844 43.5223
+49.4383 101.165  86.823
+88.3099 29.7551 37.7775
+m * v =
+404.274
+512.237
+261.153
+patten@patten-hp:~/workspace/xj_collide/xj_collide/eigen_solution$
+</code></pre>
+<h3 id="第二个例子的说明"><a class="markdownIt-Anchor" href="#第二个例子的说明"></a> 第二个例子的说明</h3>
+<p>第二个示例首先声明一个<code>3×3</code>的矩阵<code>m</code>，它是使用<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/classEigen_1_1DenseBase.html#ae97f8d9d08f969c733c8144be6225756">Random()</a>方法初始化的，随机值在<code>-1</code>和<code>1</code>之间。下一行应用一个线性映射，其值介于<code>10</code>和<code>110</code>之间。函数调用<code>MatrixXd::Constant(3,3,1.2)</code>（<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/classEigen_1_1DenseBase.html#a68a7ece6c5629d1e9447a321fcb14ccd">MatrixXd::Constant</a>）返回一个<code>3×3</code>的矩阵表达式，所有系数都等于<code>1.2</code>。剩下的都是标准算术。</p>
+<p><code>main</code>函数的下一行介绍了一个新类型:<code>VectorXd</code>。这表示任意大小的(列)向量。在这里，向量<code>v</code>被创建来包含<code>3</code>个系数，这些系数被单独保留。最后一行使用所谓的逗号初始化器<code>,</code>，在_高级初始化_（<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/group__TutorialAdvancedInitialization.html">Advanced initialization</a>）中解释过，将向量<code>v</code>的所有系数设置为:</p>
+<p><img src="https://www.guopengzhen.com/content/images/2019/10/image-13.png" alt></p>
+<p>程序的最后一行将矩阵<code>m</code>与向量<code>v</code>相乘并输出结果。</p>
+<p>现在回头看看第二个示例程序。我们展示了它的两个版本。在左列的版本（在运行时设置大小）中，矩阵类型为<code>MatrixXd</code>，表示任意大小的矩阵。右栏中的版本（在编译时设置大小）与此类似，只是矩阵类型为<code>Matrix3d</code>，它表示固定大小的矩阵(这里是<code>3×3</code>)。因为类型已经编码了矩阵的大小，所以没有必要在构造函数中指定大小;比较<code>MatrixXd m(3,3)</code>和<code>Matrix3d m</code>。同样，我们有<code>VectorXd</code>在左边(任意大小)和<code>Vector3d</code>在右边(固定大小)。注意，这里向量<code>v</code>的系数是直接在构造函数中设置的，不过也可以使用与左例相同的语法。</p>
+<p>使用固定大小的矩阵和向量有两个优点。编译器会编译出更好(更快)的代码，因为它知道矩阵和向量的大小。在类型中指定大小还允许在编译时进行更严格的检查。例如，如果您试图将<code>Matrix4d</code>(一个<code>4×4</code>矩阵)与<code>Vector3d</code>(一个大小为3的向量)相乘，编译器将会报错，但是，使用多种类型会增加编译时间和可执行文件的大小。在编译时也可能不知道矩阵的大小。根据经验，对于大小为<code>4×4</code>或更小的矩阵，应该使用固定大小的矩阵。</p>
+<h3 id="下一步该去哪儿"><a class="markdownIt-Anchor" href="#下一步该去哪儿"></a> 下一步该去哪儿？</h3>
+<p>花点时间阅读_长篇教程_（<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/group__TutorialMatrixClass.html"><em>long tutorial</em></a>）是值得的。</p>
+<p>然而，如果你认为你不需要它，你可以直接使用类文档和我们的_快速参考指南_（<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/group__QuickRefPage.html"><em>Quick reference guide</em></a>）。</p>
+<p><strong>下一篇:<a target="_blank" rel="noopener" href="http://eigen.tuxfamily.org/dox/group__TutorialMatrixClass.html">The Matrix class</a>（<strong>矩阵类</strong>）</strong></p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">郭鹏真PattenKuo</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://guopengzhen.com/%E7%BF%BB%E8%AF%91/3053/">https://guopengzhen.com/%E7%BF%BB%E8%AF%91/3053/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://guopengzhen.com" target="_blank">郭鹏真PattenKuo的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">程序猿的学习笔记</a><a class="post-meta__tags" href="/tags/C/">C++</a><a class="post-meta__tags" href="/tags/%E7%BF%BB%E8%AF%91/">翻译</a></div><div class="post_share"><div class="social-share" data-image="https://guopengzhen.com/img/avater.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src="/img/wechat.png" alt="Wechat Pay"/></a><div class="post-qr-code-desc">Wechat Pay</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="Alipay"/></a><div class="post-qr-code-desc">Alipay</div></li></ul></div></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/14802/"><img class="next-cover" src="https://guopengzhen.com/img/avater.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C++ 10位时间戳（精确到秒）与标准时间格式（%Y-%m-%d %H:%M:%S）</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/翻译/30387/" title="size_t为什么重要-Why size_t matters"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-07</div><div class="title">size_t为什么重要-Why size_t matters</div></div></a></div><div><a href="/程序猿的学习笔记/14802/" title="C++ 10位时间戳（精确到秒）与标准时间格式（%Y-%m-%d %H:%M:%S）"><img class="cover" src="https://guopengzhen.com/img/avater.jpg"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-11</div><div class="title">C++ 10位时间戳（精确到秒）与标准时间格式（%Y-%m-%d %H:%M:%S）</div></div></a></div><div><a href="/程序猿的学习笔记/24359/" title="C++11/14中的新特性：其他杂项"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/13475/C++ New Features.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-06</div><div class="title">C++11/14中的新特性：其他杂项</div></div></a></div><div><a href="/程序猿的学习笔记/21758/" title="C++11/14中的新特性：对标准库的扩充 - 新增容器"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/13475/C++ New Features.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-06</div><div class="title">C++11/14中的新特性：对标准库的扩充 - 新增容器</div></div></a></div><div><a href="/程序猿的学习笔记/18864/" title="C++11/14中的新特性：对标准库的扩充 - 智能指针和引用计数"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/13475/C++ New Features.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-06</div><div class="title">C++11/14中的新特性：对标准库的扩充 - 智能指针和引用计数</div></div></a></div><div><a href="/程序猿的学习笔记/19053/" title="C++11/14中的新特性：对标准库的扩充 - 正则表达式"><img class="cover" src="https://guopengzhen.com/程序猿的学习笔记/13475/C++ New Features.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-12-06</div><div class="title">C++11/14中的新特性：对标准库的扩充 - 正则表达式</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div class="comment-switch"><span class="first-comment">Valine</span><label><input id="switch-comments-btn" type="checkbox"/><span class="slider"></span></label><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By 郭鹏真PattenKuo</div><div class="framework-info"><span>Powered by </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></section><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a target="_blank" rel="noopener" href="https://github.com/wzpan/hexo-generator-search" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})</script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const initData = {
+      el: '#vcomment',
+      appId: 'q3J83vICPB2taER4oq48LBuV-gzGzoHsz',
+      appKey: 'Sme7y8okowBtcEXM8OqIfQVf',
+      placeholder: '来都来了，随便说两句吧！',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'zh-CN',
+      recordIP: true,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: true,
+      path: window.location.pathname,
+    }
+
+    if (true) { 
+      initData.requiredFields= ('nick,mail'.split(','))
+    }
+
+    const valine = new Valine(initData)
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else $.getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js', initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.querySelector('#vcomment'),loadValine)
+  else setTimeout(() => loadValine(), 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://guopengzhen.com/%E7%BF%BB%E8%AF%91/3053/'
+    this.page.identifier = '翻译/3053/'
+    this.page.title = 'C++矩阵运算库Eigen3入门中文教程'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><script defer="defer" id="ribbon" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="false"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-heart.min.js" async="async" mobile="false"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config_change',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: true,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  $('script[data-pjax]').each(function () {
+    $(this).parent().append($(this).remove())
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  if (typeof gtag === 'function') {
+    gtag('config', 'UA-180790879-1', {'page_path': window.location.pathname});
+  }
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+
+document.addEventListener('pjax:send', function () {
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  $(window).off('scroll')
+
+  //reset readmode
+  $('body').hasClass('read-mode') && $('body').removeClass('read-mode')
+
+})</script><script>(function(){
+  const bp = document.createElement('script');
+  const curProtocol = window.location.protocol.split(':')[0];
+  if (curProtocol === 'https'){
+  bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+  }
+  else{
+  bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+  }
+  bp.dataset.pjax = ''
+  const s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(bp, s);
+})()</script></div></body></html>
