@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>C++ 10位时间戳（精确到秒）与标准时间格式（%Y-%m-%d %H:%M:%S）</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/14802/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/14802/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2><blockquote><p>10位时间戳：精确到秒<br>13位时间戳：精确到毫秒</p></blockquote><p>项目需求，翻译python实现的文件，需要将<code>datetime.fromtimestamp</code>以C++方式实现类似功能，即将13位时间戳<code>timestamp</code>（精确到毫秒）转换为标准时间格式（<code>YY-MM-DD hh:mm:ss</code>），后面发现只需要10位时间戳（精确到秒）即可满足需求，故实现如下函数示例：</p><h2 id="编译环境"><a class="markdownIt-Anchor" href="#编译环境"></a> <strong><strong><strong><strong><strong><strong><strong>编译环境</strong></strong></strong></strong></strong></strong></strong></h2><p><strong><strong><strong><strong><strong><strong><strong><strong>系统环境：</strong></strong></strong></strong></strong></strong></strong></strong></p><pre><code>patten@patten-hp:~$ sudo lsb_release -aNo LSB modules are available.Distributor ID:UbuntuDescription:Ubuntu 16.04.6 LTSRelease:16.04Codename:xenialpatten@patten-hp:~$</code></pre><p><strong><strong><strong><strong><strong><strong><strong><strong>IDE环境</strong></strong></strong></strong></strong></strong></strong></strong>：Visual Studio Code，Version: 1.38.1</p><h2 id="时间戳转标准时间"><a class="markdownIt-Anchor" href="#时间戳转标准时间"></a> 时间戳转标准时间</h2><h3 id="代码实现"><a class="markdownIt-Anchor" href="#代码实现"></a> 代码实现：</h3><p>如下：</p><pre><code>// timestamp.cpp#include &lt;stdio.h&gt;#include &lt;time.h&gt;#include &lt;iostream&gt;#include &lt;string&gt;using namespace std;typedef struct times &#123;  int Year;  int Mon;  int Day;  int Hour;  int Min;  int Second;&#125; Times;Times stamp_to_standard(int stampTime) &#123;  time_t tick = (time_t)stampTime;  struct tm tm;  char s[100];  Times standard;  // tick = time(NULL);  tm = *localtime(&amp;tick);  strftime(s, sizeof(s), &quot;%Y-%m-%d %H:%M:%S&quot;, &amp;tm);  printf(&quot;%d: %s\n&quot;, (int)tick, s);  standard.Year = atoi(s);  standard.Mon = atoi(s + 5);  standard.Day = atoi(s + 8);  standard.Hour = atoi(s + 11);  standard.Min = atoi(s + 14);  standard.Second = atoi(s + 17);  return standard;&#125;int main(int argc, const char *argv[]) &#123;  long timeStamp = 1549133300623;  // 13位时间戳，精确到毫秒  stamp_to_standard(timeStamp / 1000);  return 0;&#125;</code></pre><h3 id="编译运行结果"><a class="markdownIt-Anchor" href="#编译运行结果"></a> 编译运行结果</h3><p>结果如下：</p><pre><code>patten@patten-hp:~/workspace/xjCollide$ g++ timestamp.cpp  -std=c++11patten@patten-hp:~/workspace/xjCollide$ ./a.out 1549133300: 2019-02-03 02:48:20patten@patten-hp:~/workspace/xjCollide$</code></pre><h2 id="标准时间转时间戳"><a class="markdownIt-Anchor" href="#标准时间转时间戳"></a> 标准时间转时间戳</h2><h3 id="代码实现-2"><a class="markdownIt-Anchor" href="#代码实现-2"></a> 代码实现：</h3><p>如下：</p><pre><code>#include &lt;string.h&gt;#include &lt;iostream&gt;using namespace std;long standard_to_stamp(char *str_time) &#123;  struct tm stm;  int iY, iM, iD, iH, iMin, iS;  memset(&amp;stm, 0, sizeof(stm));  iY = atoi(str_time);  iM = atoi(str_time + 5);  iD = atoi(str_time + 8);  iH = atoi(str_time + 11);  iMin = atoi(str_time + 14);  iS = atoi(str_time + 17);  stm.tm_year = iY - 1900;  stm.tm_mon = iM - 1;  stm.tm_mday = iD;  stm.tm_hour = iH;  stm.tm_min = iMin;  stm.tm_sec = iS;  printf(&quot;%d-%0d-%0d %0d:%0d:%0d\n&quot;, iY, iM, iD, iH, iMin, iS);  return (long)mktime(&amp;stm);&#125;int main() &#123;  char arr[20] = &quot;2019-10-21 16:02:30&quot;;  char *a = arr;  std::cout &lt;&lt; &quot;timeStamp: &quot; &lt;&lt; standard_to_stamp(arr) &lt;&lt; std::endl;  return 0;&#125;</code></pre><h3 id="编译运行结果-2"><a class="markdownIt-Anchor" href="#编译运行结果-2"></a> 编译运行结果</h3><p>结果如下：</p><pre><code>patten@patten-hp:~/workspace/others/cpp/demo$ g++ -g -std=c++11 main.cpp patten@patten-hp:~/workspace/others/cpp/demo$ ./a.out 2019-10-21 16:2:30timeStamp: 1571644950patten@patten-hp:~/workspace/others/cpp/demo$</code></pre><h2 id="代码说明"><a class="markdownIt-Anchor" href="#代码说明"></a> 代码说明</h2><p>其中的<code>+5</code>, <code>+8</code>, <code>+11</code>, <code>+14</code>, <code>+17</code>等分别表示<code>月</code>、<code>日</code>、<code>时</code>、<code>分</code>、<code>秒</code>距离字符数组头部的距离。</p><h2 id="致谢"><a class="markdownIt-Anchor" href="#致谢"></a> 致谢</h2><p><a href="https://blog.csdn.net/wangqing_12345">此去经年.COM</a>《<a href="https://blog.csdn.net/wangqing_12345/article/details/52092728">c，c++中时间戳与标准时间间的相互转换</a>》</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+            <tag> Linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Linux下C++查找指定文件夹路径下文件名含有指定字符串的文件（以前缀/后缀为例）</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/6312/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/6312/</url>
@@ -20,9 +51,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -76,9 +107,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -107,9 +138,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -136,9 +167,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> JAVA </tag>
             
@@ -192,9 +223,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> 前端 </tag>
             
@@ -221,9 +252,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -250,9 +281,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -306,9 +337,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -524,9 +555,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -553,9 +584,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> Linux </tag>
             
@@ -613,9 +644,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> 前端 </tag>
             
@@ -642,9 +673,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> Linux </tag>
             
@@ -673,9 +704,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -729,9 +760,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> JAVA </tag>
             
@@ -758,9 +789,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> JAVA </tag>
             
@@ -814,9 +845,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -843,9 +874,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -899,9 +930,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -949,9 +980,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -978,9 +1009,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> C++ </tag>
             
@@ -1470,9 +1501,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> 工具 </tag>
             
@@ -1609,9 +1640,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
         </tags>
       
@@ -1636,9 +1667,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> Bug </tag>
             
@@ -1744,9 +1775,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
         </tags>
       
@@ -1771,9 +1802,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> 工具 </tag>
             
@@ -2551,9 +2582,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> 工具 </tag>
             
@@ -2580,9 +2611,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> 工具 </tag>
             
@@ -2719,9 +2750,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> Linux </tag>
             
@@ -2750,9 +2781,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> Linux </tag>
             
@@ -2781,9 +2812,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
         </tags>
       
@@ -2808,9 +2839,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
         </tags>
       
@@ -3560,9 +3591,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> 跨境电商 </tag>
             
@@ -3616,9 +3647,9 @@
       
         <tags>
             
-            <tag> 程序猿的学习笔记 </tag>
-            
             <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
             
             <tag> Linux </tag>
             
