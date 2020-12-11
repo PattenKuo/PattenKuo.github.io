@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>转换成小写字母-算法题-C++实现-Leetcode</title>
+      <link href="%E7%AE%97%E6%B3%95/2984/"/>
+      <url>%E7%AE%97%E6%B3%95/2984/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> <strong><strong><strong><strong><strong><strong><strong>前言</strong></strong></strong></strong></strong></strong></strong></h2><p>近期准备把<strong><strong><strong><strong><strong><strong><strong><strong>力扣leetcode</strong></strong></strong></strong></strong></strong></strong></strong><a href="https://leetcode-cn.com/problemset/algorithms/">算法题</a>刷一遍，算是一个Flag吗？几千道题啊啊啊啊啊。。。。。。我是不是膨胀了？</p><p>把我的C++解决方案记录在这里，与大家分享。</p><h2 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> <strong><strong><strong><strong><strong><strong><strong>题目描述</strong></strong></strong></strong></strong></strong></strong></h2><p>实现函数 <code>ToLowerCase()</code>，该函数接收一个字符串参数 <code>str</code>，并将该字符串中的大写字母转换成小写字母，之后返回新的字符串。</p><p><strong>示例 1：</strong></p><pre><code>输入: &quot;Hello&quot;输出: &quot;hello&quot;</code></pre><p><strong>示例 2：</strong></p><pre><code>输入: &quot;here&quot;输出: &quot;here&quot;</code></pre><p><strong>示例 3：</strong></p><pre><code>输入: &quot;LOVELY&quot;输出: &quot;lovely&quot;</code></pre><h2 id="c代码实现"><a class="markdownIt-Anchor" href="#c代码实现"></a> <strong><strong><strong><strong><strong><strong><strong>C++代码实现</strong></strong></strong></strong></strong></strong></strong></h2><pre><code>class Solution &#123;public:    string toLowerCase(string str) &#123;        size_t len = str.length();        for(size_t i = 0; i &lt; len; i++)&#123;            if(str[i] &gt;= 'A' &amp;&amp; str[i] &lt;= 'Z')&#123;                str[i] = str[i] - 'A' + 'a';            &#125;        &#125;        return str;    &#125;&#125;;</code></pre><h2 id="代码性能"><a class="markdownIt-Anchor" href="#代码性能"></a> <strong><strong><strong><strong><strong><strong><strong>代码性能</strong></strong></strong></strong></strong></strong></strong></h2><p>算是比较简单的一道题，主要思路就是根据ASCII编码进行计算。</p><p><img src="/%E7%AE%97%E6%B3%95/2984/toLowerCase.png" alt></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+            <tag> LeetCode力扣 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>无重复字符的最长子串-算法题-C++实现-Leetcode</title>
       <link href="%E7%AE%97%E6%B3%95/49470/"/>
       <url>%E7%AE%97%E6%B3%95/49470/</url>
