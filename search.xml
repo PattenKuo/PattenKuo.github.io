@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>反转字符串-算法题-C++实现-Leetcode</title>
+      <link href="%E7%AE%97%E6%B3%95/44676/"/>
+      <url>%E7%AE%97%E6%B3%95/44676/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>前言</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></h2><p>近期准备把<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>力扣leetcode</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong><a href="https://leetcode-cn.com/problemset/algorithms/">算法题</a>刷一遍，算是一个Flag吗？几千道题啊啊啊啊啊。。。。。。我是不是膨胀了？</p><p>把我的C++解决方案记录在这里，与大家分享。</p><h2 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>题目描述</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></h2><p>编写一个函数，其作用是将输入的字符串反转过来。输入字符串以字符数组 <code>char[]</code> 的形式给出。</p><p>不要给另外的数组分配额外的空间，你必须原地修改输入数组、使用 <code>O(1)</code> 的额外空间解决这一问题。</p><p>你可以假设数组中的所有字符都是 <code>ASCII</code> 码表中的可打印字符。</p><p><strong>示例 1：</strong></p><pre><code>输入：[&quot;h&quot;,&quot;e&quot;,&quot;l&quot;,&quot;l&quot;,&quot;o&quot;]输出：[&quot;o&quot;,&quot;l&quot;,&quot;l&quot;,&quot;e&quot;,&quot;h&quot;]</code></pre><p><strong>示例 2：</strong></p><pre><code>输入：[&quot;H&quot;,&quot;a&quot;,&quot;n&quot;,&quot;n&quot;,&quot;a&quot;,&quot;h&quot;]输出：[&quot;h&quot;,&quot;a&quot;,&quot;n&quot;,&quot;n&quot;,&quot;a&quot;,&quot;H&quot;]</code></pre><h2 id="c代码实现"><a class="markdownIt-Anchor" href="#c代码实现"></a> <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>C++代码实现</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></h2><pre><code>class Solution &#123;public:    void reverseString(vector&lt;char&gt;&amp; s) &#123;        if(s.size())&#123;  //数组判断是否为空            vector&lt;char&gt;::iterator start = s.begin();            vector&lt;char&gt;::iterator end = s.end();            char tem;            end--;            while(start &lt; end)&#123;                tem = *start;                *start = *end;                *end = tem;                start++;                end--;            &#125;          &#125;    &#125;&#125;;</code></pre><h2 id="代码性能"><a class="markdownIt-Anchor" href="#代码性能"></a> <strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>代码性能</strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></h2><p>第一次提交没有注意到空输入<code>[]</code>，大家注意一下就好。</p><p><img src="/%E7%AE%97%E6%B3%95/44676/reverseString.png" alt></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+            <tag> LeetCode力扣 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>机器人能否返回原点-算法题-C++实现-Leetcode</title>
       <link href="%E7%AE%97%E6%B3%95/10077/"/>
       <url>%E7%AE%97%E6%B3%95/10077/</url>
