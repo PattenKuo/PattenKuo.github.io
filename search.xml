@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>无重复字符的最长子串-算法题-C++实现-Leetcode</title>
+      <link href="%E7%AE%97%E6%B3%95/49470/"/>
+      <url>%E7%AE%97%E6%B3%95/49470/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> <strong><strong><strong>前言</strong></strong></strong></h2><p>近期准备把<strong><strong><strong><strong>力扣leetcode</strong></strong></strong></strong><a href="https://leetcode-cn.com/problemset/algorithms/">算法题</a>刷一遍，算是一个Flag吗？几千道题啊啊啊啊啊。。。。。。我是不是膨胀了？</p><p>把我的C++解决方案记录在这里，与大家分享。</p><h2 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> <strong><strong><strong>题目描述</strong></strong></strong></h2><p>给定一个字符串，请你找出其中不含有重复字符的<strong>最长子串</strong>的长度。</p><p><strong>示例1:</strong></p><pre><code>输入: &quot;abcabcbb&quot;输出: 3 解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。</code></pre><p><strong>示例 2:</strong></p><pre><code>输入: &quot;bbbbb&quot;输出: 1解释: 因为无重复字符的最长子串是 &quot;b&quot;，所以其长度为 1。</code></pre><p><strong>示例 3:</strong></p><pre><code>输入: &quot;pwwkew&quot;输出: 3解释: 因为无重复字符的最长子串是 &quot;wke&quot;，所以其长度为 3。   请注意，你的答案必须是 子串 的长度，&quot;pwke&quot; 是一个子序列，不是子串。</code></pre><h2 id="c代码实现"><a class="markdownIt-Anchor" href="#c代码实现"></a> <strong><strong><strong>C++代码实现</strong></strong></strong></h2><pre><code>class Solution &#123;public:    int lengthOfLongestSubstring(string s) &#123;      string strDiff = &quot;&quot;;  //暂存无重复字符串      int longest = 0;  //暂存最长无重复字符串长度      int result = 0;  //返回值            string::iterator pos = s.begin();      string::iterator end = s.end();      size_t findPos;            for(; pos != end; pos++)&#123;        findPos = strDiff.find(*pos);        if(findPos == string::npos)&#123;  //没找到          strDiff.append(1, *pos);          longest++;        &#125;else&#123;  //已找到          strDiff.erase(0, findPos + 1);          strDiff.append(1, *pos);          longest = longest - findPos ;        &#125;                if(longest &gt; result)&#123;          result = longest;        &#125;      &#125;      return result;                  &#125;&#125;;</code></pre><h2 id="代码性能"><a class="markdownIt-Anchor" href="#代码性能"></a> <strong><strong><strong>代码性能</strong></strong></strong></h2><p>有点难度，需要注意的是：如果找到了重复的单个字符，需要删除包括该重复字符在内的之前的所有元素。</p><p><img src="/%E7%AE%97%E6%B3%95/49470/lengthOfLongestSubstring.png" alt></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 算法 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+            <tag> LeetCode力扣 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>整数转罗马数字-算法题-C++实现-Leetcode</title>
       <link href="%E7%AE%97%E6%B3%95/7502/"/>
       <url>%E7%AE%97%E6%B3%95/7502/</url>
