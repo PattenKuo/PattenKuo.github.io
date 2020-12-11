@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>Linux下C++查找指定文件夹路径下文件名含有指定字符串的文件（以前缀/后缀为例）</title>
+      <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/6312/"/>
+      <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/6312/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2><p>项目需求中需要处理百万级别的数据，第一步便是读取指定路径下的所有<code>.csv</code>文件，于是有了该博文。其中会用到C++11的新特性<code>std::regex</code> （点击<a href="https://blog.svenhetin.com/dui-biao-zhun-ku-de-kuo-chong-zheng-ze-biao-da-shi/">这里</a>去了解）及其相关的正则表达式。</p><h2 id="编译环境"><a class="markdownIt-Anchor" href="#编译环境"></a> <strong><strong><strong><strong><strong><strong><strong>编译环境</strong></strong></strong></strong></strong></strong></strong></h2><p><strong><strong><strong><strong><strong><strong><strong><strong>系统环境：</strong></strong></strong></strong></strong></strong></strong></strong></p><pre><code>patten@patten-hp:~$ sudo lsb_release -aNo LSB modules are available.Distributor ID:UbuntuDescription:Ubuntu 16.04.6 LTSRelease:16.04Codename:xenialpatten@patten-hp:~$</code></pre><p><strong><strong><strong><strong><strong><strong><strong><strong>IDE环境</strong></strong></strong></strong></strong></strong></strong></strong>：Visual Studio Code，Version: 1.38.1</p><p>目标路径下的文件列表：</p><pre><code>patten@patten-hp:~/文档/collide/222222$ lsdrive-data_collision-gps_0.csv     drive-data_collision-sensor-stay_0.csvdrive-data_collision-gps_1.csv     drive-data_collision-sensor-stay_1.csvdrive-data_collision-gps_2.csv     drive-data_collision-sensor-stay_2.csvdrive-data_collision-gps_3.csv     drive-data_collision-sensor-stay_3.csvdrive-data_collision-gps_4.csv     drive-data_collision-sensor-stay_4.csvdrive-data_collision-gps_5.csv     drive-data_collision-sensor-stay_5.csvdrive-data_collision-gps_6.csv     drive-data_collision-sensor-stay_6.csvdrive-data_collision-gps_7.csv     drive-data_collision-sensor-stay_7.csvdrive-data_collision-sensor_7.csv  result_check.csvpatten@patten-hp:~/文档/collide/222222$</code></pre><h2 id="代码示例"><a class="markdownIt-Anchor" href="#代码示例"></a> <strong>代码示例</strong></h2><pre><code>// searchTargetFile.cpp#include &lt;dirent.h&gt;#include &lt;iostream&gt;#include &lt;regex&gt;#include &lt;string&gt;#include &lt;vector&gt;using namespace std;const std::string XJ_TESTDATASRC = &quot;/home/patten/文档/collide/222222/&quot;;  //测试文件路径const std::string prefix = &quot;drive-data_collision-sensor-stay_&quot;;          //指定前缀const std::string suffix = &quot;.csv&quot;;                                       //指定后缀//查找指定文件夹下指定前缀的文件std::vector&lt;std::string&gt; Get_all_files_prefix(std::string path, std::string prefix) &#123;  std::vector&lt;std::string&gt; files;  files.clear();  DIR *dp;  struct dirent *dirp;  if ((dp = opendir(path.c_str())) == NULL) &#123;    cout &lt;&lt; &quot;Can not open &quot; &lt;&lt; path &lt;&lt; endl;    return files;  &#125;  cout &lt;&lt; &quot;open &quot; &lt;&lt; path &lt;&lt; &quot; successfully!&quot; &lt;&lt; endl;  std::regex reg_obj(prefix + &quot;.*&quot;, regex::icase);  while ((dirp = readdir(dp)) != NULL) &#123;    if (dirp-&gt;d_type == 8)  // 4 means catalog; 8 means file; 0 means unknown    &#123;      if (regex_match(dirp-&gt;d_name, reg_obj)) &#123;        cout &lt;&lt; dirp-&gt;d_name &lt;&lt; endl;        string all_path = path + dirp-&gt;d_name;        files.push_back(all_path);        cout &lt;&lt; dirp-&gt;d_name &lt;&lt; &quot; &quot; &lt;&lt; dirp-&gt;d_ino &lt;&lt; &quot; &quot; &lt;&lt; dirp-&gt;d_off &lt;&lt; &quot; &quot; &lt;&lt; dirp-&gt;d_reclen             &lt;&lt; &quot; &quot; &lt;&lt; dirp-&gt;d_type &lt;&lt; endl;      &#125;    &#125;  &#125;  closedir(dp);  return files;&#125;//查找指定文件夹下指定后缀的文件std::vector&lt;std::string&gt; Get_all_files_suffix(std::string path, std::string suffix) &#123;  std::vector&lt;std::string&gt; files;  files.clear();  DIR *dp;  struct dirent *dirp;  if ((dp = opendir(path.c_str())) == NULL) &#123;    cout &lt;&lt; &quot;Can not open &quot; &lt;&lt; path &lt;&lt; endl;    return files;  &#125;  cout &lt;&lt; &quot;open &quot; &lt;&lt; path &lt;&lt; &quot; successfully!&quot; &lt;&lt; endl;  std::regex reg_obj(&quot;.*&quot; + suffix, regex::icase);  while ((dirp = readdir(dp)) != NULL) &#123;    if (dirp-&gt;d_type == 8)  // 4 means catalog; 8 means file; 0 means unknown    &#123;      if (regex_match(dirp-&gt;d_name, reg_obj)) &#123;        cout &lt;&lt; dirp-&gt;d_name &lt;&lt; endl;        string all_path = path + dirp-&gt;d_name;        files.push_back(all_path);        cout &lt;&lt; dirp-&gt;d_name &lt;&lt; &quot; &quot; &lt;&lt; dirp-&gt;d_ino &lt;&lt; &quot; &quot; &lt;&lt; dirp-&gt;d_off &lt;&lt; &quot; &quot; &lt;&lt; dirp-&gt;d_reclen             &lt;&lt; &quot; &quot; &lt;&lt; dirp-&gt;d_type &lt;&lt; endl;      &#125;    &#125;  &#125;  closedir(dp);  return files;&#125;int main() &#123;  printf(&quot;\n/*************开始查找指定前缀文件*******************/\n&quot;);  Get_all_files_prefix(XJ_TESTDATASRC, prefix);  printf(&quot;\n/*************结束查找指定前缀文件*******************/\n&quot;);  printf(&quot;\n/*************开始查找指定后缀文件*******************/\n&quot;);  Get_all_files_suffix(XJ_TESTDATASRC, suffix);  printf(&quot;\n/*************结束查找指定后缀文件*******************/\n&quot;);  return 0;&#125;</code></pre><h2 id="编译运行结果"><a class="markdownIt-Anchor" href="#编译运行结果"></a> <strong>编译运行结果</strong></h2><pre><code>patten@patten-hp:~/workspace/xjCollide$ g++ searchTargetFile.cpp -std=c++11patten@patten-hp:~/workspace/xjCollide$ ./a.out /*************开始查找指定前缀文件*******************/open /home/patten/文档/collide/222222/ successfully!drive-data_collision-sensor-stay_3.csvdrive-data_collision-sensor-stay_3.csv 60868958 1496425211632737111 64 drive-data_collision-sensor-stay_0.csvdrive-data_collision-sensor-stay_0.csv 60868955 3389925680683477497 64 drive-data_collision-sensor-stay_4.csvdrive-data_collision-sensor-stay_4.csv 60868959 3914622289505186073 64 drive-data_collision-sensor-stay_5.csvdrive-data_collision-sensor-stay_5.csv 60868960 6337759545780258730 64 drive-data_collision-sensor-stay_2.csvdrive-data_collision-sensor-stay_2.csv 60868957 6847131988194754799 64 drive-data_collision-sensor-stay_6.csvdrive-data_collision-sensor-stay_6.csv 60868961 7096464187626317677 64 drive-data_collision-sensor-stay_1.csvdrive-data_collision-sensor-stay_1.csv 60868956 7711111459540839378 64 drive-data_collision-sensor-stay_7.csvdrive-data_collision-sensor-stay_7.csv 60868962 8148512087471513061 64 /*************结束查找指定前缀文件*******************//*************开始查找指定后缀文件*******************/open /home/patten/文档/collide/222222/ successfully!drive-data_collision-sensor-stay_3.csvdrive-data_collision-sensor-stay_3.csv 60868958 1496425211632737111 64 drive-data_collision-gps_3.csvdrive-data_collision-gps_3.csv 60868950 2617472239127085004 56 drive-data_collision-gps_2.csvdrive-data_collision-gps_2.csv 60868949 2631674452140846130 56 drive-data_collision-gps_7.csvdrive-data_collision-gps_7.csv 60868954 2725119114177981729 56 drive-data_collision-sensor_7.csvdrive-data_collision-sensor_7.csv 60868963 2961243752813142490 56 drive-data_collision-sensor-stay_0.csvdrive-data_collision-sensor-stay_0.csv 60868955 3389925680683477497 64 drive-data_collision-sensor-stay_4.csvdrive-data_collision-sensor-stay_4.csv 60868959 3914622289505186073 64 drive-data_collision-gps_0.csvdrive-data_collision-gps_0.csv 60868947 4273490190034659860 56 drive-data_collision-sensor-stay_5.csvdrive-data_collision-sensor-stay_5.csv 60868960 6337759545780258730 64 drive-data_collision-gps_6.csvdrive-data_collision-gps_6.csv 60868953 6382352328763770855 56 drive-data_collision-sensor-stay_2.csvdrive-data_collision-sensor-stay_2.csv 60868957 6847131988194754799 64 drive-data_collision-sensor-stay_6.csvdrive-data_collision-sensor-stay_6.csv 60868961 7096464187626317677 64 drive-data_collision-gps_1.csvdrive-data_collision-gps_1.csv 60868948 7163652831385258945 56 result_check.csvresult_check.csv 60868551 7655545783049624870 40 drive-data_collision-sensor-stay_1.csvdrive-data_collision-sensor-stay_1.csv 60868956 7711111459540839378 64 drive-data_collision-sensor-stay_7.csvdrive-data_collision-sensor-stay_7.csv 60868962 8148512087471513061 64 drive-data_collision-gps_5.csvdrive-data_collision-gps_5.csv 60868952 8963525734837085419 56 drive-data_collision-gps_4.csvdrive-data_collision-gps_4.csv 60868951 9223372036854775807 56 /*************结束查找指定后缀文件*******************/patten@patten-hp:~/workspace/xjCollide$</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 程序猿的学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>C/C++读写csv文件</title>
       <link href="%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/49766/"/>
       <url>%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/49766/</url>
@@ -47,9 +76,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -78,9 +107,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -107,9 +136,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> JAVA </tag>
             
@@ -163,9 +192,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> 前端 </tag>
             
@@ -192,9 +221,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -221,9 +250,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -277,9 +306,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -495,9 +524,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -524,9 +553,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> Linux </tag>
             
@@ -584,9 +613,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> 前端 </tag>
             
@@ -613,9 +642,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> Linux </tag>
             
@@ -644,9 +673,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -700,9 +729,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> JAVA </tag>
             
@@ -729,9 +758,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> JAVA </tag>
             
@@ -785,9 +814,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -814,9 +843,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -870,9 +899,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -920,9 +949,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -949,9 +978,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> C++ </tag>
             
@@ -1441,9 +1470,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> 工具 </tag>
             
@@ -1580,9 +1609,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
         </tags>
       
@@ -1607,9 +1636,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> Bug </tag>
             
@@ -1715,9 +1744,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
         </tags>
       
@@ -1742,9 +1771,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> 工具 </tag>
             
@@ -2522,9 +2551,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> 工具 </tag>
             
@@ -2551,9 +2580,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> 工具 </tag>
             
@@ -2690,9 +2719,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> Linux </tag>
             
@@ -2721,9 +2750,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> Linux </tag>
             
@@ -2752,9 +2781,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
         </tags>
       
@@ -2779,9 +2808,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
         </tags>
       
@@ -3531,9 +3560,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> 跨境电商 </tag>
             
@@ -3587,9 +3616,9 @@
       
         <tags>
             
-            <tag> 原创拙笔 </tag>
-            
             <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> 原创拙笔 </tag>
             
             <tag> Linux </tag>
             
