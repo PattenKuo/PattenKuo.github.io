@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>Singleton 模式-GoF 23 种设计模式精解系列-附 C++实现源码</title>
+      <link href="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/48635/"/>
+      <url>%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/48635/</url>
+      
+        <content type="html"><![CDATA[<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2><p>尊重原创，本系列文本解析部分主要基于Candidate for Master’s Degree School of Computer Wuhan University的K_Eckel（frwei@whu.edu.cn）《设计模式精解-GoF 23 种设计模式解析附 C++实现源码》。为了避免重造轮子，本系列博文对源码在ubuntu16.04下做了验证并上传到了<a href="https://gitee.com/PattenKuo/designpatternsbycpipei">gitee</a>，再次感谢。</p><p>如有问题，可邮件联系我(<a href="mailto:guopz@outlook.com">guopz@outlook.com</a>)并共同探讨解决方案。</p><h2 id="目录"><a class="markdownIt-Anchor" href="#目录"></a> 目录</h2><h3 id="创建型模式creating-pattern"><a class="markdownIt-Anchor" href="#创建型模式creating-pattern"></a> 创建型模式(Creating Pattern)</h3><p><a href="https://blog.svenhetin.com/gof-factory/">Factory 模式</a> | <a href="https://blog.svenhetin.com/gof-abstactfactory/">AbstactFactory 模式</a> | <a href="https://blog.svenhetin.com/gof-singleton/">Singleton 模式</a> | <a href="https://blog.svenhetin.com/gof-builder/">Builder 模式</a> | <a href="https://blog.svenhetin.com/gof-prototype/">Prototype 模式</a></p><h3 id="结构型模式structrual-pattern"><a class="markdownIt-Anchor" href="#结构型模式structrual-pattern"></a> 结构型模式（Structrual Pattern）</h3><p><a href="https://blog.svenhetin.com/gof-bridge/">Bridge 模式</a> | <a href="https://blog.svenhetin.com/gof-adapter/">Adapter 模式</a> | <a href="https://blog.svenhetin.com/gof-decorator/">Decorator 模式</a> | <a href="https://blog.svenhetin.com/gof-decorator-2/">Composite 模式</a> | <a href="https://blog.svenhetin.com/gof-flyweight/">Flyweight 模式</a> | <a href="https://blog.svenhetin.com/gof-facade/">Facade 模式</a> | <a href="https://blog.svenhetin.com/gof-proxy/">Proxy 模式</a></p><h3 id="行为型模式behavioral-pattern"><a class="markdownIt-Anchor" href="#行为型模式behavioral-pattern"></a> 行为型模式（Behavioral  Pattern）</h3><p><a href="https://blog.svenhetin.com/gof-template/">Template 模式</a> | <a href="https://blog.svenhetin.com/gof-strategy/">Strategy 模式</a> | <a href="https://blog.svenhetin.com/gof-state/">State 模式</a> | <a href="https://blog.svenhetin.com/gof-observer/">Observer 模式</a> | <a href="https://blog.svenhetin.com/gof-memento/">Memento 模式</a> | <a href="https://blog.svenhetin.com/gof/">Mediator 模式</a> | <a href="https://blog.svenhetin.com/gof-command/">Command 模式</a> | <a href="https://blog.svenhetin.com/gof-visitor/">Visitor 模式</a> | <a href="https://blog.svenhetin.com/gof-iterator/">Iterator 模式</a> | <a href="https://blog.svenhetin.com/gof-interpreter/">Interpreter 模式</a> | <a href="https://blog.svenhetin.com/gof-chainofresponsibility/">Chain of Responsibility 模式</a></p><h2 id="singleton模式简介"><a class="markdownIt-Anchor" href="#singleton模式简介"></a> Singleton模式简介：</h2><pre><code> 单例模式也称为单件模式、单子模式，可能是使用最广泛的设计模式。其意图是保证一个类仅有一个实例，并提供一个访问它的全局访问点，该实例被所有程序模块共享。有很多地方需要这样的功能模块，如系统的日志输出，GUI应用必须是单鼠标，MODEM的联接需要一条且只需要一条电话线，操作系统只能有一个窗口管理器，一台PC连一个键盘。    单例模式有许多种实现方法，在C++中，甚至可以直接用一个全局变量做到这一点，但这样的代码显的很不优雅。 使用全局对象能够保证方便地访问实例，但是不能保证只声明一个对象——也就是说除了一个全局实例外，仍然能创建相同类的本地实例。《设计模式》一书中给出了一种很不错的实现，定义一个单例类，使用类的私有静态指针变量指向类的唯一实例，并用一个公有的静态方法获取该实例。    单例模式通过类本身来管理其唯一实例，这种特性提供了解决问题的方法。唯一的实例是类的一个普通对象，但设计这个类时，让它只能创建一个实例并提供对此实例的全局访问。唯一实例类Singleton在静态成员函数中隐藏创建实例的操作。习惯上把这个成员函数叫做Instance()，它的返回值是唯一实例的指针。</code></pre><h2 id="问题"><a class="markdownIt-Anchor" href="#问题"></a> 问题</h2><p>Singleton 模式解决问题十分常见,我们怎样去创建一个唯一的变量(对象)?在基于对象的设计中我们可以通过创建一个全局变量(对象)来实现,在面向对象和面向过程结合的设计范式(如 C++中)中,我们也还是可以通过一个全局变量实现这一点。但是当我们遇到了纯粹的面向对象范式中,这一点可能就只能是通过 Singleton 模式来实现了,可能这也正是很多公司在招聘 Java 开发人员时候经常考察 Singleton 模式的缘故吧。<br>Singleton 模式在开发中非常有用,具体使用在讨论给出。</p><h2 id="模式选择"><a class="markdownIt-Anchor" href="#模式选择"></a> 模式选择</h2><p>Singleton 模式典型的结构图为:</p><p><img src="/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/48635/image-5.png" alt></p><p>图 1:Singleton Pattern 结构图</p><p>在 Singleton 模式的结构图中可以看到,我们通过维护一个 <code>static</code> 的成员变量来记录这个唯一的对象实例。通过提供一个 <code>staitc</code> 的接口 <code>instance</code> 来获得这个唯一的实例。</p><h2 id="实现"><a class="markdownIt-Anchor" href="#实现"></a> 实现</h2><h3 id="完整代码示例code"><a class="markdownIt-Anchor" href="#完整代码示例code"></a> 完整代码示例(code)</h3><p>Singleton 模式的实现比较简单,这里为了方便初学者的学习和参考,将给出完整的实现代码(所有代码采用 C++实现,并在 Visual Studio Code，Version: 1.36.1 下测试运行)。</p><p>源码gitee地址：<a href="https://gitee.com/PattenKuo/designpatternsbycpipei/tree/master/creatingPattern/Singleton">点击这里</a></p><p>代码目录结构：</p><pre><code>patten@patten-hp:~/workspace/others/cpp/designPatterns/creatingPattern/Singleton/src$ tree ../../├── include│   └── Singleton.h└── src    ├── main.cpp    └── Singleton.cpp2 directories, 3 files</code></pre><p>Singleton.h:</p><pre><code>// Singleton.h#ifndef _SINGLETON_H_#define _SINGLETON_H_#include &lt;iostream&gt;using namespace std;class Singleton &#123; private:  static Singleton* _instance; protected:  Singleton(/* args */); public:  ~Singleton();  static Singleton* Instance();&#125;;#endif //~_SINGLETON_H_</code></pre><p>Singleton.cpp:</p><pre><code>//Singleton.cpp#include &quot;../include/Singleton.h&quot;#include &lt;iostream&gt;using namespace std;Singleton* Singleton::_instance = 0;Singleton::Singleton()&#123;    printf(&quot;Singleton.... \n&quot;);&#125;Singleton* Singleton::Instance()&#123;    if (_instance == 0)&#123;        _instance = new Singleton();    &#125;    return _instance;&#125;</code></pre><p>main.cpp:</p><pre><code>// main.cpp#include &lt;iostream&gt;#include &quot;../include/Singleton.h&quot;using namespace std;int main(int argc, char* argv[]) &#123;  Singleton* sgn = Singleton::Instance();    return 0;&#125;</code></pre><h3 id="代码说明"><a class="markdownIt-Anchor" href="#代码说明"></a> 代码说明</h3><p>Singleton 模式的实现无须补充解释,需要说明的是,Singleton 不可以被实例化,因此我们将其构造函数声明为 <code>protected</code> 或者直接声明为 <code>private</code>。</p><h3 id="编译运行结果"><a class="markdownIt-Anchor" href="#编译运行结果"></a> 编译运行结果：</h3><pre><code>patten@patten-hp:~/workspace/others/cpp/designPatterns/creatingPattern/Singleton/src$ g++ *.cpp -std=c++11patten@patten-hp:~/workspace/others/cpp/designPatterns/creatingPattern/Singleton/src$ ./a.out Singleton.... patten@patten-hp:~/workspace/others/cpp/designPatterns/creatingPattern/Singleton/src$</code></pre><h2 id="讨论"><a class="markdownIt-Anchor" href="#讨论"></a> 讨论</h2><p>Singleton 模式在开发中经常用到,且不说我们开发过程中一些变量必须是唯一的,比如说打印机的实例等等。</p><p>Singleton 模式经常和 Factory(AbstractFactory)模式在一起使用,因为系统中工厂对象一般来说只要一个,笔者在开发 <strong>Visual CMCS</strong> 的时候,语义分析过程(以及其他过程)中都用到工厂模式来创建对象(对象实在是太多了),这里的工厂对象实现就是同时是一个Singleton 模式的实例,因为系统我们就只要一个工厂来创建对象就可以了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 设计模式 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 原创拙笔 </tag>
+            
+            <tag> 程序猿的学习笔记 </tag>
+            
+            <tag> C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>AbstactFactory 模式-GoF 23 种设计模式精解系列-附 C++实现源码</title>
       <link href="%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/34277/"/>
       <url>%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/34277/</url>
