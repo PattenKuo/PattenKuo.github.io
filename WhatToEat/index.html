@@ -191,8 +191,19 @@
               $('#stop').show();
           }
       })
+
+      var msgShow = [
+          "这么作？今天别吃了！",
+          "你够了，挑食活该饿着！",
+          "你越是作，TA越是讨厌。",
+          "挑食的后果就是自作自受！",
+          "你从不信任我，所以我就不推荐了，各自安好！",
+          "我本将心向明月，奈何你就看不上！",
+          "还不满意，你知道啥是自作自受吗？"
+        ];
+
       $('#stop').click(function(){
-          alert('这么作？今天别吃了！')
+          alert(msg[Math.floor(Math.random() * msgShow.length)])
           $(this).hide();
       })
     </script>
