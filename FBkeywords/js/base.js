@@ -22,7 +22,46 @@ var sortableTable = new Class({
 		this.elements = this.tBody.getElements('tr');
 		this.filtered = false;
 		
-		/*for(i=0;i<10;i++){ 4 this.elements.clone().injectinside(this.tbody); } this.elements="this.tBody.getElements('tr');*/" this.elements.each(function(el,i){ if(this.options.overcls){ el.addevent('mouseover', function(){ el.addclass(options.overcls); }, this); el.addevent('mouseout', el.removeclass(options.overcls); }); if(this.options.onclick){ el.addevent('click', options.onclick); setup header this.thead.getelements('th').each(function(el,i){ if(el.axis){ this.sort.bind(this,i)); el.addclass('tableheaderover'); el.removeclass('tableheaderover'); el.getdate="function(str){" inner util function to convert 2-digit years fixyear(yr) { yr="+yr;" if (yr<50) +="2000;" else (yr<100) return yr; }; var ret; (str.length>12){
+		/*for(i=0;i<10;i++){
+			this.elements.clone().injectInside(this.tBody);
+		}
+		this.elements = this.tBody.getElements('tr');*/
+		
+		this.elements.each(function(el,i){
+			if(this.options.overCls){
+				el.addEvent('mouseover', function(){
+					el.addClass(options.overCls);
+				}, this);
+				el.addEvent('mouseout', function(){
+					el.removeClass(options.overCls);
+				});
+			}
+			if(this.options.onClick){
+				el.addEvent('click', options.onClick);
+			}
+		}, this);
+		
+		//setup header
+		this.tHead.getElements('th').each(function(el,i){
+			if(el.axis){
+				el.addEvent('click', this.sort.bind(this,i));
+				el.addEvent('mouseover', function(){
+					el.addClass('tableHeaderOver');
+				});
+				el.addEvent('mouseout', function(){
+					el.removeClass('tableHeaderOver');
+				});
+				el.getdate = function(str){
+					// inner util function to convert 2-digit years to 4
+					function fixYear(yr) {
+						yr = +yr;
+						if (yr<50) { yr += 2000; }
+						else if (yr<100) { yr += 1900; }
+						return yr;
+					};
+					var ret;
+					//
+					if (str.length>12){
 						strtime = str.substring(str.lastIndexOf(' ')+1);
 						strtime = strtime.substring(0,2)+strtime.substr(-2)
 					}else{
@@ -71,7 +110,9 @@ var sortableTable = new Class({
 						
 						if(var1==var2){return 0};
 						if(el.sortBy == 'ASC'){
-							if(var1<var2){return -1}; }else{ if(var1>var2){return -1};
+							if(var1<var2){return -1};
+						}else{
+							if(var1>var2){return -1};
 						}
 						return 1;
 						
@@ -238,4 +279,3 @@ var sortableTable = new Class({
 sortableTable.implement(new Events);
 sortableTable.implement(new Options);
 
-</var2){return></10;i++){>

@@ -1,4 +1,4 @@
-//MooTools, My Object Oriented Javascript Tools. Copyright (c) 2006 Valerio Proietti, <http: mad4milk.net>, MIT Style License.
+//MooTools, My Object Oriented Javascript Tools. Copyright (c) 2006 Valerio Proietti, <http://mad4milk.net>, MIT Style License.
 var MooTools = {
     version: '1.11'
 };
@@ -470,7 +470,7 @@ var Element = new Class({
                 var type = (props.type) ? ' type="' + props.type + '"' : '';
                 delete props.name;
                 delete props.type;
-                el = '<' + el name type '>'
+                el = '<' + el + name + type + '>'
             }
             el = document.createElement(el)
         }
@@ -2618,4 +2618,4 @@ Array.extend({
         }
         return false
     }
-});</script></'></http:>
+});
