@@ -8,7 +8,6 @@ function StartSearch(){
     jQuery.get(request_url, function(data, status){
         console.log("Status: " + status);
         keywordsList = data["data"];
-        console.log("data:", keywordsList.length);
         if(keywordsList.length < 1){
             alert("No related keywords response, Please try another keyword!");
         }
