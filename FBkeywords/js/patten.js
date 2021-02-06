@@ -6,7 +6,6 @@ function StartSearch(){
     var userInput = document.getElementById("userInput").value;
     request_url = "https://graph.facebook.com/search?type=adinterest&q=[" + userInput + "]&limit=100&locale=en_US&access_token=562476534284148%7CRR0VTMWxhtPFVGMbPS8_GkQPmHQ";
     jQuery.get(request_url, function(data, status){
-        keywordsList = {};
         keywordsList = data["data"];
         if(keywordsList.length < 1){
             alert("No related keywords response, Please try another keyword!");
