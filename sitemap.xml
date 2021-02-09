@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://guopengzhen.com/link/index.html</loc>
+    
+    <lastmod>2021-02-09</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://guopengzhen.com/%E9%9A%8F%E7%AC%94/8198/</loc>
     
     <lastmod>2021-02-08</lastmod>
@@ -1143,13 +1150,6 @@
   </url>
   
   <url>
-    <loc>https://guopengzhen.com/link/index.html</loc>
-    
-    <lastmod>2020-10-18</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://guopengzhen.com/categories/index.html</loc>
     
     <lastmod>2020-10-18</lastmod>
@@ -1243,14 +1243,14 @@
   </url>
   
   <url>
-    <loc>https://guopengzhen.com/tags/Bug/</loc>
+    <loc>https://guopengzhen.com/tags/JAVA/</loc>
     <lastmod>2021-02-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://guopengzhen.com/tags/JAVA/</loc>
+    <loc>https://guopengzhen.com/tags/Bug/</loc>
     <lastmod>2021-02-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
