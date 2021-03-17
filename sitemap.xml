@@ -2,7 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://guopengzhen.com/ShareToPublic/Mens_Underwear_Brands/mens_underwear_brands_D-F.json</loc>
+    <loc>https://guopengzhen.com/ShareToPublic/Mens_Underwear_Brands/mens_underwear_brands_0-A.json</loc>
+    
+    <lastmod>2021-03-17</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://guopengzhen.com/ShareToPublic/Mens_Underwear_Brands/mens_underwear_brands_G-H.json</loc>
     
     <lastmod>2021-03-17</lastmod>
     
@@ -16,7 +23,7 @@
   </url>
   
   <url>
-    <loc>https://guopengzhen.com/ShareToPublic/Mens_Underwear_Brands/mens_underwear_brands_0-A.json</loc>
+    <loc>https://guopengzhen.com/ShareToPublic/Mens_Underwear_Brands/mens_underwear_brands_D-F.json</loc>
     
     <lastmod>2021-03-17</lastmod>
     
@@ -1236,20 +1243,6 @@
   </url>
   
   <url>
-    <loc>https://guopengzhen.com/tags/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2021-03-17</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://guopengzhen.com/tags/C/</loc>
-    <lastmod>2021-03-17</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://guopengzhen.com/tags/318/</loc>
     <lastmod>2021-03-17</lastmod>
     <changefreq>daily</changefreq>
@@ -1258,6 +1251,20 @@
   
   <url>
     <loc>https://guopengzhen.com/tags/%E6%B8%B8%E8%AE%B0/</loc>
+    <lastmod>2021-03-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://guopengzhen.com/tags/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2021-03-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://guopengzhen.com/tags/C/</loc>
     <lastmod>2021-03-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -1364,14 +1371,14 @@
   </url>
   
   <url>
-    <loc>https://guopengzhen.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+    <loc>https://guopengzhen.com/categories/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2021-03-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://guopengzhen.com/categories/%E7%A8%8B%E5%BA%8F%E7%8C%BF%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <loc>https://guopengzhen.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2021-03-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
